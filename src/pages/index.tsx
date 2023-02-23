@@ -3,20 +3,16 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
-  const { data: loading } = useSession();
 
   return (
     <>
-      {loading && <h1>Loading...</h1>}
-
-      {!loading && !session && (
+      {!session ? (
         <>
           Not signed in <br />
           <button onClick={() => signIn()}>Sign in</button>
           <pre>{!session && "User is not logged in"}</pre>
         </>
-      )}
-      {!loading && session && (
+      ) : (
         <>
           Signed in as {session.user?.email} <br />
           <button onClick={() => signOut()}>Sign out</button>

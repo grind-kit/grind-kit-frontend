@@ -1,4 +1,4 @@
-import NextAuth, { Account, User } from "next-auth";
+import NextAuth, { User } from "next-auth";
 
 export interface IAuthenticatedUser extends User {
   accessToken?: string;
@@ -7,6 +7,6 @@ export interface IAuthenticatedUser extends User {
 
 declare module "next-auth" {
   interface Session {
-    accessToken?: Account.accessToken;
+    accessToken?: string;
   }
 }

@@ -1,11 +1,11 @@
-// import { NextApiRequest, NextApiResponse } from "next";
-import NextAuth from "next-auth";
+import { NextApiRequest, NextApiResponse } from "next";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
-// import { IAuthenticatedUser } from "../../../../types";
+import { IAuthenticatedUser } from "types/next-auth";
 
-const authOptions = {
+const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET,
   providers: [
     GoogleProvider({
@@ -14,8 +14,8 @@ const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn(user, account, profile) {
-      if (account && account.provider === "google") {
+    async signIn(user: IAuthenticatedUser, account, profile) {
+      if (account.provider === "google") {
         const { accessToken, idToken } = account;
 
         try {
@@ -55,6 +55,6 @@ const authOptions = {
   },
 };
 
-export default function (req, res) {
+export default function (req: NextApiRequest, res: NextApiResponse) {
   NextAuth(req, res, authOptions);
 }
