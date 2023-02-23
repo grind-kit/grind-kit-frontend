@@ -4,5 +4,3 @@ declare namespace NodeJS {
     GOOGLE_CLIENT_SECRET: string | undefined;
   }
 }
-
-declare module "next-auth/client";
