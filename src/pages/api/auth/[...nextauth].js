@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { signIn } from "next-auth/react";
 
 const settings = {
   providers: [
@@ -16,7 +15,7 @@ const settings = {
 
         try {
           const response = await axios.post(
-            `${process.env.DJANGO_URL}/api/auth/google/`,
+            `${process.env.DJANGO_URL}/api/social/login/google/`,
             { access_token: accessToken, id_token: idToken }
           );
           const { access_token } = response.data;
@@ -46,7 +45,7 @@ const settings = {
   },
   pages: {
     signIn: "/auth/signin",
-  }
+  },
 };
 
 export default (req, res) => NextAuth(req, res, settings);
