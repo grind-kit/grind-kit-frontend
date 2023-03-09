@@ -4,7 +4,7 @@ import Head from "next/head";
 import Layout from "@/components/layout/layout";
 import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <Layout>
@@ -16,3 +16,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </SessionProvider>
   );
 }
+
+export default App;

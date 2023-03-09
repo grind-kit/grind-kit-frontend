@@ -6,13 +6,13 @@ export default function Navigation() {
 
   return (
     <header className="container flex flex-row items-center mx-auto px-5 py-14 max-w-screen-lg">
-      <Link href="/">
+      <Link legacyBehavior href="/">
         <a className="text-4xl font-bold text-blue-500">Grind Kit</a>
       </Link>
       <nav className="ml-auto">
         {session && session.accessToken ? (
           <>
-            <Link href="/profile">
+            <Link legacyBehavior href="/profile">
               <a className="mr-5">Profile</a>
             </Link>
             <div
