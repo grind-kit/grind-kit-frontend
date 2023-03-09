@@ -10,7 +10,7 @@ const settings = {
   ],
   callbacks: {
     async signIn(user, account, profile) {
-      if (account.provider === "google") {
+      if (account.provider === "GoogleProvider") {
         const { accessToken, idToken } = account;
 
         try {

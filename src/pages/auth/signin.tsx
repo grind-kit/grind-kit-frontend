@@ -1,5 +1,5 @@
 import React from "react";
-import { signIn, signOut, getProviders } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 
 interface InputWrapperProps {
   providers: any;
@@ -10,7 +10,7 @@ export default function SignIn({ providers }: InputWrapperProps) {
   return (
     <div className="flex flex-col">
       <>
-        <h1 className="mb-5 text-center text-3xl font-bold">Sign In</h1>
+        <h1 className="mb-5 text-center text-3xl font-bold">Sign in to Grind Kit</h1>
         {Object.values(providers).map((provider: any) => {
           <div key={provider.name}>
             <button
@@ -28,6 +28,7 @@ export default function SignIn({ providers }: InputWrapperProps) {
 
 export async function getServerSideProps(context: any) {
   const providers = await getProviders();
+  console.log("Providers:", providers)
   return {
     props: { providers },
   };

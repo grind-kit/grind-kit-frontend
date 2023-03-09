@@ -1,8 +1,13 @@
 import React from "react";
-import Navigation from "../components/navigation";
+import Head from "next/head";
 
 export default function Home() {
   return (
-    <Navigation />
+    <div>
+      <Head>
+        <title>Grind Kit</title>
+      </Head>
+    </div>
+    
   )
 }
