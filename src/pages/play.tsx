@@ -6,7 +6,8 @@ export default function Play() {
 
   const tanks = {
     type: "tank",
-    className: "bg-blue-600 hover:bg-blue-700",
+    bg: "bg-blue-600",
+    hover: "hover:bg-blue-700",
     data: [
       {
         id: 0,
@@ -28,7 +29,8 @@ export default function Play() {
   };
   const healers = {
     type: "healer",
-    className: "bg-green-600 hover:bg-green-700",
+    bg: "bg-green-600",
+    hover: "hover:bg-green-700",
     data: [
       {
         id: 0,
@@ -51,7 +53,8 @@ export default function Play() {
 
   const meleeDPS = {
     type: "melee DPS",
-    className: "bg-red-600 hover:bg-red-700",
+    bg: "bg-red-600",
+    hover: "hover:bg-red-700",
     data: [
       {
         id: 0,
@@ -78,7 +81,8 @@ export default function Play() {
 
   const physicalRangedDPS = {
     type: "physical ranged DPS",
-    className: "bg-red-600 hover:bg-red-700",
+    bg: "bg-red-600",
+    hover: "hover:bg-red-700",
     data: [
       {
         id: 0,
@@ -97,7 +101,8 @@ export default function Play() {
 
   const magicalRangedDPS = {
     type: "magical ranged DPS",
-    className: "bg-red-600 hover:bg-red-700",
+    bg: "bg-red-600",
+    hover: "hover:bg-red-700",
     data: [
       {
         id: 0,
