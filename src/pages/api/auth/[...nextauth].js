@@ -9,15 +9,14 @@ const settings = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
-    async signIn(user, account, profile) {
-      console.log(user.account);
+    async signIn({ user, account }) {
+      if (account.provider === "google") {
+        const accessToken = account.access_token;
+        const idToken = account.id_token;
 
-      if (user.account.provider === "google") {
-        const accessToken = user.account.access_token;
-        const idToken = user.account.id_token;
+        console.log(idToken);
 
         try {
           const response = await axios.post(
@@ -46,10 +45,13 @@ const settings = {
       return token;
     },
 
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.accessToken = token.accessToken;
       return session;
     },
+  },
+  pages: {
+    signIn: "/auth/signin",
   },
 };
 

@@ -16,7 +16,7 @@ export default function Navigation() {
               <a className="mr-5">Profile</a>
             </Link>
             <div
-              className="inline-block cursor-pointer"
+              className="inline-block cursor-pointer mr-5"
               onClick={() => signOut()}
             >
               Sign Out
@@ -25,13 +25,16 @@ export default function Navigation() {
         ) : (
           <>
             <div
-              className="inline-block cursor-pointer"
+              className="inline-block cursor-pointer mr-5"
               onClick={() => signIn()}
             >
               Sign In
             </div>
           </>
         )}
+        <Link legacyBehavior href="/play">
+          <a className="mr-5">Play</a>
+        </Link>
       </nav>
     </header>
   );
