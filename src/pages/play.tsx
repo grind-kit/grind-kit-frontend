@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Accordion from "@/components/Accordion";
 
 export default function Play() {
+  const [selectedJob, setSelectedJob] = useState<string>("");
+
   const tanks = {
     type: "tank",
     className: "bg-blue-600 hover:bg-blue-700",
@@ -114,12 +116,12 @@ export default function Play() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="mb-5 text-3xl font-bold">Choose a Job</h1>
-      <Accordion {...tanks} />
-      <Accordion {...healers} />
-      <Accordion {...meleeDPS} />
-      <Accordion {...physicalRangedDPS} />
-      <Accordion {...magicalRangedDPS} />
+      <h1 className="text-3xl font-bold">Choose a Job</h1>
+      <Accordion {...tanks} setSelectedJob={setSelectedJob} />
+      <Accordion {...healers} setSelectedJob={setSelectedJob} />
+      <Accordion {...meleeDPS} setSelectedJob={setSelectedJob} />
+      <Accordion {...physicalRangedDPS} setSelectedJob={setSelectedJob} />
+      <Accordion {...magicalRangedDPS} setSelectedJob={setSelectedJob} />
     </div>
   );
 }
