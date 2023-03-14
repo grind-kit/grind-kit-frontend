@@ -8,7 +8,7 @@ type AccordionProps = {
     id: number;
     name: string;
   }>;
-  setSelectedJob: Function;
+  setLevel: Function;
 };
 
 export default function Accordion({
@@ -16,7 +16,7 @@ export default function Accordion({
   bg,
   hover,
   data,
-  setSelectedJob,
+  setLevel,
 }: AccordionProps) {
   const [isShowing, setIsShowing] = useState<boolean>(false);
 
@@ -52,7 +52,7 @@ export default function Accordion({
           {data.map((job) => (
             <div
               key={job.id}
-              onClick={setSelectedJob(job.name)}
+              onClick={setLevel(0)}
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >
               <div>{job.name}</div>
