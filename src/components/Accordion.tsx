@@ -28,7 +28,7 @@ export default function Accordion({
     <div
       className={`${bg} w-full rounded-md mt-5 p-4 font-bold text-white text-transform: capitalize`}
     >
-      <div className={"flex flex-row items-center justify-between text-2xl"}>
+      <div className="flex flex-row items-center justify-between text-2xl">
         {type}
         <button onClick={() => handleIsShowing()}>
           <svg

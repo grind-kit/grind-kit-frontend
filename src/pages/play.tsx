@@ -121,7 +121,7 @@ export default function Play() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="text-3xl font-bold">Choose a Job</h1>
+      <h1 className="text-3xl font-bold text-slate-900">Choose a Job</h1>
       <Accordion {...tanks} setLevel={setLevel} />
       <Accordion {...healers} setLevel={setLevel} />
       <Accordion {...meleeDPS} setLevel={setLevel} />
