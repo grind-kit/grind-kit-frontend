@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type TAccordionProps = {
+type TProps = {
   type: string;
   bg: string;
   hover: string;
@@ -11,13 +11,7 @@ type TAccordionProps = {
   setLevel: Function;
 };
 
-export default function Accordion({
-  type,
-  bg,
-  hover,
-  data,
-  setLevel,
-}: TAccordionProps) {
+export default function Accordion({ type, bg, hover, data, setLevel }: TProps) {
   const [isShowing, setIsShowing] = useState<boolean>(false);
 
   const handleIsShowing = () => {
