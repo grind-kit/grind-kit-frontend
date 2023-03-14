@@ -30,7 +30,8 @@ export default function InstanceContent({
 
 export async function getServerSideProps() {
   const res = await axios.get(
-    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}&columns=ID,Name,ContentFinderCondition.ClassJobLevelRequired,InstanceClearExp,InstanceClearGil`
+    // Rate limit is set to 86 due to current MSQ level
+    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}&limit=86&columns=ID,Name,ContentFinderCondition.ClassJobLevelRequired,InstanceClearExp,InstanceClearGil`
   );
 
   return {
