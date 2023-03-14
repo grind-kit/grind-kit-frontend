@@ -5,6 +5,7 @@ import Head from "next/head";
 import Layout from "@/components/layout/layout";
 import { SessionProvider } from "next-auth/react";
 import { Router } from "next/router";
+import Loading from "./loading";
 
 function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,7 +35,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
-        {loading ? <h1>App is loading...</h1> : <Component {...pageProps} />}
+        {loading ? <Loading /> : <Component {...pageProps} />}
       </Layout>
     </SessionProvider>
   );
