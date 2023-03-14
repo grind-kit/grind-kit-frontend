@@ -3,7 +3,12 @@ import axios from "axios";
 import { TPagination } from "types/global";
 
 type TResults = {
+  ContentFinderCondition: {
+    ClassJobLevelRequired: number;
+  };
   ID: number;
+  InstanceClearExp: number;
+  InstanceClearGil: number;
   Icon: string;
   Name: string;
   Url: string;
@@ -15,7 +20,7 @@ type TInstancesProps = {
   initialPagination: TPagination;
 };
 
-export default function Instances({
+export default function InstanceContent({
   level,
   initialResults,
   initialPagination,
@@ -27,11 +32,18 @@ export default function Instances({
 
   return (
     <div className="w-full flex flex-col items-center">
-      <h1 className="text-3xl font-bold">Instance Content</h1>
+      <h1 className="text-3xl font-bold">Dungeons</h1>
       <ul>
-        {results.map((instance) => (
-          <li key={instance.ID}>{instance.Name}</li>
-        ))}
+        {results
+          .filter(
+            (instance) =>
+              instance.ContentFinderCondition.ClassJobLevelRequired <= 50
+          )
+          .map((instance) => (
+            <li className="text-transform: capitalize" key={instance.ID}>
+              {instance.Name}
+            </li>
+          ))}
       </ul>
     </div>
   );
@@ -39,7 +51,7 @@ export default function Instances({
 
 export async function getServerSideProps() {
   const res = await axios.get(
-    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}`
+    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}&columns=ID,Name,ContentFinderCondition.ClassJobLevelRequired,InstanceClearExp,InstanceClearGil`
   );
 
   return {
