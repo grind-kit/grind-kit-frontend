@@ -1,6 +1,6 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth, { Account } from "next-auth";
 
-export interface IAuthenticatedUser extends User {
+export interface IAuthenticatedAccount extends Account {
   accessToken?: string;
   refreshToken?: string;
 }
