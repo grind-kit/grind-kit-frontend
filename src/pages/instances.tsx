@@ -13,7 +13,7 @@ type InstancesProps = {
 export default function Instances(props: InstancesProps) {}
 
 export async function getServerSideProps() {
-  const res = await axios.get(`https://xivapi.com/InstanceContent`);
+  const res = await axios.get(`https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}`);
 
   console.log(res.data);
 
