@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { TPagination, TInstanceContentResults } from "types/global";
-import List from "@/components/List";
+import List from "@/components/DungeonList";
 
 type TProps = {
   level: number;
@@ -9,7 +9,7 @@ type TProps = {
   initialPagination: TPagination;
 };
 
-export default function InstanceContent({
+export default function Dungeons({
   level,
   initialResults,
   initialPagination,

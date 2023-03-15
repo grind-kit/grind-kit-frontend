@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { TInstanceContentResults } from "types/global";
 
 type TProps = {
@@ -5,6 +6,8 @@ type TProps = {
 };
 
 export default function List({ results }: TProps) {
+  const router = useRouter();
+
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
       {results
@@ -24,6 +27,7 @@ export default function List({ results }: TProps) {
           <div
             key={instance.ID}
             className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"
+            onClick={() => router.push(`/dungeons/${instance.ID}`)}
           >
             <div className="flex flex-row items-center justify-between text-2xl">
               <p>{instance.Name}</p>
