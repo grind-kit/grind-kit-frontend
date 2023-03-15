@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 type TProps = {
   type: string;
@@ -12,6 +13,7 @@ type TProps = {
 };
 
 export default function Accordion({ type, bg, hover, data, setLevel }: TProps) {
+  const router = useRouter();
   const [isShowing, setIsShowing] = useState<boolean>(false);
 
   const handleIsShowing = () => {
@@ -46,7 +48,7 @@ export default function Accordion({ type, bg, hover, data, setLevel }: TProps) {
           {data.map((job) => (
             <div
               key={job.id}
-              onClick={setLevel(0)}
+              onClick={() => router.push(`/grinds/${job.name}`)}
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >
               <div>{job.name}</div>

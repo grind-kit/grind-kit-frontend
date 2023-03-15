@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Accordion from "@/components/Accordion";
 
-export default function Play() {
+export default function Grind() {
   const [level, setLevel] = useState<number | null>(null);
 
   const tanks = {
