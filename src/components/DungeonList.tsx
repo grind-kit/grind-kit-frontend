@@ -11,13 +11,6 @@ export default function List({ results }: TProps) {
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
       {results
-        .filter(
-          (instance) =>
-            // Replace 50 with the level variable later
-            instance.ContentFinderCondition.ClassJobLevelRequired <= 50 &&
-            instance.Name &&
-            instance.InstanceClearExp > 0
-        )
         .sort(
           (a, b) =>
             b.ContentFinderCondition.ClassJobLevelRequired -

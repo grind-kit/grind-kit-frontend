@@ -29,9 +29,12 @@ export default function Dungeons({
 }
 
 export async function getServerSideProps() {
+  // Change this to get dungeons for a specific level
+  // Implement item level required later
   const res = await axios.get(
-    // Rate limit is set to 86 due to current MSQ level
-    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}&limit=86&columns=ID,Name,ContentFinderCondition.ClassJobLevelRequired,InstanceClearExp,InstanceClearGil`
+    `https://xivapi.com/search?private_key=${
+      process.env.XIVAPI_KEY
+    }&filters=ContentFinderCondition.ClassJobLevelRequired<=${50},InstanceClearExp>0,InstanceClearGil>0&columns=ID,Name,InstanceClearExp,InstanceClearGil,ContentFinderCondition.ClassJobLevelRequired&language=en`
   );
 
   return {
