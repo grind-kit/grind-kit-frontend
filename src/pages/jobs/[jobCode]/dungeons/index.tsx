@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TInstanceContentResults } from "types/global";
+import { TDungeonList } from "types/global";
 import DungeonList from "@/components/List";
 import { useRouter } from "next/router";
 
 type TProps = {
   level: number;
-  initialResults: Array<TInstanceContentResults>;
+  initialResults: Array<TDungeonList>;
 };
 
 export default function Dungeons({ level, initialResults }: TProps) {
   const [results, setResults] =
-    useState<Array<TInstanceContentResults>>(initialResults);
+    useState<Array<TDungeonList>>(initialResults);
 
   const router = useRouter();
   const { jobCode } = router.query;

@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { TRoleAccordionProps } from "types/global";
 
-type TProps = {
-  id: number;
-  type: string;
-  bg: string;
-  hover: string;
-  data: Array<{
-    id: number;
-    name: string;
-    jobCode: string;
-  }>;
-};
-
-export default function RoleAccordion({ id, type, bg, hover, data }: TProps) {
+export function RoleAccordion({
+  id,
+  type,
+  bg,
+  hover,
+  data,
+}: TRoleAccordionProps) {
   const router = useRouter();
   const [isShowing, setIsShowing] = useState<boolean>(false);
 

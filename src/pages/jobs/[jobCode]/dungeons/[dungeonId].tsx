@@ -1,26 +1,12 @@
 import { useRouter } from "next/router";
 import axios from "axios";
+import { TDungeonId } from "types/global";
 
-type TResults = {
-  Name: string;
-  Description: string;
-  Banner: string;
-  InstanceClearExp: number;
-  InstanceClearGil: number;
-  ContentType: {
-    IconHD: string;
-  };
-  ItemLevelRequired: number;
-  ContentFinderCondition: {
-    ClassJobLevelRequired: number;
-  };
+type TDungeonIdProps = {
+  initialResults: TDungeonId;
 };
 
-type TProps = {
-  initialResults: TResults;
-};
-
-export default function DungeonPage({ initialResults }: TProps) {
+export default function DungeonId({ initialResults }: TDungeonIdProps) {
   const router = useRouter();
   const { dungeonId } = router.query;
   return (
@@ -28,7 +14,10 @@ export default function DungeonPage({ initialResults }: TProps) {
       <p>Dungeon #{dungeonId}</p>
       <p>Name: {initialResults.Name}</p>
       <p>Description: {initialResults.Description}</p>
-      <p>Minimum Level: {initialResults.ContentFinderCondition.ClassJobLevelRequired}</p>
+      <p>
+        Minimum Level:{" "}
+        {initialResults.ContentFinderCondition.ClassJobLevelRequired}
+      </p>
     </div>
   );
 }

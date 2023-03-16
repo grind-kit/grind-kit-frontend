@@ -1,13 +1,7 @@
-import JobCode from "@/pages/jobs/[jobCode]";
 import { useRouter } from "next/router";
-import { TInstanceContentResults } from "types/global";
+import { TDungeonListProps } from "types/global";
 
-type TProps = {
-  results: Array<TInstanceContentResults>;
-  jobCode: string | string[] | undefined;
-};
-
-export default function DungeonList({ results, jobCode }: TProps) {
+export default function DungeonList({ results, jobCode }: TDungeonListProps) {
   const router = useRouter();
 
   return (
