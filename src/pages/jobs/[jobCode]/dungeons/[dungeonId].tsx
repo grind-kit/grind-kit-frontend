@@ -11,6 +11,9 @@ type TResults = {
     IconHD: string;
   };
   ItemLevelRequired: number;
+  ContentFinderCondition: {
+    ClassJobLevelRequired: number;
+  };
 };
 
 type TProps = {
@@ -24,7 +27,8 @@ export default function DungeonPage({ initialResults }: TProps) {
     <div>
       <p>Dungeon #{dungeonId}</p>
       <p>Name: {initialResults.Name}</p>
-      <p>Description {initialResults.Description}</p>
+      <p>Description: {initialResults.Description}</p>
+      <p>Minimum Level: {initialResults.ContentFinderCondition.ClassJobLevelRequired}</p>
     </div>
   );
 }
@@ -32,7 +36,7 @@ export default function DungeonPage({ initialResults }: TProps) {
 export async function getServerSideProps(context: any) {
   const id = context.query.dungeonId;
   const res = await axios.get(
-    `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired`
+    `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
   );
 
   return {
