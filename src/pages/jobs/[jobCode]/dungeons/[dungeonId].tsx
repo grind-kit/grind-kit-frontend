@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { TPagination } from "types/global";
 import axios from "axios";
 
 type TResults = {
@@ -16,7 +15,6 @@ type TResults = {
 
 type TProps = {
   initialResults: TResults;
-  initialPagination: TPagination;
 };
 
 export default function DungeonPage({ initialResults }: TProps) {
@@ -40,7 +38,6 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       initialResults: res.data,
-      initialPagination: res.data.Pagination,
     },
   };
 }

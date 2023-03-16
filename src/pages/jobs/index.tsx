@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Accordion from "@/components/Accordion";
 
-export default function Grind() {
+export default function Jobs() {
   const [level, setLevel] = useState<number | null>(null);
 
   const tanks = {
@@ -12,18 +12,22 @@ export default function Grind() {
       {
         id: 0,
         name: "paladin",
+        jobCode: "pld",
       },
       {
         id: 1,
         name: "warrior",
+        jobCode: "war",
       },
       {
         id: 2,
         name: "dark knight",
+        jobCode: "drk",
       },
       {
         id: 3,
         name: "gunbreaker",
+        jobCode: "gnb",
       },
     ],
   };
@@ -35,18 +39,22 @@ export default function Grind() {
       {
         id: 0,
         name: "white mage",
+        jobCode: "whm",
       },
       {
         id: 1,
         name: "scholar",
+        jobCode: "sch",
       },
       {
         id: 2,
         name: "astrologian",
+        jobCode: "ast",
       },
       {
         id: 3,
         name: "sage",
+        jobCode: "sge",
       },
     ],
   };
@@ -59,22 +67,27 @@ export default function Grind() {
       {
         id: 0,
         name: "monk",
+        jobCode: "mnk",
       },
       {
         id: 1,
         name: "dragoon",
+        jobCode: "drg",
       },
       {
         id: 2,
         name: "ninja",
+        jobCode: "nin",
       },
       {
         id: 3,
         name: "samurai",
+        jobCode: "sam",
       },
       {
         id: 4,
         name: "reaper",
+        jobCode: "rpr",
       },
     ],
   };
@@ -87,14 +100,17 @@ export default function Grind() {
       {
         id: 0,
         name: "bard",
+        jobCode: "brd",
       },
       {
         id: 1,
         name: "machinist",
+        jobCode: "mch",
       },
       {
         id: 2,
         name: "dancer",
+        jobCode: "dnc",
       },
     ],
   };
@@ -107,14 +123,17 @@ export default function Grind() {
       {
         id: 0,
         name: "black mage",
+        jobCode: "blm"
       },
       {
         id: 1,
         name: "summoner",
+        jobCode: "smn",
       },
       {
         id: 2,
         name: "red mage",
+        jobCode: "rdm",
       },
     ],
   };

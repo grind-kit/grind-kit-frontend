@@ -9,6 +9,7 @@ const settings = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.SECRET,
 
   callbacks: {
     async signIn({ user, account }) {

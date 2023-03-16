@@ -8,6 +8,7 @@ type TProps = {
   data: Array<{
     id: number;
     name: string;
+    jobCode: string;
   }>;
   setLevel: Function;
 };
@@ -48,7 +49,7 @@ export default function Accordion({ type, bg, hover, data, setLevel }: TProps) {
           {data.map((job) => (
             <div
               key={job.id}
-              onClick={() => router.push(`/grinds/${job.name}`)}
+              onClick={() => router.push(`/jobs/${job.jobCode}`)}
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >
               <div>{job.name}</div>

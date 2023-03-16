@@ -1,11 +1,13 @@
+import JobCode from "@/pages/jobs/[jobCode]";
 import { useRouter } from "next/router";
 import { TInstanceContentResults } from "types/global";
 
 type TProps = {
   results: Array<TInstanceContentResults>;
+  jobCode: string | string[] | undefined;
 };
 
-export default function List({ results }: TProps) {
+export default function List({ results, jobCode }: TProps) {
   const router = useRouter();
 
   return (
@@ -20,7 +22,9 @@ export default function List({ results }: TProps) {
           <div
             key={instance.ID}
             className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"
-            onClick={() => router.push(`/dungeons/${instance.ID}`)}
+            onClick={() =>
+              router.push(`/jobs/${jobCode}/dungeons/${instance.ID}`)
+            }
           >
             <div className="flex flex-row items-center justify-between text-2xl">
               <p>{instance.Name}</p>

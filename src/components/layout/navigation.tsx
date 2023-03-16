@@ -32,8 +32,8 @@ export default function Navigation() {
             </div>
           </>
         )}
-        <Link legacyBehavior href="/play">
-          <a className="mr-5">Play</a>
+        <Link legacyBehavior href="/jobs">
+          <a className="mr-5">Grind</a>
         </Link>
       </nav>
     </header>

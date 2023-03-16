@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TPagination, TInstanceContentResults } from "types/global";
+import { TInstanceContentResults } from "types/global";
 import List from "@/components/DungeonList";
+import { useRouter } from "next/router";
 
 type TProps = {
   level: number;
   initialResults: Array<TInstanceContentResults>;
-  initialPagination: TPagination;
 };
 
-export default function Dungeons({
-  level,
-  initialResults,
-  initialPagination,
-}: TProps) {
+export default function Dungeons({ level, initialResults }: TProps) {
   const [results, setResults] =
     useState<Array<TInstanceContentResults>>(initialResults);
-  const [currentPage, setCurrentPage] = useState<number>(
-    initialPagination.Page
-  );
+
+  const router = useRouter();
+  const { jobCode } = router.query;
 
   return (
     <div className="w-full flex flex-col items-center">
       <h1 className="text-3xl font-bold text-slate-900">Dungeons</h1>
-      <List results={results} />
+      <List results={results} jobCode={jobCode} />
     </div>
   );
 }
@@ -40,7 +36,6 @@ export async function getServerSideProps() {
   return {
     props: {
       initialResults: res.data.Results,
-      initialPagination: res.data.Pagination,
     },
   };
 }
