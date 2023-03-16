@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { TInstanceContentResults } from "types/global";
-import List from "@/components/DungeonList";
+import DungeonList from "@/components/List";
 import { useRouter } from "next/router";
 
 type TProps = {
@@ -19,13 +19,13 @@ export default function Dungeons({ level, initialResults }: TProps) {
   return (
     <div className="w-full flex flex-col items-center">
       <h1 className="text-3xl font-bold text-slate-900">Dungeons</h1>
-      <List results={results} jobCode={jobCode} />
+      <DungeonList results={results} jobCode={jobCode} />
     </div>
   );
 }
 
 export async function getServerSideProps() {
-  const maxLevel = 60;
+  const maxLevel = 55;
   const minLevel = maxLevel - 2;
   // Change this to get dungeons for a specific level
   // Implement item level required later

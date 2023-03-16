@@ -11,10 +11,9 @@ type TProps = {
     name: string;
     jobCode: string;
   }>;
-  
 };
 
-export default function Accordion({ id, type, bg, hover, data }: TProps) {
+export default function RoleAccordion({ id, type, bg, hover, data }: TProps) {
   const router = useRouter();
   const [isShowing, setIsShowing] = useState<boolean>(false);
 
@@ -24,6 +23,7 @@ export default function Accordion({ id, type, bg, hover, data }: TProps) {
 
   return (
     <div
+      key={id}
       className={`${bg} w-full rounded-md mt-5 p-4 font-bold text-white text-transform: capitalize`}
     >
       <div className="flex flex-row items-center justify-between text-2xl">

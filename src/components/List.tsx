@@ -7,7 +7,7 @@ type TProps = {
   jobCode: string | string[] | undefined;
 };
 
-export default function List({ results, jobCode }: TProps) {
+export default function DungeonList({ results, jobCode }: TProps) {
   const router = useRouter();
 
   return (
