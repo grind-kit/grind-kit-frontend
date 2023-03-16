@@ -1,0 +1,28 @@
+{
+  "id": 1,
+  "type": "healer",
+  "bg": "bg-green-600",
+  "hover": "hover:bg-green-700",
+  "data": [
+    {
+      "id": 0,
+      "name": "white mage",
+      "jobCode": "whitemage"
+    },
+    {
+      "id": 1,
+      "name": "scholar",
+      "jobCode": "scholar"
+    },
+    {
+      "id": 2,
+      "name": "astrologian",
+      "jobCode": "astrologian"
+    },
+    {
+      "id": 3,
+      "name": "sage",
+      "jobCode": "sage"
+    }
+  ]
+}

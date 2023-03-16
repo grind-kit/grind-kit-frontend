@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 type TProps = {
+  id: number;
   type: string;
   bg: string;
   hover: string;
@@ -10,10 +11,10 @@ type TProps = {
     name: string;
     jobCode: string;
   }>;
-  setLevel: Function;
+  
 };
 
-export default function Accordion({ type, bg, hover, data, setLevel }: TProps) {
+export default function Accordion({ id, type, bg, hover, data }: TProps) {
   const router = useRouter();
   const [isShowing, setIsShowing] = useState<boolean>(false);
 
@@ -32,13 +33,13 @@ export default function Accordion({ type, bg, hover, data, setLevel }: TProps) {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="white"
             className="w-6 h-6"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M19.5 8.25l-7.5 7.5-7.5-7.5"
             />
           </svg>
