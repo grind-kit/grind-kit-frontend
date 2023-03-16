@@ -49,3 +49,7 @@ type TDungeonId = {
     ClassJobLevelRequired: number;
   };
 };
+
+type TDungeonIdProps = {
+  initialResults: TDungeonId;
+};

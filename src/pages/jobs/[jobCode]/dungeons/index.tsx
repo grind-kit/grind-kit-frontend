@@ -5,11 +5,10 @@ import DungeonList from "@/components/List";
 import { useRouter } from "next/router";
 
 type TProps = {
-  level: number;
   initialResults: Array<TDungeonList>;
 };
 
-export default function Dungeons({ level, initialResults }: TProps) {
+export default function Dungeons({ initialResults }: TProps) {
   const [results, setResults] =
     useState<Array<TDungeonList>>(initialResults);
 

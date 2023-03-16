@@ -1,10 +1,6 @@
 import { useRouter } from "next/router";
 import axios from "axios";
-import { TDungeonId } from "types/global";
-
-type TDungeonIdProps = {
-  initialResults: TDungeonId;
-};
+import { TDungeonIdProps } from "types/global";
 
 export default function DungeonId({ initialResults }: TDungeonIdProps) {
   const router = useRouter();
