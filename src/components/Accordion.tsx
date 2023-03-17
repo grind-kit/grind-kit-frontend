@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { TRoleAccordionProps } from "types/global";
 
 export function RoleAccordion({
-  id,
+  roleId,
   type,
   bg,
   hover,
@@ -18,7 +18,7 @@ export function RoleAccordion({
 
   return (
     <div
-      key={id}
+      key={roleId}
       className={`${bg} w-full rounded-md mt-5 p-4 font-bold text-white text-transform: capitalize`}
     >
       <div className="flex flex-row items-center justify-between text-2xl">
@@ -44,7 +44,7 @@ export function RoleAccordion({
         <div className="w-full text-xl flex flex-col">
           {data.map((job) => (
             <div
-              key={job.id}
+              key={job.jobId}
               onClick={() => router.push(`/jobs/${job.jobCode}`)}
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >

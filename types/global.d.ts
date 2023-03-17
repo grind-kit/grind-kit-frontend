@@ -1,10 +1,10 @@
 export type TRoleAccordionProps = {
-  id: number;
+  roleId: number;
   type: string;
   bg: string;
   hover: string;
   data: Array<{
-    id: number;
+    jobId: number;
     name: string;
     jobCode: string;
   }>;
@@ -30,12 +30,16 @@ export type TDungeonList = {
   Name: string;
 };
 
-type TDungeonListProps = {
+export type TDungeonListProps = {
   results: Array<TDungeonList>;
   jobCode: string | string[] | undefined;
 };
 
-type TDungeonId = {
+export type TDungeonListPageProps = {
+  initialResults: Array<TDungeonList>;
+};
+
+export type TDungeonId = {
   Name: string;
   Description: string;
   Banner: string;
@@ -50,6 +54,6 @@ type TDungeonId = {
   };
 };
 
-type TDungeonIdProps = {
+export type TDungeonIdProps = {
   initialResults: TDungeonId;
 };

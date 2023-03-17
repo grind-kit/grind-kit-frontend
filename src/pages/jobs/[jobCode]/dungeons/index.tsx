@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TDungeonList } from "types/global";
+import { TDungeonList, TDungeonListPageProps } from "types/global";
 import DungeonList from "@/components/List";
 import { useRouter } from "next/router";
 
-type TProps = {
-  initialResults: Array<TDungeonList>;
-};
-
-export default function Dungeons({ initialResults }: TProps) {
+export default function Dungeons({ initialResults }: TDungeonListPageProps) {
   const [results, setResults] =
     useState<Array<TDungeonList>>(initialResults);
 
