@@ -4,6 +4,7 @@ import { contentData } from "@/data";
 
 export function ContentList({ jobCode }: TContentListProps) {
   const router = useRouter();
+  
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
       {contentData.map((content) => (

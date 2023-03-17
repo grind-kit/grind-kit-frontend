@@ -143,10 +143,10 @@ export const contentData = [
     icon: null,
     href: "dungeons",
   },
-  // {
-  //   contentId: 1,
-  //   name: "Trials",
-  //   icon: null,
-  //   href: "trials",
-  // },
+  {
+    contentId: 1,
+    name: "Trials",
+    icon: null,
+    href: "trials",
+  },
 ];
