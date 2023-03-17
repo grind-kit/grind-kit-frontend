@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import axios from "axios";
 import { TDungeonIdProps } from "types/global";
+import { GetServerSideProps } from "next";
 
 export default function DungeonId({ initialResults }: TDungeonIdProps) {
   const router = useRouter();
@@ -18,7 +19,8 @@ export default function DungeonId({ initialResults }: TDungeonIdProps) {
   );
 }
 
-export async function getServerSideProps(context: any) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
   const id = context.query.dungeonId;
   const res = await axios.get(
     `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`

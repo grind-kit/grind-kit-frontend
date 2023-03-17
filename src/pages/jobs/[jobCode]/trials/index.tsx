@@ -14,12 +14,16 @@ export default function Trials({ initialResults }: TDungeonListPageProps) {
   return (
     <div className="w-full flex flex-col items-center">
       <h1 className="text-3xl font-bold text-slate-900">Recommended Trials</h1>
-      <DungeonList results={results} jobCode={jobCode} contentType={contentType}/>
+      <DungeonList
+        results={results}
+        jobCode={jobCode}
+        contentType={contentType}
+      />
     </div>
   );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   // Trials are less common than dungeons, so the minLevel is 5 levels lower
   const maxLevel = 55;
   const minLevel = maxLevel - 5;
@@ -34,4 +38,4 @@ export async function getServerSideProps() {
       initialResults: res.data.Results,
     },
   };
-}
+};

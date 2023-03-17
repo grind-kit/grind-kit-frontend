@@ -16,12 +16,16 @@ export default function Dungeons({ initialResults }: TDungeonListPageProps) {
       <h1 className="text-3xl font-bold text-slate-900">
         Recommended Dungeons
       </h1>
-      <DungeonList results={results} jobCode={jobCode} contentType={contentType}/>
+      <DungeonList
+        results={results}
+        jobCode={jobCode}
+        contentType={contentType}
+      />
     </div>
   );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   const maxLevel = 55;
   const minLevel = maxLevel - 2;
   // Change this to get dungeons for a specific level
@@ -35,4 +39,4 @@ export async function getServerSideProps() {
       initialResults: res.data.Results,
     },
   };
-}
+};
