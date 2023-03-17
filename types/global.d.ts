@@ -37,6 +37,7 @@ export type TContentListProps = {
 export type TDungeonListProps = {
   results: Array<TDungeonList>;
   jobCode: string | string[] | undefined;
+  contentType: string;
 };
 
 export type TDungeonListPageProps = {

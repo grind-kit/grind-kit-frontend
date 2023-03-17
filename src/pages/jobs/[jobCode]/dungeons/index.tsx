@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 export default function Dungeons({ initialResults }: TDungeonListPageProps) {
   const [results, setResults] = useState<Array<TDungeonList>>(initialResults);
+  const contentType = "dungeons";
 
   const router = useRouter();
   const { jobCode } = router.query;
@@ -15,7 +16,7 @@ export default function Dungeons({ initialResults }: TDungeonListPageProps) {
       <h1 className="text-3xl font-bold text-slate-900">
         Recommended Dungeons
       </h1>
-      <DungeonList results={results} jobCode={jobCode} />
+      <DungeonList results={results} jobCode={jobCode} contentType={contentType}/>
     </div>
   );
 }

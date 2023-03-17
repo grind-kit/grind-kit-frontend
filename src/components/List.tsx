@@ -4,7 +4,7 @@ import { contentData } from "@/data";
 
 export function ContentList({ jobCode }: TContentListProps) {
   const router = useRouter();
-  
+
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
       {contentData.map((content) => (
@@ -22,7 +22,7 @@ export function ContentList({ jobCode }: TContentListProps) {
   );
 }
 
-export function DungeonList({ results, jobCode }: TDungeonListProps) {
+export function DungeonList({ results, jobCode, contentType }: TDungeonListProps) {
   const router = useRouter();
 
   return (
@@ -38,7 +38,7 @@ export function DungeonList({ results, jobCode }: TDungeonListProps) {
             key={instance.ID}
             className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"
             onClick={() =>
-              router.push(`/jobs/${jobCode}/dungeons/${instance.ID}`)
+              router.push(`/jobs/${jobCode}/${contentType}/${instance.ID}`)
             }
           >
             <div className="flex flex-row items-center justify-between text-2xl">
