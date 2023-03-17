@@ -135,3 +135,18 @@ export const roleData = [
     ],
   },
 ];
+
+export const contentData = [
+  {
+    contentId: 0,
+    name: "Dungeons",
+    icon: null,
+    href: "dungeons",
+  },
+  // {
+  //   contentId: 1,
+  //   name: "Trials",
+  //   icon: null,
+  //   href: "trials",
+  // },
+];

@@ -1,7 +1,27 @@
 import { useRouter } from "next/router";
-import { TDungeonListProps } from "types/global";
+import { TDungeonListProps, TContentListProps } from "types/global";
+import { contentData } from "@/data";
 
-export default function DungeonList({ results, jobCode }: TDungeonListProps) {
+export function ContentList({ jobCode }: TContentListProps) {
+  const router = useRouter();
+  return (
+    <div className="w-full flex flex-col items-center font-bold text-slate-900">
+      {contentData.map((content) => (
+        <div
+          key={content.contentId}
+          className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"
+          onClick={() => router.push(`/jobs/${jobCode}/${content.href}`)}
+        >
+          <div className="flex flex-row items-center justify-between text-2xl">
+            <p>{content.name}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function DungeonList({ results, jobCode }: TDungeonListProps) {
   const router = useRouter();
 
   return (

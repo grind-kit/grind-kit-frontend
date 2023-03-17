@@ -30,6 +30,10 @@ export type TDungeonList = {
   Name: string;
 };
 
+export type TContentListProps = {
+  jobCode: string | string[] | undefined;
+}
+
 export type TDungeonListProps = {
   results: Array<TDungeonList>;
   jobCode: string | string[] | undefined;
