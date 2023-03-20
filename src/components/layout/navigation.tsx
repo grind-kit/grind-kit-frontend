@@ -21,7 +21,7 @@ export default function Navigation() {
         <a className="text-4xl font-bold text-blue-500">Grind Kit</a>
       </Link>
       <nav className="ml-auto">
-        {!user.uid ? (
+        {user.uid ? (
           <>
             <Link legacyBehavior href="/jobs">
               <a className="mr-5">Grind</a>
@@ -41,6 +41,9 @@ export default function Navigation() {
           <>
             <Link legacyBehavior href="/login">
               <a className="mr-5">Login</a>
+            </Link>
+            <Link legacyBehavior href="/signup">
+              <a className="mr-5">Sign Up</a>
             </Link>
           </>
         )}
