@@ -1,9 +1,11 @@
+"use client";
+
 import "@/styles/globals.css";
 import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "@/components/layout/layout";
-import { SessionProvider } from "next-auth/react";
+import { AuthContextProvider } from "@/context/AuthContext";
 import { Router } from "next/router";
 import Loading from "./loading";
 
@@ -30,14 +32,14 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   }, []);
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <AuthContextProvider>
       <Layout>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         {loading ? <Loading /> : <Component {...pageProps} />}
       </Layout>
-    </SessionProvider>
+    </AuthContextProvider>
   );
 }
 

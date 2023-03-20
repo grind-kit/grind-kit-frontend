@@ -6,7 +6,13 @@ import Loading from "@/pages/loading";
 
 const auth = getAuth(firebase_app);
 
-export const AuthContext = createContext({});
+interface AuthContextObj {
+  user: any | null;
+}
+
+export const AuthContext = createContext<AuthContextObj>({
+  user: undefined
+});
 
 export const useAuthContext = () => useContext(AuthContext);
 
