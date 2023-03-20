@@ -2,10 +2,10 @@
 "use client";
 
 import React from "react";
-import signUp from "@/firebase/auth/signup";
-import { useRouter } from "next/router";
+import signIn from "@/firebase/auth/signin";
+import { useRouter } from "next/navigation";
 
-export default function Page() {
+function Page() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function Page() {
   const handleForm = async (event: any) => {
     event.preventDefault();
 
-    const { result, error } = await signUp(email, password);
+    const { result, error } = await signIn(email, password);
 
     if (error) {
       return console.error(error);
@@ -55,3 +55,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default Page;
