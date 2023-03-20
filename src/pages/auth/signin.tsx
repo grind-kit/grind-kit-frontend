@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { initFirebase } from "@/firebase/firebase";
+import { initFirebase } from "@/firebase/config";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
