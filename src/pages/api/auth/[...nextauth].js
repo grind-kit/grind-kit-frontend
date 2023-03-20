@@ -17,7 +17,8 @@ const settings = {
         const accessToken = account.access_token;
         const idToken = account.id_token;
 
-        console.log(idToken);
+        console.log("idToken 🐬", idToken);
+        console.log("accessToken 🥩", accessToken);
 
         try {
           const response = await axios.post(

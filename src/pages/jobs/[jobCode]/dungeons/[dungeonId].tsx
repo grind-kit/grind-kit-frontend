@@ -20,14 +20,13 @@ export default function DungeonId({ initialResults }: TDungeonIdProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-
   const id = context.query.dungeonId;
-  
-  const fetchedData = await Dungeon.getDungeon(id);
+
+  const fetchedData = await Dungeon.getDungeonInfo(id);
 
   return {
     props: {
       initialResults: fetchedData,
     },
   };
-}
+};

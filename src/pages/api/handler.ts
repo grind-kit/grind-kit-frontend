@@ -38,11 +38,15 @@ export class Dungeon {
     this.ContentFinderCondition = ContentFinderCondition;
   }
 
-  static async getDungeon(id: string | string[] | undefined) {
-    const res = await axios.get(
-      `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
-    );
+  static async getDungeonInfo(id: string | string[] | undefined) {
+    try {
+      const res = await axios.get(
+        `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
+      );
 
-    return res.data;
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
