@@ -1,36 +1,45 @@
-import React from "react";
-import { signIn, getProviders } from "next-auth/react";
+import type { NextPage } from "next";
+import { initFirebase } from "@/firebase/firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
-interface InputWrapperProps {
-  providers: any;
-  children?: React.ReactNode;
-}
+const SignIn: NextPage = () => {
+  initFirebase();
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const [user, setUser] = useAuthState(auth);
+  const router = useRouter();
 
-export default function SignIn({ providers }: InputWrapperProps) {
-  
+  if (user) {
+    router.push("/profile");
+    return (
+      <div>
+        <h1>Welcome {user.displayName}</h1>
+      </div>
+    );
+  }
+
+  const signInWithGoogle = async () => {
+    const result = await signInWithPopup(auth, provider);
+    console.log(result.user);
+  };
+
   return (
-    <div className="flex flex-col">
-      <>
-        <h1 className="mb-5 text-center text-3xl font-bold">
-          Sign in to Grind Kit
-        </h1>
-        <div key={providers.google.name}>
-          <button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
-            className="text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600"
-          >
-            Login with {providers.google.name}
-          </button>
-        </div>
-      </>
+    <div className="text-center flex flex-col gap-4 items-center">
+      <div>
+        <h1>Please sign in to continue</h1>
+      </div>
+      <div>
+        <button
+          onClick={signInWithGoogle}
+          className="bg-blue-600 text-white rounded-md p-2 w-48"
+        >
+          Sign In
+        </button>
+      </div>
     </div>
   );
 }
 
-export async function getServerSideProps(context: any) {
-  const providers = await getProviders();
-
-  return {
-    props: { providers },
-  };
-}
+export default SignIn;
