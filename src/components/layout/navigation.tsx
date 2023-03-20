@@ -1,9 +1,19 @@
-import { useAuthContext } from "@/context/AuthContext";
-import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 
 export default function Navigation() {
-  const { user } = useAuthContext();
+  const { user, logOut } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      router.push("/login");
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <header className="container flex flex-row items-center mx-auto px-5 py-14 max-w-screen-lg">
@@ -11,26 +21,26 @@ export default function Navigation() {
         <a className="text-4xl font-bold text-blue-500">Grind Kit</a>
       </Link>
       <nav className="ml-auto">
-        {user !== null ? (
+        {!user.uid ? (
           <>
             <Link legacyBehavior href="/jobs">
               <a className="mr-5">Grind</a>
             </Link>
-            <Link legacyBehavior href="/profile">
-              <a className="mr-5">Profile</a>
+            <Link legacyBehavior href="/dashboard">
+              <a className="mr-5">Dashboard</a>
             </Link>
 
             <div
               className="inline-block cursor-pointer mr-5"
-              onClick={() => signOut}
+              onClick={handleLogout}
             >
-              Sign Out
+              Logout
             </div>
           </>
         ) : (
           <>
-            <Link legacyBehavior href="/signin">
-              <a className="mr-5">Sign In</a>
+            <Link legacyBehavior href="/login">
+              <a className="mr-5">Login</a>
             </Link>
           </>
         )}

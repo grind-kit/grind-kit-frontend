@@ -1,5 +1,3 @@
-"use client";
-
 import "@/styles/globals.css";
 import React, { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
@@ -9,7 +7,7 @@ import { AuthContextProvider } from "@/context/AuthContext";
 import { Router } from "next/router";
 import Loading from "./loading";
 
-function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {

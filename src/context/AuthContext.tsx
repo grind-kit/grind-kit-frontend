@@ -1,41 +1,61 @@
-import React from "react";
-import { useState, useContext, createContext, useEffect } from "react";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
-import firebase_app from "@/firebase/config";
-import Loading from "@/pages/loading";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import {
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { auth } from "@/firebase/firebase";
 
-const auth = getAuth(firebase_app);
-
-interface AuthContextObj {
-  user: any | null;
+interface UserType {
+  email: string | null;
+  uid: string | null;
 }
 
-export const AuthContext = createContext<AuthContextObj>({
-  user: undefined
-});
+const AuthContext = createContext({});
 
-export const useAuthContext = () => useContext(AuthContext);
+export const useAuth = () => useContext<any>(AuthContext);
 
-export const AuthContextProvider = ({ children }: any) => {
-  const [user, setUser] = useState<any>(null);
+export const AuthContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [user, setUser] = useState<UserType>({ email: null, uid: null });
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        setUser({
+          email: user.email,
+          uid: user.uid,
+        });
       } else {
-        setUser(null);
+        setUser({ email: null, uid: null });
       }
-      setLoading(false);
     });
+    setLoading(false);
 
     return () => unsubscribe();
   }, []);
 
+  const signUp = (email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const logIn = (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logOut = async () => {
+    setUser({ email: null, uid: null });
+    await signOut(auth);
+  };
+
   return (
-    <AuthContext.Provider value={{ user }}>
-      {loading ? <Loading /> : children}
+    <AuthContext.Provider value={{ user, signUp, logIn, logOut }}>
+      {loading ? null : children}
     </AuthContext.Provider>
   );
 };
