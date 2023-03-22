@@ -20,7 +20,7 @@ export default function Navigation() {
       <Link legacyBehavior href="/">
         <a className="text-4xl font-bold text-blue-500">Grind Kit</a>
       </Link>
-      <nav className="ml-auto">
+      <nav className="ml-auto text-slate-900">
         {user.uid ? (
           <>
             <Link legacyBehavior href="/jobs">
@@ -30,10 +30,7 @@ export default function Navigation() {
               <a className="mr-5">Dashboard</a>
             </Link>
 
-            <div
-              className="inline-block cursor-pointer mr-5"
-              onClick={handleLogout}
-            >
+            <div className="inline-block cursor-pointer" onClick={handleLogout}>
               Logout
             </div>
           </>
