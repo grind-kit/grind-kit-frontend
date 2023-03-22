@@ -1,7 +1,11 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 export default function TrialID() {
-    return (
-        <div>
+  return (
+    <ProtectedRoute>
+      <div>
         <p>Trial ID</p>
-        </div>
-    );
+      </div>
+    </ProtectedRoute>
+  );
 }

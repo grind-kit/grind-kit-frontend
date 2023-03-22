@@ -1,3 +1,4 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
 import { useRouter } from "next/router";
 import { TDungeonIdProps } from "types/global";
 import { GetServerSideProps } from "next";
@@ -7,15 +8,17 @@ export default function DungeonId({ initialResults }: TDungeonIdProps) {
   const router = useRouter();
   const { dungeonId } = router.query;
   return (
-    <div>
-      <p>Dungeon #{dungeonId}</p>
-      <p>Name: {initialResults.Name}</p>
-      <p>Description: {initialResults.Description}</p>
-      <p>
-        Minimum Level:{" "}
-        {initialResults.ContentFinderCondition.ClassJobLevelRequired}
-      </p>
-    </div>
+    <ProtectedRoute>
+      <div>
+        <p>Dungeon #{dungeonId}</p>
+        <p>Name: {initialResults.Name}</p>
+        <p>Description: {initialResults.Description}</p>
+        <p>
+          Minimum Level:{" "}
+          {initialResults.ContentFinderCondition.ClassJobLevelRequired}
+        </p>
+      </div>
+    </ProtectedRoute>
   );
 }
 

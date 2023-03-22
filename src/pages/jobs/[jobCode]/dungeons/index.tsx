@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import { TDungeonList, TDungeonListPageProps } from "types/global";
 import { DungeonList } from "@/components/List";
 import { useRouter } from "next/router";
@@ -12,16 +13,18 @@ export default function Dungeons({ initialResults }: TDungeonListPageProps) {
   const { jobCode } = router.query;
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <h1 className="text-3xl font-bold text-slate-900">
-        Recommended Dungeons
-      </h1>
-      <DungeonList
-        results={results}
-        jobCode={jobCode}
-        contentType={contentType}
-      />
-    </div>
+    <ProtectedRoute>
+      <div className="w-full flex flex-col items-center">
+        <h1 className="text-3xl font-bold text-slate-900">
+          Recommended Dungeons
+        </h1>
+        <DungeonList
+          results={results}
+          jobCode={jobCode}
+          contentType={contentType}
+        />
+      </div>
+    </ProtectedRoute>
   );
 }
 

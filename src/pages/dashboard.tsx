@@ -1,10 +1,14 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 const DashboardPage = () => {
   return (
-    <div className="flex py-2 container mx-auto">
-      <div className="text-gray-900 px-12 py-24 mt-24 overflow-y-hidden mx-auto">
-        <h2 className="text-2xl font-semibold">You are logged in!</h2>
+    <ProtectedRoute>
+      <div className="flex py-2 container mx-auto">
+        <div className="text-gray-900 px-12 py-24 mt-24 overflow-y-hidden mx-auto">
+          <h2 className="text-2xl font-semibold">You are logged in!</h2>
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 };
 

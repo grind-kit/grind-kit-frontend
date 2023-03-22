@@ -8,6 +8,5 @@ export default function Home() {
         <title>Grind Kit</title>
       </Head>
     </div>
-    
-  )
+  );
 }
