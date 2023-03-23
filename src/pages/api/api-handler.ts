@@ -40,11 +40,11 @@ export class Dungeon {
 
   static async getDungeonInfo(id: string | string[] | undefined) {
     try {
-      const res = await axios.get(
+      const response = await axios.get(
         `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
       );
 
-      return res.data;
+      return response.data;
     } catch (error) {
       console.error(error);
     }

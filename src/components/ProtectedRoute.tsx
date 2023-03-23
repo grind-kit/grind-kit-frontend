@@ -11,7 +11,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
       router.push("/login");
     }
   }, [router, user]);
-  return <div>{user ? children : null}</div>;
+
+  return <div className="w-full">{user ? children : null}</div>;
 };
 
 export default ProtectedRoute;

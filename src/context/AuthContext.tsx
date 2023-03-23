@@ -25,7 +25,7 @@ export const AuthContextProvider = ({
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser({
           email: user.email,
@@ -44,7 +44,7 @@ export const AuthContextProvider = ({
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const logIn = (email: string, password: string) => {
+  const logIn = async (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
