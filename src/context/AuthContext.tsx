@@ -49,26 +49,22 @@ export const AuthContextProvider = ({
         email,
         password
       );
-      // Get token
-      const token = await auth.currentUser?.getIdToken();
 
       // Send relevant data to our API
-      const response = await axios(`${process.env.BACKEND_URL}/users`, {
+      const response = await axios(`http://localhost:8000/api/users`, {
         method: "POST",
         data: {
-          uid: userCredential.user.uid,
+          username: userCredential.user.uid,
           email: email,
           password: password,
         },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       });
 
-      if (!response) {
+      if (!response.data.success) {
         throw new Error("Failed to create user in our database");
       }
 
+      // Return the userCredential object from Firebase
       return userCredential;
     } catch (error) {
       console.error(error);
