@@ -6,6 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
+import axios from "axios";
 
 interface UserType {
   email: string | null;
@@ -40,8 +41,38 @@ export const AuthContextProvider = ({
     return () => unsubscribe();
   }, []);
 
-  const signUp = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (email: string, password: string) => {
+    try {
+      // Create user in Firebase
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // Get token
+      const token = await auth.currentUser?.getIdToken();
+
+      // Send relevant data to our API
+      const response = await axios(`${process.env.BACKEND_URL}/users`, {
+        method: "POST",
+        data: {
+          uid: userCredential.user.uid,
+          email: email,
+          password: password,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response) {
+        throw new Error("Failed to create user in our database");
+      }
+
+      return userCredential;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const logIn = async (email: string, password: string) => {
