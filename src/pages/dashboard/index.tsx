@@ -1,7 +1,14 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
+import { User } from "@/pages/api/api-client";
+import axios from "axios";
+import { auth } from "@/firebase/firebase";
 
 const DashboardPage = () => {
+  const user = auth.currentUser;
+  console.log(user);
+  console.log(user?.getIdToken);
+
   return (
     <ProtectedRoute>
       <div className="flex py-2 container mx-auto text-slate-900">
