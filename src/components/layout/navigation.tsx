@@ -24,23 +24,23 @@ export default function Navigation() {
         {user.uid ? (
           <>
             <Link legacyBehavior href="/jobs">
-              <a className="mr-5">Grind</a>
+              <a className="mr-5 hover:underline">Grind</a>
             </Link>
             <Link legacyBehavior href="/dashboard">
-              <a className="mr-5">Dashboard</a>
+              <a className="mr-5 hover:underline">Dashboard</a>
             </Link>
 
-            <div className="inline-block cursor-pointer" onClick={handleLogout}>
+            <div className="inline-block cursor-pointer hover:underline" onClick={handleLogout}>
               Logout
             </div>
           </>
         ) : (
           <>
             <Link legacyBehavior href="/login">
-              <a className="mr-5">Login</a>
+              <a className="mr-5 hover:underline">Login</a>
             </Link>
             <Link legacyBehavior href="/signup">
-              <a className="mr-5">Sign Up</a>
+              <a className="mr-5 hover:underline">Sign Up</a>
             </Link>
           </>
         )}
