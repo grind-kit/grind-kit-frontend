@@ -60,7 +60,8 @@ export const AuthContextProvider = ({
         },
       });
 
-      if (!response.data.success) {
+      // If the API call fails, throw a new error
+      if (!response.data) {
         throw new Error("Failed to create user in our database");
       }
 
