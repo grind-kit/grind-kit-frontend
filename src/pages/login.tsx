@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const methods = useForm<LoginType>({ mode: "onBlur" });
   const { logIn } = useAuth();
   const router = useRouter();
+  const [loginError, setLoginError] = useState<boolean>(false);
 
   const {
     register,
@@ -24,6 +26,7 @@ const LoginPage = () => {
       router.push("/dashboard");
     } catch (error: any) {
       console.log(error.message);
+      setLoginError(true);
     }
   };
 
@@ -69,14 +72,20 @@ const LoginPage = () => {
               <p className="text-red-500">{errors.password.message}</p>
             )}
           </div>
-
-          <div className="flex justify-center pt-8">
-            <button
-              type="submit"
-              className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
-            >
-              <p className="capitalize text-white font-normal">log in</p>
-            </button>
+          <div className="mt-8">
+            <div className="flex items-center justify-center">
+              <button
+                type="submit"
+                className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
+              >
+                <p className="capitalize text-white font-normal">log in</p>
+              </button>
+            </div>
+            {loginError && (
+              <p className="text-red-500 text-center">
+                Email or password is incorrect
+              </p>
+            )}
           </div>
         </form>
       </FormProvider>
