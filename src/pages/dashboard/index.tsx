@@ -12,18 +12,18 @@ const DashboardPage = ({ uid, lodestoneId }: TDashboardProps) => {
           <h2 className="text-2xl font-semibold">Character Stats</h2>
           {!lodestoneId ? (
             <div>
-              <h3 className="text-1xl mt-4">
+              <h3 className="text-1xl my-4">
                 Your character has not been set up yet.
               </h3>
               <Link legacyBehavior href="/dashboard/settings">
-                <a className="mt-5 hover:underline">Settings</a>
+                <a className="hover:underline">Settings</a>
               </Link>
             </div>
           ) : (
             <div>
-              <h3 className="text-1xl mt-4">Your character is set up.</h3>
+              <h3 className="text-1xl my-4">Your character is set up.</h3>
               <Link legacyBehavior href="/dashboard/settings">
-                <a className="mt-5 hover:underline">Settings</a>
+                <a className="hover:underline">Settings</a>
               </Link>
             </div>
           )}
