@@ -1,13 +1,30 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { User } from "@/pages/api/api-client";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 
 const DashboardPage = () => {
-  const user = auth.currentUser;
-  console.log(user);
-  console.log(user?.getIdToken);
+  const [userData, setUserData] = useState<any>(null);
+  const { user } = useAuth();
+
+  const fetchUserData = async () => {
+    const token = await auth.currentUser?.getIdToken();
+
+    if (user && token) {
+      const res = User.getUserInfo(user.uid, token);
+      setUserData(res);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   return (
     <ProtectedRoute>
