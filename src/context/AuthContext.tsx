@@ -51,7 +51,7 @@ export const AuthContextProvider = ({
       );
 
       // Send relevant data to our API
-      const response = await axios(`http://localhost:8000/api/users`, {
+      const response = await axios(`${process.env.BACKEND_URL}/users`, {
         method: "POST",
         data: {
           username: userCredential.user.uid,

@@ -45,12 +45,11 @@ export default DashboardPage;
 
 export async function getServerSideProps(context: any) {
   const { uid, token } = parseCookies(context);
-  console.log("uid ✅", uid);
-  console.log("token ✅", token);
 
   // const response = await User.getUserInfo(uid, token);
 
-  // console.log(response);
+  console.log("uid", uid);
+  console.log("token", token);
 
   return {
     props: {

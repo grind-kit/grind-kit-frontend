@@ -9,13 +9,13 @@ export default function Home() {
 
   useEffect(() => {
     const getToken = async () => {
-      const token = await auth.currentUser?.getIdToken();
-      setToken(token);
+      const res = await auth.currentUser?.getIdToken();
+      setToken(res);
       document.cookie = `token=${token}; path=/`;
       document.cookie = `uid=${user.uid}; path=/`;
     };
     getToken();
-  }, [user]);
+  }, [user, token]);
 
   return (
     <div>
