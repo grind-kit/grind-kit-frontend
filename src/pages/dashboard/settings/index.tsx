@@ -1,7 +1,8 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useState } from "react";
+import axios from "axios";
 
-export default function SettingsPage() {
+export default function SettingsPage({ servers }: { servers: string[] }) {
   const [characterName, setCharacterName] = useState<string>("");
   const [server, setServer] = useState<string>("");
 
@@ -20,11 +21,26 @@ export default function SettingsPage() {
           onChange={(e) => setCharacterName(e.target.value)}
         />
         <label htmlFor="server">Server</label>
+        <select id="server" name="server">
+          {servers.map((server: string) => (
+            <option key={server} value={server}>
+              {server}
+            </option>
+          ))}
+        </select>
       </form>
     </ProtectedRoute>
   );
 }
 
 export const getServerSideProps = async () => {
-    return null;
+  const response = await axios.get(
+    `https://xivapi.com/servers?private_key=${process.env.XIVAPI_KEY}`
+  );
+
+  return {
+    props: {
+      servers: response.data,
+    },
+  };
 };

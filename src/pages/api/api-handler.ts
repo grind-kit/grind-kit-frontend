@@ -1,5 +1,19 @@
 import axios from "axios";
 
+// Character class
+
+export class Character {
+  Name: string;
+  Server: string;
+
+  constructor(Name: string, Server: string) {
+    this.Name = Name;
+    this.Server = Server;
+  }
+}
+
+// Dungeon class
+
 export class Dungeon {
   Name: string;
   Description: string;

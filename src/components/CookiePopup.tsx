@@ -7,10 +7,13 @@ const CookiePopup = () => {
   const acceptCookies = () => {
     setShow(false);
     setAccepted(true);
+
+    // Age of the cookie is 1 year
     document.cookie = "cookies_accepted=true; path=/; max-age=31536000";
   };
 
   const hasAcceptedCookies =
+    // If the index of the cookie is greater than -1 or if accepted is true, then the cookie has been accepted
     document.cookie.indexOf("cookies_accepted=true") > -1 || accepted;
 
   if (hasAcceptedCookies) {
