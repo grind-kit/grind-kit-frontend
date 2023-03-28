@@ -1,30 +1,31 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { User } from "@/pages/api/api-client";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/firebase/firebase";
+// import { useEffect, useState } from "react";
+// import { useAuth } from "@/context/AuthContext";
+// import { auth } from "@/firebase/firebase";
+import { parseCookies } from "nookies";
 
 const DashboardPage = () => {
-  const [userData, setUserData] = useState<any>(null);
-  const { user } = useAuth();
+  // const [userData, setUserData] = useState<any>(null);
+  // const { user } = useAuth();
 
-  const fetchUserData = async () => {
-    const token = await auth.currentUser?.getIdToken();
+  // const fetchUserData = async () => {
+  //   const token = await auth.currentUser?.getIdToken();
 
-    if (user && token) {
-      const res = User.getUserInfo(user.uid, token);
-      setUserData(res);
-    }
-  };
+  //   if (user && token) {
+  //     const res = User.getUserInfo(user.uid, token);
+  //     setUserData(res);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  // useEffect(() => {
+  //   fetchUserData();
+  // }, []);
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
 
   return (
     <ProtectedRoute>
@@ -41,3 +42,18 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
+export async function getServerSideProps(context: any) {
+  const { uid, token } = parseCookies(context);
+  console.log("uid ✅", uid);
+  console.log("token ✅", token);
+
+  // const response = await User.getUserInfo(uid, token);
+
+  // console.log(response);
+
+  return {
+    props: {
+    },
+  };
+}
