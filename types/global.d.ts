@@ -1,3 +1,8 @@
+export type TDashboardProps = {
+  uid: string;
+  lodestoneId: number | null;
+};
+
 export type TRoleAccordionProps = {
   roleId: number;
   type: string;
@@ -32,7 +37,7 @@ export type TDungeonList = {
 
 export type TContentListProps = {
   jobCode: string | string[] | undefined;
-}
+};
 
 export type TDungeonListProps = {
   results: Array<TDungeonList>;

@@ -1,12 +1,14 @@
 declare namespace NodeJS {
   export interface ProcessEnv {
-    GOOGLE_CLIENT_ID: string | undefined;
-    GOOGLE_CLIENT_SECRET: string | undefined;
-    SECRET: string | undefined;
-        
-    NEXTAUTH_URL: string | undefined;
-    DJANGO_URL: string | undefined;
-    
+    NEXT_PUBLIC_FIREBASE_API_KEY: string | undefined;
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: string | undefined;
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: string | undefined;
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: string | undefined;
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: string | undefined;
+    NEXT_PUBLIC_FIREBASE_APP_ID: string | undefined;
+
     XVIAPI_KEY: string | undefined;
+
+    BACKEND_URL: string | undefined;
   }
 }

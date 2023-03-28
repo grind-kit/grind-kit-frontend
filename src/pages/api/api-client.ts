@@ -1,5 +1,6 @@
 import axios from "axios";
-import { auth } from "@/firebase/firebase";
+
+// User class
 
 export class User {
   id: number;
@@ -22,9 +23,8 @@ export class User {
     this.lodestone_id = lodestone_id;
   }
 
-  static async getUserInfo(username: string) {
+  static async getUserInfo(username: string, token: string | undefined) {
     try {
-      const token = await auth.currentUser?.getIdToken();
       const response = await axios.get(
         `${process.env.BACKEND_URL}/users/${username}`,
         {
@@ -39,6 +39,8 @@ export class User {
     }
   }
 }
+
+// Bookmark class
 
 export class Bookmark {
   user: number;
@@ -58,9 +60,8 @@ export class Bookmark {
     this.created = created;
   }
 
-  static async getBookmarks(user: number) {
+  static async getBookmarks(user: number, token: string) {
     try {
-      const token = await auth.currentUser?.getIdToken();
       const response = await axios.get(
         `${process.env.BACKEND_URL}/bookmarks/${user}`,
         {
