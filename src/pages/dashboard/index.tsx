@@ -1,37 +1,17 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { User } from "@/pages/api/api-client";
-// import { useEffect, useState } from "react";
-// import { useAuth } from "@/context/AuthContext";
-// import { auth } from "@/firebase/firebase";
 import { parseCookies } from "nookies";
+import { TDashboardProps } from "types/global";
 
-const DashboardPage = () => {
-  // const [userData, setUserData] = useState<any>(null);
-  // const { user } = useAuth();
-
-  // const fetchUserData = async () => {
-  //   const token = await auth.currentUser?.getIdToken();
-
-  //   if (user && token) {
-  //     const res = User.getUserInfo(user.uid, token);
-  //     setUserData(res);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchUserData();
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
-
+const DashboardPage = ({ uid, lodestoneId }: TDashboardProps) => {
   return (
     <ProtectedRoute>
       <div className="flex py-2 container mx-auto text-slate-900">
         <div className="px-12 py-24 mt-24 overflow-y-hidden mx-auto">
           <h2 className="text-2xl font-semibold">Character Stats</h2>
+          <p>Your uid is {uid}</p>
+          <p>Your lodestone id is {lodestoneId}</p>
           <Link legacyBehavior href="/dashboard/settings">
             <a className="hover:underline">Character Settings</a>
           </Link>
@@ -46,13 +26,14 @@ export default DashboardPage;
 export async function getServerSideProps(context: any) {
   const { uid, token } = parseCookies(context);
 
-  // const response = await User.getUserInfo(uid, token);
+  const res = await User.getUserInfo(uid, token);
 
-  console.log("uid", uid);
-  console.log("token", token);
+  console.log(res);
 
   return {
     props: {
+      uid: res.username,
+      lodestoneId: res.lodestone_id,
     },
   };
 }
