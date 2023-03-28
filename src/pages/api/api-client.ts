@@ -1,5 +1,7 @@
 import axios from "axios";
 
+// User class
+
 export class User {
   id: number;
   username: string;
@@ -37,6 +39,8 @@ export class User {
     }
   }
 }
+
+// Bookmark class
 
 export class Bookmark {
   user: number;
