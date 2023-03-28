@@ -6,9 +6,12 @@ import Layout from "@/components/layout/layout";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { Router } from "next/router";
 import Loading from "./loading";
+import CookiePopup from "@/components/CookiePopup";
+import { parseCookies } from "nookies";
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
+  const cookies = parseCookies();
 
   useEffect(() => {
     const start = () => {
@@ -35,6 +38,7 @@ function App({ Component, pageProps }: AppProps) {
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
+        <CookiePopup />
         {loading ? <Loading /> : <Component {...pageProps} />}
       </Layout>
     </AuthContextProvider>
