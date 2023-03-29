@@ -1,6 +1,7 @@
 export type TDashboardProps = {
   uid: string;
   lodestoneId: number | null;
+  initialResults: any
 };
 
 export type TRoleAccordionProps = {

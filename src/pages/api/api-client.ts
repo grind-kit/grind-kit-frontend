@@ -38,6 +38,30 @@ export class User {
       console.error(error);
     }
   }
+
+  static async putUserInfo(
+    username: string,
+    token: string | undefined,
+    lodestoneId: number | undefined
+  ) {
+    try {
+      const response = await axios.put(
+        `${process.env.BACKEND_URL}/users/${username}`,
+        {
+          username: username,
+          lodestone_id: lodestoneId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 // Bookmark class
