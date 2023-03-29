@@ -2,6 +2,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useState } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { User } from "@/pages/api/api-client";
 
 type TCharacter = {
   Avatar: string;
@@ -16,8 +17,8 @@ type TCharacter = {
 
 type TSettingsPageProps = {
   servers: string[];
-  token: string | null;
-  uid: string | null;
+  token: string | undefined;
+  uid: string;
 };
 
 export default function SettingsPage({
@@ -47,21 +48,8 @@ export default function SettingsPage({
   };
 
   const handleSave = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.BACKEND_URL}/users/${uid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data: {
-            lodestone_id: character?.ID,
-          },
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    console.log("✅", uid, token, character?.ID);
+    await User.putUserInfo(uid, token, character?.ID);
   };
 
   return (
@@ -94,7 +82,7 @@ export default function SettingsPage({
         </button>
       </form>
       {character && (
-        <div onClick={handleSave}>
+        <div className="hover:cursor-pointer" onClick={handleSave}>
           <h3>{character.Name}</h3>
           <img src={character.Avatar} alt={character.Name} />
         </div>
