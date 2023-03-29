@@ -3,8 +3,14 @@ import Link from "next/link";
 import { User } from "@/pages/api/api-client";
 import { parseCookies } from "nookies";
 import { TDashboardProps } from "types/global";
+import axios from "axios";
+import { useEffect } from "react";
 
-const DashboardPage = ({ uid, lodestoneId }: TDashboardProps) => {
+const DashboardPage = ({ uid, lodestoneId, initialResults }: TDashboardProps) => {
+  useEffect(() => {
+    console.log(initialResults);
+  }, []);
+
   return (
     <ProtectedRoute>
       <div className="flex py-2 container mx-auto text-slate-900">
@@ -39,11 +45,17 @@ export async function getServerSideProps(context: any) {
   const { uid, token } = parseCookies(context);
 
   const res = await User.getUserInfo(uid, token);
+  let characterData = null;
+
+  if (res.lodestone_id !== null) {
+    characterData = await axios.get(`https://xivapi.com/character/${res.lodestone_id}`)
+  }
 
   return {
     props: {
       uid: res.username,
       lodestoneId: res.lodestone_id,
+      initialResults: characterData?.data,
     },
   };
 }

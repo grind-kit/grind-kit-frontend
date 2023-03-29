@@ -48,7 +48,6 @@ export default function SettingsPage({
   };
 
   const handleSave = async () => {
-    console.log("✅", uid, token, character?.ID);
     await User.putUserInfo(uid, token, character?.ID);
   };
 
