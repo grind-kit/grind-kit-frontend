@@ -5,22 +5,29 @@ import axios from "axios";
 export default function SettingsPage({ servers }: { servers: string[] }) {
   const [name, setName] = useState<string>("");
   const [selectedServer, setSelectedServer] = useState<string>("");
+  const [character, setCharacter] = useState<any>(null);
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setName(value);
-    console.log(name);
   };
 
   const handleServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSelectedServer(value);
-    console.log(selectedServer);
   };
 
-  const handleSearch = () => {
-    console.log(name, selectedServer);
+  const handleSearch = async () => {
+    const response = await axios.get(
+      `https://xivapi.com/character/search?name=${name}&server=${selectedServer}&private_key=${process.env.XIVAPI_KEY}`
+    );
+    console.log(response.data);
+    setCharacter(response.data.Results[0]);
   };
+
+  useEffect(() => {
+    console.log(character);
+  }, [character]);
 
   return (
     <ProtectedRoute>
