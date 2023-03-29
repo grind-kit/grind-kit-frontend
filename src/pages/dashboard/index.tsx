@@ -6,10 +6,15 @@ import { TDashboardProps } from "types/global";
 import axios from "axios";
 import { useEffect } from "react";
 
-const DashboardPage = ({ uid, lodestoneId, initialResults }: TDashboardProps) => {
+const DashboardPage = ({
+  uid,
+  lodestoneId,
+  initialResults,
+}: TDashboardProps) => {
+
   useEffect(() => {
     console.log(initialResults);
-  }, []);
+  }, [initialResults]);
 
   return (
     <ProtectedRoute>
@@ -43,19 +48,22 @@ export default DashboardPage;
 
 export async function getServerSideProps(context: any) {
   const { uid, token } = parseCookies(context);
+  const clientRes = await User.getUserInfo(uid, token);
+  let arrayOfClassJobs = null;
 
-  const res = await User.getUserInfo(uid, token);
-  let characterData = null;
+  if (clientRes.lodestone_id !== null) {
+    const handlerRes = await axios.get(
+      `https://xivapi.com/character/${clientRes.lodestone_id}`
+    );
 
-  if (res.lodestone_id !== null) {
-    characterData = await axios.get(`https://xivapi.com/character/${res.lodestone_id}`)
+    arrayOfClassJobs = handlerRes.data.Character.ClassJobs.slice(0, 19);
   }
 
   return {
     props: {
-      uid: res.username,
-      lodestoneId: res.lodestone_id,
-      initialResults: characterData?.data,
+      uid: clientRes.username,
+      lodestoneId: clientRes.lodestone_id,
+      initialResults: arrayOfClassJobs,
     },
   };
 }
