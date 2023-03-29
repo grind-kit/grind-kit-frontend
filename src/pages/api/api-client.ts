@@ -48,11 +48,12 @@ export class User {
       const response = await axios.put(
         `${process.env.BACKEND_URL}/users/${username}`,
         {
+          username: username,
+          lodestone_id: lodestoneId,
+        },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
-          data: {
-            lodestone_id: lodestoneId,
           },
         }
       );
