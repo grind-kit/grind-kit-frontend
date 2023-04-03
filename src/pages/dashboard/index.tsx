@@ -1,8 +1,16 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { TDashboardProps } from "types/global";
+import { parseCookies } from "nookies";
+import axios from "axios";
+import { User } from "@/pages/api/api-client";
+import { useEffect } from "react";
 
-const DashboardPage = ({ lodestoneId }: TDashboardProps) => {
+const DashboardPage = ({ lodestoneId, arrayOfClassJobs }: TDashboardProps) => {
+  useEffect(() => {
+    console.log(arrayOfClassJobs);
+  }, [arrayOfClassJobs]);
+
   return (
     <ProtectedRoute>
       <div className="flex py-2 container mx-auto text-slate-900">
@@ -32,3 +40,24 @@ const DashboardPage = ({ lodestoneId }: TDashboardProps) => {
 };
 
 export default DashboardPage;
+
+export async function getServerSideProps(context: any) {
+  const { uid, token } = parseCookies(context);
+  const clientRes = await User.getUserInfo(uid, token);
+  let arrayOfClassJobs = null;
+
+  if (clientRes.lodestone_id !== null) {
+    const handlerRes = await axios.get(
+      `https://xivapi.com/character/${clientRes.lodestone_id}`
+    );
+
+    arrayOfClassJobs = handlerRes.data.Character.ClassJobs.slice(0, 19);
+  }
+
+  return {
+    props: {
+      lodestoneId: clientRes.lodestone_id,
+      arrayOfClassJobs: arrayOfClassJobs,
+    },
+  };
+}
