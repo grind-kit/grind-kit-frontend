@@ -37,13 +37,6 @@ const DashboardPage = () => {
     }
   );
 
-  useEffect(() => {
-    if (data) {
-      let local = localStorage.getItem("characterData");
-      console.log(local);
-    }
-  }, [data]);
-
   return (
     <ProtectedRoute>
       <div className="flex py-2 container mx-auto text-slate-900">

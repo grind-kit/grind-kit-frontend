@@ -4,6 +4,15 @@ import { RoleAccordion } from "@/components/Accordion";
 import { roleData } from "@/data";
 
 export default function JobsPage() {
+  const characterData = localStorage.getItem("characterData");
+
+  useEffect(() => {
+    if (!characterData) {
+      window.location.href = "/dashboard";
+    }
+    console.log(characterData);
+  }, [characterData]);
+
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
