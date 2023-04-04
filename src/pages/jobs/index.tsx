@@ -33,8 +33,6 @@ export async function getServerSideProps(context: any) {
     arrayOfClassJobs = handlerRes.data.Character.ClassJobs.slice(0, 19);
   }
 
-  console.log(arrayOfClassJobs);
-
   return {
     props: {
       arrayOfClassJobs: arrayOfClassJobs,
