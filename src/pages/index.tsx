@@ -13,14 +13,16 @@ export default function Home() {
 
   useEffect(() => {
     const getTokenAndLodestoneId = async () => {
-      const token = await auth.currentUser?.getIdToken();
-      setToken(token);
-      document.cookie = `token=${token}; path=/`;
-      document.cookie = `uid=${user.uid}; path=/`;
+      if (auth.currentUser) {
+        const token = await auth.currentUser?.getIdToken();
+        setToken(token);
+        document.cookie = `token=${token}; path=/`;
+        document.cookie = `uid=${user.uid}; path=/`;
 
-      const res = await User.getUserInfo(user.uid, token);
-      setLodestoneId(res.lodestone_id);
-      document.cookie = `lodestoneId=${lodestoneId}; path=/`;
+        const res = await User.getUserInfo(user.uid, token);
+        setLodestoneId(res.lodestone_id);
+        document.cookie = `lodestoneId=${lodestoneId}; path=/`;
+      }
     };
     getTokenAndLodestoneId();
   }, [user, token, lodestoneId]);
