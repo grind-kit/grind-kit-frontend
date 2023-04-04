@@ -1,20 +1,41 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
-import { User } from "@/pages/api/api-client";
 import { parseCookies } from "nookies";
-import { TDashboardProps } from "types/global";
-import axios from "axios";
 import { useEffect } from "react";
+import useSWR from "swr";
 
-const DashboardPage = ({
-  uid,
-  lodestoneId,
-  initialResults,
-}: TDashboardProps) => {
+const DashboardPage = () => {
+  const { lodestoneId } = parseCookies();
 
-  useEffect(() => {
-    console.log(initialResults);
-  }, [initialResults]);
+  const fetcher = async (url: string) =>
+    await fetch(url).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(res);
+      }
+    });
+
+  const { data, error } = useSWR(
+    `https://xivapi.com/character/${lodestoneId}`,
+    fetcher,
+    {
+      refreshInterval: 60000, // fetch every 60 seconds
+      dedupingInterval: 300000, // wait 5 minutes before fetching again
+      revalidateOnFocus: false, // don't revalidate when the window is focused
+      shouldRetryOnError: false, // don't retry on error
+      errorRetryCount: 1, // retry once
+      errorRetryInterval: 5000, // retry after 5 seconds
+      compare: (prevData, newData) =>
+        JSON.stringify(prevData) === JSON.stringify(newData),
+      initialData: localStorage.getItem("characterData")
+        ? JSON.parse(localStorage.getItem("characterData")!)
+        : undefined,
+      onSuccess: (data) => {
+        localStorage.setItem("characterData", JSON.stringify(data));
+      },
+    }
+  );
 
   return (
     <ProtectedRoute>
@@ -45,25 +66,3 @@ const DashboardPage = ({
 };
 
 export default DashboardPage;
-
-export async function getServerSideProps(context: any) {
-  const { uid, token } = parseCookies(context);
-  const clientRes = await User.getUserInfo(uid, token);
-  let arrayOfClassJobs = null;
-
-  if (clientRes.lodestone_id !== null) {
-    const handlerRes = await axios.get(
-      `https://xivapi.com/character/${clientRes.lodestone_id}`
-    );
-
-    arrayOfClassJobs = handlerRes.data.Character.ClassJobs.slice(0, 19);
-  }
-
-  return {
-    props: {
-      uid: clientRes.username,
-      lodestoneId: clientRes.lodestone_id,
-      initialResults: arrayOfClassJobs,
-    },
-  };
-}

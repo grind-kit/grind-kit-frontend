@@ -5,6 +5,7 @@ const nextConfig = {
     BACKEND_URL: process.env.BACKEND_URL,
     XIVAPI_KEY: process.env.XIVAPI_KEY,
   },
+  productionBrowserSourceMaps: true,
 };
 
 module.exports = nextConfig;

@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { RoleAccordion } from "@/components/Accordion";
-import { roleData } from "@/data";
+import getData from "@/data";
 
-export default function Jobs() {
+export default function JobsPage() {
+  const data = localStorage.getItem("characterData");
+  const parsedData = JSON.parse(data!);
+  const { roleData } = getData();
+
+  useEffect(() => {
+    if (!data) {
+      window.location.href = "/dashboard";
+    }
+    console.log(parsedData);
+  }, [data]);
+
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">

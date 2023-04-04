@@ -1,7 +1,21 @@
+export type TClassJob = {
+  ClassID: number;
+  ExpLevel: number;
+  ExpLevelMax: number;
+  ExpLevelTogo: number;
+  IsSpecialised: boolean;
+  JobID: number;
+  Level: number;
+  Name: string;
+  UnlockedState: {
+    ID: number;
+    Name: string;
+  };
+};
+
 export type TDashboardProps = {
-  uid: string;
   lodestoneId: number | null;
-  initialResults: any
+  arrayOfClassJobs: Array<TClassJob>;
 };
 
 export type TRoleAccordionProps = {
@@ -12,6 +26,7 @@ export type TRoleAccordionProps = {
   data: Array<{
     jobId: number;
     name: string;
+    level: number;
     jobCode: string;
   }>;
 };

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { User } from "@/pages/api/api-client";
+import Image from "next/image";
 
 type TCharacter = {
   Avatar: string;
@@ -83,7 +84,7 @@ export default function SettingsPage({
       {character && (
         <div className="hover:cursor-pointer" onClick={handleSave}>
           <h3>{character.Name}</h3>
-          <img src={character.Avatar} alt={character.Name} />
+          <Image src={character.Avatar} alt={character.Name} />
         </div>
       )}
     </ProtectedRoute>

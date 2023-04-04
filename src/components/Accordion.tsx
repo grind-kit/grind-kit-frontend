@@ -48,8 +48,12 @@ export function RoleAccordion({
               onClick={() => router.push(`/jobs/${job.jobCode}`)}
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >
-              <div>{job.name}</div>
-              <div>Your Level: 0</div>
+              <div>
+                <p>{job.name}</p>
+              </div>
+              <div>
+                <p>Level: {job.level}</p>
+              </div>
             </div>
           ))}
         </div>

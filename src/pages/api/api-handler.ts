@@ -10,6 +10,10 @@ export class Character {
     this.Name = Name;
     this.Server = Server;
   }
+
+  static async getCharacterInfo(url: string) {
+    return fetch(url).then((res) => res.json());
+  }
 }
 
 // Dungeon class
