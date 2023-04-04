@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { RoleAccordion } from "@/components/Accordion";
-import { roleData } from "@/data";
+import getData from "@/data";
 
 export default function JobsPage() {
-  const characterData = localStorage.getItem("characterData");
+  const data = localStorage.getItem("characterData");
+  const parsedData = JSON.parse(data!);
+  const { roleData } = getData();
 
   useEffect(() => {
-    if (!characterData) {
+    if (!data) {
       window.location.href = "/dashboard";
     }
-    console.log(characterData);
-  }, [characterData]);
+    console.log(parsedData);
+  }, [data]);
 
   return (
     <ProtectedRoute>

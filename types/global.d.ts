@@ -26,6 +26,7 @@ export type TRoleAccordionProps = {
   data: Array<{
     jobId: number;
     name: string;
+    level: number;
     jobCode: string;
   }>;
 };

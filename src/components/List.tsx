@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { TDungeonListProps, TContentListProps } from "types/global";
-import { contentData } from "@/data";
+import getData from "@/data";
 
 export function ContentList({ jobCode }: TContentListProps) {
   const router = useRouter();
+  const { contentData } = getData();
 
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
@@ -22,7 +23,11 @@ export function ContentList({ jobCode }: TContentListProps) {
   );
 }
 
-export function DungeonList({ results, jobCode, contentType }: TDungeonListProps) {
+export function DungeonList({
+  results,
+  jobCode,
+  contentType,
+}: TDungeonListProps) {
   const router = useRouter();
 
   return (
