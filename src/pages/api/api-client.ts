@@ -23,7 +23,7 @@ export class User {
     this.lodestone_id = lodestone_id;
   }
 
-  static async getUserInfo(username: string, token: string | undefined) {
+  static async getUserInfo(username: string, token: string | null | undefined) {
     try {
       const response = await axios.get(
         `${process.env.BACKEND_URL}/users/${username}`,

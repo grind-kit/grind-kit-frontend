@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { RoleAccordion } from "@/components/Accordion";
 import { roleData } from "@/data";
 import { parseCookies } from "nookies";
-import axios from "axios";
-import { User } from "@/pages/api/api-client";
-import { TClassJob } from "types/global";
+import { Character } from "@/pages/api/api-handler";
+import useSWR from "swr";
 
-export default function JobsPage(arrayOfClassJobs: TClassJob) {
+export default function JobsPage() {
+  const { lodestoneId } = parseCookies();
+  
+  useEffect(() => {
+    console.log(lodestoneId);
+  }, [lodestoneId]);
+
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
@@ -18,24 +23,4 @@ export default function JobsPage(arrayOfClassJobs: TClassJob) {
       </div>
     </ProtectedRoute>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  const { uid, token } = parseCookies(context);
-  const clientRes = await User.getUserInfo(uid, token);
-  let arrayOfClassJobs = null;
-
-  if (clientRes.lodestone_id !== null) {
-    const handlerRes = await axios.get(
-      `https://xivapi.com/character/${clientRes.lodestone_id}`
-    );
-
-    arrayOfClassJobs = handlerRes.data.Character.ClassJobs.slice(0, 19);
-  }
-
-  return {
-    props: {
-      arrayOfClassJobs: arrayOfClassJobs,
-    },
-  };
 }
