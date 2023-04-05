@@ -1,14 +1,17 @@
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+import { setCookie, parseCookies } from "nookies";
 
 export default function Navigation() {
-  const { user, logOut } = useAuth();
+  const { logOut } = useAuth();
+  const { authenticated } = parseCookies();
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
       await logOut();
+      await setCookie(null, "authenticated", "false");
       router.push("/login");
     } catch (error: any) {
       console.log(error.message);
@@ -21,7 +24,7 @@ export default function Navigation() {
         <a className="text-4xl font-bold text-blue-500">Grind Kit</a>
       </Link>
       <nav className="ml-auto text-slate-900">
-        {user.uid ? (
+        {authenticated && authenticated !== "false" ? (
           <>
             <Link legacyBehavior href="/jobs">
               <a className="mr-5 hover:underline">Grind</a>
@@ -30,7 +33,10 @@ export default function Navigation() {
               <a className="mr-5 hover:underline">Dashboard</a>
             </Link>
 
-            <div className="inline-block cursor-pointer hover:underline" onClick={handleLogout}>
+            <div
+              className="inline-block cursor-pointer hover:underline"
+              onClick={handleLogout}
+            >
               Logout
             </div>
           </>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
+import { setCookie } from "nookies";
 
 interface LoginType {
   email: string;
@@ -23,6 +24,7 @@ const LoginPage = () => {
   const onSubmit = async (data: LoginType) => {
     try {
       await logIn(data.email, data.password);
+      await setCookie(null, "authenticated", "true");
       router.push("/");
     } catch (error: any) {
       console.log(error.message);
