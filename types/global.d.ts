@@ -83,3 +83,14 @@ export type TDungeonId = {
 export type TDungeonIdProps = {
   initialResults: TDungeonId;
 };
+
+export type TCharacter = {
+  Avatar: string;
+  FeastMatches: number;
+  ID: number;
+  Lang: string;
+  Name: string;
+  Rank: number | null;
+  RankIcon: string | null;
+  Server: string;
+};

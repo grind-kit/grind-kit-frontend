@@ -1,21 +1,13 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { User } from "@/pages/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
-
-type TCharacter = {
-  Avatar: string;
-  FeastMatches: number;
-  ID: number;
-  Lang: string;
-  Name: string;
-  Rank: number | null;
-  RankIcon: string | null;
-  Server: string;
-};
+import { TCharacter } from "types/global";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 type TSettingsPageProps = {
   servers: string[];
@@ -33,6 +25,7 @@ export default function SettingsPage({
   token,
   uid,
 }: TSettingsPageProps) {
+  const router = useRouter();
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
     register,
@@ -40,17 +33,24 @@ export default function SettingsPage({
     formState: { errors },
   } = methods;
   const [character, setCharacter] = useState<TCharacter | null>(null);
+  const [saved, setSaved] = useState(false);
 
-  const onSubmit = async (data: SearchType) => {
-    const { characterName, server } = data;
+  const handleSave = useCallback(async () => {
+    await User.putUserInfo(uid, token, character?.ID);
+    setSaved(true);
+  }, [character, token, uid]);
+
+  useEffect(() => {
+    if (saved) {
+      router.push("/dashboard");
+    }
+  }, [saved, router]);
+
+  const onSubmit = async ({ characterName, server }: SearchType) => {
     const response = await axios.get(
       `https://xivapi.com/character/search?name=${characterName}&server=${server}&private_key=${process.env.XIVAPI_KEY}`
     );
     setCharacter(response.data.Results[0]);
-  };
-
-  const handleSave = async () => {
-    await User.putUserInfo(uid, token, character?.ID);
   };
 
   return (
@@ -125,39 +125,39 @@ export default function SettingsPage({
         </FormProvider>
         {character && (
           <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="relative max-w-screen-md mx-auto w-full p-6 bg-white rounded-md flex gap-3 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
+            <div className="relative max-w-screen-md mx-auto w-1/3 p-6 bg-white rounded-md flex gap-3 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
               <div className="w-full">
                 <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
                   Confirm Character
                 </h2>
-                <div className="flex flex-row items-center justify-center">
+                <div className="flex flex-row mt-8 items-center justify-center">
                   <Image
                     src={character.Avatar}
                     alt="Character Avatar"
-                    width={100}
-                    height={100}
+                    width={75}
+                    height={75}
                     className="rounded-full"
                   />
-                  <h3 className="text-2xl font-semibold text-blue-500">
+                  <h3 className="text-xl ml-4 font-semibold text-slate-900">
                     {character.Name} - {character.Server}
                   </h3>
                 </div>
-                <div className="flex flex-row items-center justify-center">
+                <div className="flex flex-row mt-8 items-center justify-center">
                   <button
-                    aria-label="Cancel"
+                    aria-label="Back"
                     type="submit"
                     onClick={() => setCharacter(null)}
                     className={`h-12 text-center w-2/3 bg-gray-500 border-2 rounded-md hover:shadow-lg hover:bg-gray-400 text-lg transition`}
                   >
-                    <p className="capitalize text-white font-normal">Cancel</p>
+                    <p className="capitalize text-white font-normal">Back</p>
                   </button>
                   <button
-                    aria-label="Save"
+                    aria-label="Confirm"
                     type="submit"
                     onClick={handleSave}
-                    className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
+                    className={`h-12 text-center w-2/3 ml-4 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
                   >
-                    <p className="capitalize text-white font-normal">Save</p>
+                    <p className="capitalize text-white font-normal">Confirm</p>
                   </button>
                 </div>
               </div>
