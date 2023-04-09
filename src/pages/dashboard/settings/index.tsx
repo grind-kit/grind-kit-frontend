@@ -55,14 +55,14 @@ export default function SettingsPage({
 
   return (
     <ProtectedRoute>
-      <div className="settings-form container mx-auto w-96 my-12 border-2 rounded-md border-gray-200">
+      <div className="settings-form container mx-auto w-80 my-12 border-2 rounded-md border-gray-200">
         <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-          Settings
+          Character Settings
         </h2>
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-80 mx-auto pb-12 px-4"
+            className="w-72 mx-auto pb-12 px-4"
           >
             <div className="mt-8">
               <div className="flex items-center justify-between">
@@ -114,6 +114,7 @@ export default function SettingsPage({
             </div>
             <div className="flex justify-center pt-8">
               <button
+                aria-label="Search"
                 type="submit"
                 className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
               >
@@ -123,9 +124,36 @@ export default function SettingsPage({
           </form>
         </FormProvider>
         {character && (
-          <div className="hover:cursor-pointer" onClick={handleSave}>
-            <h3>{character.Name}</h3>
-            <Image src={character.Avatar} alt={character.Name} />
+          <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="relative max-w-screen-md mx-auto w-full p-6 bg-white rounded-md flex gap-3 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
+              <div className="w-full">
+                <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
+                  Confirm Character
+                </h2>
+                <div className="flex flex-row items-center justify-center">
+                  <Image
+                    src={character.Avatar}
+                    alt="Character Avatar"
+                    width={200}
+                    height={200}
+                    className="rounded-full"
+                  />
+                  <h3 className="text-2xl font-semibold text-blue-500">
+                    {character.Name} - {character.Server}
+                  </h3>
+                </div>
+                <div className="flex justify-center pt-8">
+                  <button
+                    aria-label="Save"
+                    type="submit"
+                    onClick={handleSave}
+                    className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
+                  >
+                    <p className="capitalize text-white font-normal">Save</p>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
