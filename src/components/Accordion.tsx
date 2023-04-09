@@ -45,14 +45,19 @@ export function RoleAccordion({
           {data.map((job) => (
             <div
               key={job.jobId}
-              onClick={() => router.push(`/jobs/${job.jobCode}`)}
+              onClick={() =>
+                router.push({
+                  pathname: `/jobs/${job.jobCode}`,
+                  query: { level: job.level },
+                })
+              }
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >
               <div>
                 <p>{job.name}</p>
               </div>
               <div>
-                <p>Level: {job.level}</p>
+                <p>Lv. {job.level}</p>
               </div>
             </div>
           ))}
