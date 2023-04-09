@@ -1,7 +1,6 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
-import { useEffect } from "react";
 import useSWR from "swr";
 
 const DashboardPage = () => {
