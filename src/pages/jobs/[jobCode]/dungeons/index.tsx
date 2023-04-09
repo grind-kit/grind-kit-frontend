@@ -28,13 +28,13 @@ export default function Dungeons({ initialResults }: TDungeonListPageProps) {
   );
 }
 
-export const getServerSideProps = async () => {
-  const maxLevel = 55;
-  const minLevel = maxLevel - 2;
-  // Change this to get dungeons for a specific level
+export const getServerSideProps = async ({ query }: any) => {
+  const { level } = query;
+  const minLevel = level - 2;
+
   // Implement item level required later
   const res = await axios.get(
-    `https://xivapi.com/search?private_key=${process.env.XIVAPI_KEY}&filters=ContentFinderCondition.ClassJobLevelRequired<=${maxLevel},ContentFinderCondition.ClassJobLevelRequired>=${minLevel},InstanceClearExp>0,InstanceClearGil>0,ContentType.ID=2&columns=ID,Name,InstanceClearExp,InstanceClearGil,ContentFinderCondition.ClassJobLevelRequired,ContentType.ID&language=en`
+    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}&filters=ContentFinderCondition.ClassJobLevelRequired<=${level},ContentFinderCondition.ClassJobLevelRequired>=${minLevel},InstanceClearExp>0,InstanceClearGil>0&columns=ID,Name,InstanceClearExp,InstanceClearGil,ContentFinderCondition.ClassJobLevelRequired&language=en`
   );
 
   return {

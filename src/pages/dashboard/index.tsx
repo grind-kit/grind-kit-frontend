@@ -1,7 +1,7 @@
+import React, { useState } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
-import { useEffect } from "react";
 import useSWR from "swr";
 
 const DashboardPage = () => {
@@ -55,7 +55,7 @@ const DashboardPage = () => {
             <div>
               <h3 className="text-1xl my-4">Your character is set up.</h3>
               <Link legacyBehavior href="/dashboard/settings">
-                <a className="hover:underline">Settings</a>
+                <a className="hover:underline">Go to settings</a>
               </Link>
             </div>
           )}

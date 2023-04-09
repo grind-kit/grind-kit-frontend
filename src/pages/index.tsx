@@ -18,6 +18,7 @@ export default function Home() {
         setToken(token);
         document.cookie = `token=${token}; path=/`;
         document.cookie = `uid=${user.uid}; path=/`;
+        document.cookie = `authenticated=true; path=/`;
 
         const res = await User.getUserInfo(user.uid, token);
         setLodestoneId(res.lodestone_id);
