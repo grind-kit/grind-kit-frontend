@@ -11,10 +11,15 @@ const nextConfig = {
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
 
     XIVAPI_KEY: process.env.XIVAPI_KEY,
-    
+
     BACKEND_URL: process.env.BACKEND_URL,
   },
   productionBrowserSourceMaps: true,
 };
 
-module.exports = nextConfig;
+module.exports = {
+  ...nextConfig,
+  images: {
+    domains: ["img2.finalfantasyxiv.com", "xivapi.com"],
+  },
+};

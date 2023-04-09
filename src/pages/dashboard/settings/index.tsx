@@ -134,15 +134,23 @@ export default function SettingsPage({
                   <Image
                     src={character.Avatar}
                     alt="Character Avatar"
-                    width={200}
-                    height={200}
+                    width={100}
+                    height={100}
                     className="rounded-full"
                   />
                   <h3 className="text-2xl font-semibold text-blue-500">
                     {character.Name} - {character.Server}
                   </h3>
                 </div>
-                <div className="flex justify-center pt-8">
+                <div className="flex flex-row items-center justify-center">
+                  <button
+                    aria-label="Cancel"
+                    type="submit"
+                    onClick={() => setCharacter(null)}
+                    className={`h-12 text-center w-2/3 bg-gray-500 border-2 rounded-md hover:shadow-lg hover:bg-gray-400 text-lg transition`}
+                  >
+                    <p className="capitalize text-white font-normal">Cancel</p>
+                  </button>
                   <button
                     aria-label="Save"
                     type="submit"
