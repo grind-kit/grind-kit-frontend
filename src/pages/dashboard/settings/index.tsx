@@ -1,12 +1,11 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { User } from "@/pages/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { TCharacter } from "types/global";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 type TSettingsPageProps = {
@@ -26,6 +25,7 @@ export default function SettingsPage({
   uid,
 }: TSettingsPageProps) {
   const router = useRouter();
+  const { setIsVisible } = router.query;
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
     register,

@@ -1,10 +1,13 @@
+import React, { useState } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import useSWR from "swr";
+import ChangesSavedPopup from "@/components/Popup";
 
 const DashboardPage = () => {
   const { lodestoneId } = parseCookies();
+  const [isVisible, setIsVisible] = useState(false);
 
   const fetcher = async (url: string) =>
     await fetch(url).then((res) => {
@@ -52,6 +55,10 @@ const DashboardPage = () => {
             </div>
           ) : (
             <div>
+              <ChangesSavedPopup
+                isVisible={isVisible}
+                setIsVisible={setIsVisible}
+              />
               <h3 className="text-1xl my-4">Your character is set up.</h3>
               <Link legacyBehavior href="/dashboard/settings">
                 <a className="hover:underline">Settings</a>
