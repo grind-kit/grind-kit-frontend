@@ -87,7 +87,7 @@ export type TDungeonIdProps = {
 export type TCharacter = {
   Avatar: string;
   FeastMatches: number;
-  ID: number;
+  ID: number 
   Lang: string;
   Name: string;
   Rank: number | null;

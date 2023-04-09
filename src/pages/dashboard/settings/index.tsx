@@ -6,12 +6,13 @@ import { User } from "@/pages/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { TCharacter } from "types/global";
-import { useRouter } from "next/router";
+import ChangesSavedPopup from "@/components/Popup";
 
 type TSettingsPageProps = {
   servers: string[];
   token: string | undefined;
   uid: string;
+  setIsVisible: Function;
 };
 
 interface SearchType {
@@ -24,8 +25,6 @@ export default function SettingsPage({
   token,
   uid,
 }: TSettingsPageProps) {
-  const router = useRouter();
-  const { setIsVisible } = router.query;
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
     register,
@@ -34,17 +33,19 @@ export default function SettingsPage({
   } = methods;
   const [character, setCharacter] = useState<TCharacter | null>(null);
   const [saved, setSaved] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleSave = useCallback(async () => {
     await User.putUserInfo(uid, token, character?.ID);
     setSaved(true);
+    setCharacter(null);
   }, [character, token, uid]);
 
   useEffect(() => {
     if (saved) {
-      router.push("/dashboard");
+      setIsVisible(true);
     }
-  }, [saved, router]);
+  }, [saved]);
 
   const onSubmit = async ({ characterName, server }: SearchType) => {
     const response = await axios.get(
@@ -123,6 +124,7 @@ export default function SettingsPage({
             </div>
           </form>
         </FormProvider>
+        <ChangesSavedPopup isVisible={isVisible} setIsVisible={setIsVisible} />
         {character && (
           <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">
             <div className="relative max-w-screen-md mx-auto w-1/3 p-6 bg-white rounded-md flex gap-3 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
@@ -177,12 +179,14 @@ export const getServerSideProps = async (context: any) => {
   const servers = response.data.slice(0, 77);
 
   const { uid, token } = parseCookies(context);
+  const { setIsVisible } = context.query;
 
   return {
     props: {
       servers,
       uid,
       token,
+      setIsVisible,
     },
   };
 };

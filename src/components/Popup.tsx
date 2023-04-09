@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "@/styles/globals.css";
 
 type TChangesSavedPopupProps = {
   isVisible: boolean;
@@ -16,11 +15,15 @@ export default function ChangesSavedPopup({
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, [isVisible]);
+  }, [isVisible, setIsVisible]);
 
   return (
-    <div className={`popup ${isVisible === true ? `show` : ""}`}>
-      <p>Changes saved! May take up to 5 minutes to take effect.</p>
+    <div
+      className={`fixed bottom-20 left-10 bg-slate-900 bg-opacity-75 text-white p-4 rounded-lg shadow-md opacity-0 transition-opacity duration-200 ease-in-out ${
+        isVisible ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <p>Changes saved! Please log in again to view the updated information.</p>
     </div>
   );
 }
