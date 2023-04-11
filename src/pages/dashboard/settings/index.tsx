@@ -12,7 +12,6 @@ type TSettingsPageProps = {
   servers: string[];
   token: string | undefined;
   uid: string;
-  setIsVisible: Function;
 };
 
 interface SearchType {
@@ -33,12 +32,14 @@ export default function SettingsPage({
   } = methods;
   const [character, setCharacter] = useState<TCharacter | null>(null);
   const [saved, setSaved] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleSave = useCallback(async () => {
     await User.putUserInfo(uid, token, character?.ID);
     setSaved(true);
     setCharacter(null);
+    setSubmitted(false);
   }, [character, token, uid]);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function SettingsPage({
   }, [saved]);
 
   const onSubmit = async ({ characterName, server }: SearchType) => {
+    setSubmitted(true);
     const response = await axios.get(
       `https://xivapi.com/character/search?name=${characterName}&server=${server}&private_key=${process.env.XIVAPI_KEY}`
     );
@@ -114,13 +116,17 @@ export default function SettingsPage({
               </select>
             </div>
             <div className="flex justify-center pt-8">
-              <button
-                aria-label="Search"
-                type="submit"
-                className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
-              >
-                <p className="capitalize text-white font-normal">Search</p>
-              </button>
+              {!submitted ? (
+                <button
+                  aria-label="Search"
+                  type="submit"
+                  className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
+                >
+                  <p className="capitalize text-white font-normal">Search</p>
+                </button>
+              ) : (
+                <p className="text-blue-500">Searching...</p>
+              )}
             </div>
           </form>
         </FormProvider>
@@ -179,14 +185,12 @@ export const getServerSideProps = async (context: any) => {
   const servers = response.data.slice(0, 77);
 
   const { uid, token } = parseCookies(context);
-  const { setIsVisible } = context.query;
 
   return {
     props: {
       servers,
       uid,
       token,
-      setIsVisible,
     },
   };
 };
