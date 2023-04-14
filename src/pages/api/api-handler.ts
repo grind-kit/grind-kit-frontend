@@ -1,4 +1,5 @@
 import axios from "axios";
+import strings from "public/strings.json";
 
 // Character class
 
@@ -13,6 +14,38 @@ export class Character {
 
   static async getCharacterInfo(url: string) {
     return fetch(url).then((res) => res.json());
+  }
+}
+
+export class ContentFinderCondition {
+  Name: string;
+  ClassJobLevelRequired: number;
+  ItemLevelRequired: number;
+
+  constructor(
+    Name: string,
+    ClassJobLevelRequired: number,
+    ItemLevelRequired: number
+  ) {
+    this.Name = Name;
+    this.ClassJobLevelRequired = ClassJobLevelRequired;
+    this.ItemLevelRequired = ItemLevelRequired;
+  }
+
+  static async getContentFinderConditionList(
+    classJob: string,
+    classJobLevel: number,
+    itemLevel: number
+  ) {
+    try {
+      const response = await axios.get(
+        `${process.env.XIVAPI_URL}ContentFinderCondition?private_key=${process.env.XIVAPI_KEY}&language=${strings.language}&columns=${strings.contentFinderListColumns}&filters=ClassJobLevelRequired>=${classJobLevel}`
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
@@ -59,7 +92,7 @@ export class Dungeon {
   static async getDungeonInfo(id: string | string[] | undefined) {
     try {
       const response = await axios.get(
-        `https://xivapi.com/InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
+        `${process.env.XIVAPI_URL}InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
       );
 
       return response.data;
