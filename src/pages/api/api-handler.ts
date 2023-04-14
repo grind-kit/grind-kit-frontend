@@ -39,10 +39,10 @@ export class ContentFinderCondition {
   ) {
     try {
       const response = await axios.get(
-        `${process.env.XIVAPI_URL}ContentFinderCondition?private_key=${process.env.XIVAPI_KEY}&language=${strings.language}&columns=${strings.contentFinderListColumns}&filters=ClassJobLevelRequired>=${classJobLevel}`
+        `${process.env.XIVAPI_URL}ContentFinderCondition?private_key=${process.env.XIVAPI_KEY}&language=${strings.language}&columns=${strings.contentFinderListColumns}&filters=ClassJobLevelRequired<=${classJobLevel}`
       );
 
-      return response.data;
+      return response.data.Results;
     } catch (error) {
       console.error(error);
     }

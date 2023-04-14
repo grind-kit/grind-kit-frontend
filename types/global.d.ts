@@ -42,13 +42,10 @@ export type TPagination = {
 };
 
 export type TDungeonList = {
-  ContentFinderCondition: {
-    ClassJobLevelRequired: number;
-  };
   ID: number;
-  InstanceClearExp: number;
-  InstanceClearGil: number;
   Name: string;
+  ClassJobLevelRequired: number;
+  ItemLevelRequired: number;
 };
 
 export type TContentListProps = {
@@ -62,7 +59,7 @@ export type TDungeonListProps = {
 };
 
 export type TDungeonListPageProps = {
-  initialResults: Array<TDungeonList>;
+  results: Array<TDungeonList>;
 };
 
 export type TDungeonId = {

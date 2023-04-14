@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { ContentFinderCondition } from "@/pages/api/api-handler";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { TDungeonList, TDungeonListPageProps } from "types/global";
+import { TDungeonListPageProps } from "types/global";
 import { DungeonList } from "@/components/List";
 import { useRouter } from "next/router";
 
-export default function Dungeons({ initialResults }: TDungeonListPageProps) {
-  const [results, setResults] = useState<Array<TDungeonList>>(initialResults);
+export default function Dungeons({ results }: TDungeonListPageProps) {
   const contentType = "dungeons";
-
   const router = useRouter();
   const { jobCode } = router.query;
 
@@ -20,8 +18,8 @@ export default function Dungeons({ initialResults }: TDungeonListPageProps) {
         </h1>
         <DungeonList
           results={results}
-          jobCode={jobCode}
           contentType={contentType}
+          jobCode={jobCode}
         />
       </div>
     </ProtectedRoute>
@@ -29,17 +27,18 @@ export default function Dungeons({ initialResults }: TDungeonListPageProps) {
 }
 
 export const getServerSideProps = async ({ query }: any) => {
-  const { level } = query;
-  const minLevel = level - 2;
+  const { level, jobCode } = query;
 
   // Implement item level required later
-  const res = await axios.get(
-    `https://xivapi.com/InstanceContent?private_key=${process.env.XIVAPI_KEY}&filters=ContentFinderCondition.ClassJobLevelRequired<=${level},ContentFinderCondition.ClassJobLevelRequired>=${minLevel},InstanceClearExp>0,InstanceClearGil>0&columns=ID,Name,InstanceClearExp,InstanceClearGil,ContentFinderCondition.ClassJobLevelRequired&language=en`
+  const response = await ContentFinderCondition.getContentFinderConditionList(
+    jobCode,
+    level,
+    0
   );
 
   return {
     props: {
-      initialResults: res.data.Results,
+      results: response,
     },
   };
 };

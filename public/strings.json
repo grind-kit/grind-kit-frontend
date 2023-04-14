@@ -1,4 +1,4 @@
 {
     "language": "en",
-    "contentFinderListColumns": "Name,ClassJobLevelRequired,ItemLevelRequired"
+    "contentFinderListColumns": "ID,Name,ClassJobLevelRequired,ItemLevelRequired"
 }

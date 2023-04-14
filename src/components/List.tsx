@@ -25,8 +25,8 @@ export function ContentList({ jobCode }: TContentListProps) {
 
 export function DungeonList({
   results,
-  jobCode,
   contentType,
+  jobCode,
 }: TDungeonListProps) {
   const router = useRouter();
 
@@ -35,8 +35,8 @@ export function DungeonList({
       {results
         .sort(
           (a, b) =>
-            b.ContentFinderCondition.ClassJobLevelRequired -
-            a.ContentFinderCondition.ClassJobLevelRequired
+            b.ClassJobLevelRequired -
+            a.ClassJobLevelRequired
         )
         .map((instance) => (
           <div
@@ -49,8 +49,8 @@ export function DungeonList({
             <div className="flex flex-row items-center justify-between text-2xl">
               <p>{instance.Name}</p>
               <ul className="flex flex-row">
-                <li className="ml">EXP: {instance.InstanceClearExp}</li>
-                <li className="ml-5">Gil: {instance.InstanceClearGil}</li>
+                <li className="ml">Lvl. {instance.ClassJobLevelRequired}</li>
+                <li className="ml-5">iLvl. {instance.ItemLevelRequired}</li>
               </ul>
             </div>
           </div>
