@@ -1,6 +1,7 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useRouter } from "next/router";
 import { ContentList } from "@/components/List";
+import { parseCookies } from "nookies";
 
 export default function JobCode() {
   const router = useRouter();

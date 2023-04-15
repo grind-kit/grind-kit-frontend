@@ -1,5 +1,4 @@
 import axios from "axios";
-import strings from "public/strings.json";
 
 // Character class
 
@@ -33,16 +32,29 @@ export class ContentFinderCondition {
   }
 
   static async getContentFinderConditionList(
-    classJob: string,
     classJobLevel: number,
-    itemLevel: number
+    token: string | undefined
   ) {
     try {
+      const minClassJobLevel = classJobLevel - 5;
+      console.log("minClassJobLevel ✅", minClassJobLevel, typeof minClassJobLevel)
+      console.log("classJobLevel ✅", classJobLevel, typeof classJobLevel)
+
       const response = await axios.get(
-        `${process.env.XIVAPI_URL}ContentFinderCondition?private_key=${process.env.XIVAPI_KEY}&language=${strings.language}&columns=${strings.contentFinderListColumns}&filters=ClassJobLevelRequired<=${classJobLevel}`
+        `${process.env.BACKEND_URL}/conditions`,
+        {
+          params: {
+            minLevel: minClassJobLevel,
+            maxLevel: classJobLevel,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
-      return response.data.Results;
+      return response;
+      
     } catch (error) {
       console.error(error);
     }

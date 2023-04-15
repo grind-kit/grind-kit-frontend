@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { ContentFinderCondition } from "@/pages/api/api-handler";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { TDungeonListPageProps } from "types/global";
 import { DungeonList } from "@/components/List";
 import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
 
 export default function Dungeons({ results }: TDungeonListPageProps) {
   const contentType = "dungeons";
@@ -26,19 +27,21 @@ export default function Dungeons({ results }: TDungeonListPageProps) {
   );
 }
 
-export const getServerSideProps = async ({ query }: any) => {
-  const { level, jobCode } = query;
+export const getServerSideProps = async (context: any) => {
+  let parsedLevel = 50;
+  const { token } = parseCookies(context);
 
   // Implement item level required later
   const response = await ContentFinderCondition.getContentFinderConditionList(
-    jobCode,
-    level,
-    0
+    parsedLevel,
+    token
   );
+
+  console.log(response?.data, "🤞")
 
   return {
     props: {
-      results: response,
+      results: response?.data,
     },
   };
 };

@@ -42,10 +42,13 @@ export type TPagination = {
 };
 
 export type TDungeonList = {
-  ID: number;
-  Name: string;
-  ClassJobLevelRequired: number;
-  ItemLevelRequired: number;
+  id: number;
+  name: string;
+  class_job_level_required: number;
+  item_level_required: number;
+  url: string;
+  content_type_id: number;
+  accept_class_job_category: any;
 };
 
 export type TContentListProps = {
@@ -84,7 +87,7 @@ export type TDungeonIdProps = {
 export type TCharacter = {
   Avatar: string;
   FeastMatches: number;
-  ID: number 
+  ID: number;
   Lang: string;
   Name: string;
   Rank: number | null;
