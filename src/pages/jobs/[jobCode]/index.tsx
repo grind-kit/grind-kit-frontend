@@ -5,7 +5,9 @@ import { parseCookies } from "nookies";
 
 export default function JobCode() {
   const router = useRouter();
-  const { jobCode } = router.query;
+  const { level, jobCode } = router.query;
+
+  console.log(level);
 
   return (
     <ProtectedRoute>

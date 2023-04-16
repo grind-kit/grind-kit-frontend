@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { RoleAccordion } from "@/components/Accordion";
+import { RoleAccordion } from "@/components/RoleAccordion";
 import getData from "@/data";
 import { useRouter } from "next/router";
 

@@ -28,7 +28,8 @@ export default function Dungeons({ results }: TDungeonListPageProps) {
 }
 
 export const getServerSideProps = async (context: any) => {
-  let parsedLevel = 50;
+  const { level } = context.query;
+  let parsedLevel = Number(level);
   const { token } = parseCookies(context);
 
   // Implement item level required later
@@ -36,8 +37,6 @@ export const getServerSideProps = async (context: any) => {
     parsedLevel,
     token
   );
-
-  console.log(response?.data, "🤞")
 
   return {
     props: {
