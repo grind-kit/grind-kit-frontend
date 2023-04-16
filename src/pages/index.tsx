@@ -20,9 +20,12 @@ export default function Home() {
         document.cookie = `uid=${user.uid}; path=/`;
         document.cookie = `authenticated=true; path=/`;
 
-        const res = await User.getUserInfo(user.uid, token);
-        setLodestoneId(res.lodestone_id);
-        document.cookie = `lodestoneId=${lodestoneId}; path=/`;
+        const response = await User.getUserInfo(user.uid, token);
+
+        if (response && response.lodestone_id) {
+          setLodestoneId(response.lodestone_id);
+          document.cookie = `lodestoneId=${response.lodestone_id}; path=/`;
+        }
       }
     };
     getTokenAndLodestoneId();
