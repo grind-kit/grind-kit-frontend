@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { TDungeonListPageProps } from "types/global";
-import { DungeonList } from "@/components/List";
+import DungeonList from "@/components/InstanceContentTypeList";
 import { useRouter } from "next/router";
 
 export default function Trials({ results }: TDungeonListPageProps) {
@@ -17,11 +17,6 @@ export default function Trials({ results }: TDungeonListPageProps) {
         <h1 className="text-3xl font-bold text-slate-900">
           Recommended Trials
         </h1>
-        <DungeonList
-          results={results}
-          jobCode={jobCode}
-          contentType={contentType}
-        />
       </div>
     </ProtectedRoute>
   );

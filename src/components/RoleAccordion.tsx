@@ -33,7 +33,6 @@ function RoleAccordionToggle({
 
 function RoleAccordion({
   // Takes in data as props to display the accordion depending on the type of role
-  roleId,
   roleType,
   bg,
   hover,
@@ -48,7 +47,7 @@ function RoleAccordion({
 
   const handleClassJobClick = (classJob: TRoleData) => {
     router.push({
-      pathname: `/jobs/${classJob.classJobCode}`,
+      pathname: `/classjobs/${classJob.classJobCode}`,
       // Pass in the level as a query for the filter
       query: { level: classJob.classJobLevel },
     });
@@ -56,7 +55,6 @@ function RoleAccordion({
 
   return (
     <div
-      key={roleId}
       className={`${bg} w-full rounded-md mt-5 p-4 font-bold text-white text-transform: capitalize`}
     >
       <div className="flex flex-row items-center justify-between text-2xl">

@@ -1,23 +1,19 @@
 function getData() {
-  const arrayOfContent = [
+  const arrayOfInstanceContent = [
     {
-      contentId: 0,
-      name: "Dungeons",
-      icon: null,
-      href: "dungeons",
+      instanceContentId: 0,
+      instanceContentType: "dungeons",
     },
     {
-      contentId: 1,
-      name: "Trials",
-      icon: null,
-      href: "trials",
+      instanceContentId: 1,
+      instanceContentType: "trials",
     },
   ];
 
   const data = localStorage.getItem("characterData");
 
   if (data === null) {
-    return { arrayOfContent };
+    return { arrayOfInstanceContent };
   }
 
   const parsedData = JSON.parse(data);
@@ -199,7 +195,7 @@ function getData() {
     },
   ];
 
-  return { arrayOfRoles, arrayOfContent };
+  return { arrayOfRoles, arrayOfInstanceContent };
 }
 
 export default getData;

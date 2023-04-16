@@ -4,7 +4,7 @@ import RoleAccordion from "@/components/RoleAccordion";
 import getData from "@/data";
 import { useRouter } from "next/router";
 
-export default function JobsPage() {
+function ClassJobsPage() {
   const data = localStorage.getItem("characterData");
   const { arrayOfRoles } = getData();
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function JobsPage() {
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-slate-900">Choose a Job</h1>
+        <h1 className="text-3xl font-bold text-slate-900">Choose a Class / Job</h1>
         {arrayOfRoles?.map((role) => {
           return <RoleAccordion key={role.roleId} {...role} />;
         })}
@@ -26,3 +26,5 @@ export default function JobsPage() {
     </ProtectedRoute>
   );
 }
+
+export default ClassJobsPage;

@@ -26,8 +26,8 @@ export default function Navigation() {
       <nav className="ml-auto text-slate-900">
         {authenticated && authenticated !== "false" ? (
           <>
-            <Link legacyBehavior href="/jobs">
-              <a className="mr-5 hover:underline">Grind</a>
+            <Link legacyBehavior href="/classjobs">
+              <a className="mr-5 hover:underline">Start</a>
             </Link>
             <Link legacyBehavior href="/dashboard">
               <a className="mr-5 hover:underline">Dashboard</a>

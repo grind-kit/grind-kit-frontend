@@ -23,7 +23,7 @@ export type TRoleData = {
   classJobName: string;
   classJobLevel: number;
   classJobCode: string;
-}
+};
 
 export type TRoleAccordionProps = {
   roleId: number;
@@ -33,6 +33,11 @@ export type TRoleAccordionProps = {
   roleData: Array<TRoleData>;
 };
 
+export type TInstanceContentTypeListProps = {
+  instanceContentId: number;
+  instanceContentType: string;
+  classJobCode: string | string[] | undefined;
+};
 
 export type TDungeonList = {
   id: number;
@@ -42,10 +47,6 @@ export type TDungeonList = {
   url: string;
   content_type_id: number;
   accept_class_job_category: any;
-};
-
-export type TContentListProps = {
-  jobCode: string | string[] | undefined;
 };
 
 export type TDungeonListProps = {

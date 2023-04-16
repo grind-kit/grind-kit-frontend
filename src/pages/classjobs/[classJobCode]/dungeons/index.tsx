@@ -2,7 +2,7 @@ import React from "react";
 import { ContentFinderCondition } from "@/pages/api/api-handler";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { TDungeonListPageProps } from "types/global";
-import { DungeonList } from "@/components/List";
+import DungeonList from "@/components/DungeonList";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 
