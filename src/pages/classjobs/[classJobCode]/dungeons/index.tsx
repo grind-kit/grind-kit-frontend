@@ -4,6 +4,7 @@ import InstanceContentResultsList from "@/components/InstanceContentResultsList"
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { TDungeonPageProps } from "types/global";
 import { parseCookies } from "nookies";
+import { IGetServerSidePropsContext } from "types/global";
 
 export default function DungeonsPage({ results }: TDungeonPageProps) {
   const instanceContentType = "dungeons";
@@ -23,8 +24,7 @@ export default function DungeonsPage({ results }: TDungeonPageProps) {
   );
 }
 
-export const getServerSideProps = async (context: any) => {
-  console.log(context);
+export const getServerSideProps = async (context: IGetServerSidePropsContext) => {
   const { level } = context.query;
   const parsedLevel = Number(level);
   const { token } = parseCookies(context);

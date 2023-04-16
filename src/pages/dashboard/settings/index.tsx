@@ -6,7 +6,7 @@ import { User } from "@/pages/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { TCharacter } from "types/global";
-import ChangesSavedPopup from "@/components/Popup";
+import ChangesSavedPopup from "@/components/ChangesSavedPopup";
 
 type TSettingsPageProps = {
   servers: string[];

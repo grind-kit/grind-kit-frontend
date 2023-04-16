@@ -5,7 +5,7 @@ type TChangesSavedPopupProps = {
   setIsVisible: Function;
 };
 
-export default function ChangesSavedPopup({
+function ChangesSavedPopup({
   isVisible,
   setIsVisible,
 }: TChangesSavedPopupProps) {
@@ -27,3 +27,5 @@ export default function ChangesSavedPopup({
     </div>
   );
 }
+
+export default ChangesSavedPopup;

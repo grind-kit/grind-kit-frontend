@@ -1,3 +1,10 @@
+export interface IGetServerSidePropsContext<Q extends ParsedUrlQuery = ParsedUrlQuery> {
+  req: IncomingMessage & { cookies: Record<string, string> }
+  res: ServerResponse
+  query: Q
+  resolvedUrl: string
+}
+
 export type TClassJob = {
   ClassID: number;
   ExpLevel: number;
