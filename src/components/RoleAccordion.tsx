@@ -31,7 +31,7 @@ function RoleAccordionToggle({
   );
 }
 
-export function RoleAccordion({
+function RoleAccordion({
   // Takes in data as props to display the accordion depending on the type of role
   roleId,
   roleType,
@@ -87,3 +87,5 @@ export function RoleAccordion({
     </div>
   );
 }
+
+export default RoleAccordion;
