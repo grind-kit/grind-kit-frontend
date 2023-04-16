@@ -19,14 +19,12 @@ export default function DungeonsPage({
           Recommended Dungeons
         </h1>
         {arrayOfContentFinderConditions
-          ?.sort(
-            (a, b) => b.class_job_level_required - a.class_job_level_required
-          )
+          ?.sort((a, b) => b.classJobLevelRequired - a.classJobLevelRequired)
           .map((contentFinderCondition: TContentFinderCondition) => {
             return (
               <InstanceContentResultsList
                 key={contentFinderCondition.id}
-                {...contentFinderCondition}
+                contentFinderCondition={contentFinderCondition}
                 instanceContentType={instanceContentType}
               />
             );

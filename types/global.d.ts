@@ -53,21 +53,15 @@ export type TInstanceContentTypeListProps = {
 export type TContentFinderCondition = {
   id: number;
   name: string;
-  class_job_level_required: number;
-  item_level_required: number;
+  classJobLevelRequired: number;
+  itemLevelRequired: number;
   url: string;
-  content_type_id: number;
-  accept_class_job_category: JSON;
+  contentTypeId: number;
+  acceptClassJobCategory: JSON;
 };
 
 export type TInstanceContentResultsListProps = {
-  id: number;
-  name: string;
-  class_job_level_required: number;
-  item_level_required: number;
-  url: string;
-  content_type_id: number;
-  accept_class_job_category: JSON;
+  contentFinderCondition: TContentFinderCondition;
   instanceContentType: string;
 };
 
