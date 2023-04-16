@@ -19,7 +19,9 @@ export default function DungeonsPage({
           Recommended Dungeons
         </h1>
         {arrayOfContentFinderConditions
-          ?.sort((a, b) => b.classJobLevelRequired - a.classJobLevelRequired)
+        // Improve this time complexity
+          ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
+          .slice(0, 5)
           .map((contentFinderCondition: TContentFinderCondition) => {
             return (
               <InstanceContentResultsList
@@ -37,14 +39,15 @@ export default function DungeonsPage({
 export const getServerSideProps = async (
   context: IGetServerSidePropsContext
 ) => {
-  const { level } = context.query;
+  const { level, contentTypeId } = context.query;
   const parsedLevel = Number(level);
   const { token } = parseCookies(context);
-  let response;
+  let response = null;
 
   if (level && token) {
     response = await ContentFinderCondition.getContentFinderConditionList(
       parsedLevel,
+      contentTypeId,
       token
     );
   }

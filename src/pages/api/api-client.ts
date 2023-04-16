@@ -121,15 +121,17 @@ export class ContentFinderCondition {
 
   static async getContentFinderConditionList(
     classJobLevel: number,
+    contentTypeId: number,
     token: string | undefined
   ) {
     try {
-      const minClassJobLevel = classJobLevel - 5;
+      const minClassJobLevel = classJobLevel - 2;
 
       const response = await axios.get(
         `${process.env.BACKEND_URL}/conditions`,
         {
           params: {
+            type: contentTypeId,
             min: minClassJobLevel,
             max: classJobLevel,
           },
