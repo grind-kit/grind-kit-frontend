@@ -4,11 +4,11 @@ import getData from "@/data";
 
 export function ContentList({ jobCode }: TContentListProps) {
   const router = useRouter();
-  const { contentData } = getData();
+  const { arrayOfContent } = getData();
 
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
-      {contentData.map((content) => (
+      {arrayOfContent.map((content) => (
         <div
           key={content.contentId}
           className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"

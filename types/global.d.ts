@@ -18,28 +18,21 @@ export type TDashboardProps = {
   arrayOfClassJobs: Array<TClassJob>;
 };
 
+export type TRoleData = {
+  classJobId: number;
+  classJobName: string;
+  classJobLevel: number;
+  classJobCode: string;
+}
+
 export type TRoleAccordionProps = {
   roleId: number;
-  type: string;
+  roleType: string;
   bg: string;
   hover: string;
-  data: Array<{
-    jobId: number;
-    name: string;
-    level: number;
-    jobCode: string;
-  }>;
+  roleData: Array<TRoleData>;
 };
 
-export type TPagination = {
-  Page: number;
-  PageNext: number | null;
-  PagePrev: number | null;
-  PageTotal: number;
-  Results: number;
-  ResultsPerPage: number;
-  ResultsTotal: number;
-};
 
 export type TDungeonList = {
   id: number;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { TRoleAccordionProps } from "types/global";
+import { TRoleAccordionProps, TRoleData } from "types/global";
 
 type TRoleAccordionToggleProps = {
   isShowingClassJobs: boolean;
@@ -34,10 +34,10 @@ function RoleAccordionToggle({
 export function RoleAccordion({
   // Takes in data as props to display the accordion depending on the type of role
   roleId,
-  type,
+  roleType,
   bg,
   hover,
-  data,
+  roleData,
 }: TRoleAccordionProps) {
   const router = useRouter();
   const [isShowingClassJobs, setIsShowingClassJobs] = useState<boolean>(false);
@@ -46,16 +46,11 @@ export function RoleAccordion({
     setIsShowingClassJobs(!isShowingClassJobs);
   };
 
-  const handleClassJobClick = (classJob: {
-    jobId: number;
-    jobCode: string;
-    level: number;
-    name: string;
-  }) => {
+  const handleClassJobClick = (classJob: TRoleData) => {
     router.push({
-      pathname: `/jobs/${classJob.jobCode}`,
+      pathname: `/jobs/${classJob.classJobCode}`,
       // Pass in the level as a query for the filter
-      query: { level: classJob.level },
+      query: { level: classJob.classJobLevel },
     });
   };
 
@@ -65,7 +60,7 @@ export function RoleAccordion({
       className={`${bg} w-full rounded-md mt-5 p-4 font-bold text-white text-transform: capitalize`}
     >
       <div className="flex flex-row items-center justify-between text-2xl">
-        {type}
+        {roleType}
         <RoleAccordionToggle
           isShowingClassJobs={isShowingClassJobs}
           onClick={handleIsShowing}
@@ -73,17 +68,17 @@ export function RoleAccordion({
       </div>
       {isShowingClassJobs && (
         <div className="w-full text-xl flex flex-col">
-          {data.map((classJob) => (
+          {roleData.map((classJob: TRoleData) => (
             <div
-              key={classJob.jobId}
+              key={classJob.classJobId}
               onClick={() => handleClassJobClick(classJob)}
               className={`${hover} hover:cursor-pointer p-2 rounded-md flex flex-row mt-5 items-center justify-between`}
             >
               <div>
-                <p>{classJob.name}</p>
+                <p>{classJob.classJobName}</p>
               </div>
               <div>
-                <p>Lv. {classJob.level}</p>
+                <p>Lv. {classJob.classJobLevel}</p>
               </div>
             </div>
           ))}
