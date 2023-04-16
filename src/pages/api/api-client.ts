@@ -1,4 +1,5 @@
 import axios from "axios";
+import camelcaseKeys from "camelcase-keys";
 
 // User class
 
@@ -129,16 +130,18 @@ export class ContentFinderCondition {
         `${process.env.BACKEND_URL}/conditions`,
         {
           params: {
-            minLevel: minClassJobLevel,
-            maxLevel: classJobLevel,
+            min: minClassJobLevel,
+            max: classJobLevel,
           },
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      
+      const data = camelcaseKeys(response.data, { deep: true });
 
-      return response.data;
+      return data;
     } catch (error) {
       console.error(error);
     }
