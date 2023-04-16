@@ -16,51 +16,6 @@ export class Character {
   }
 }
 
-export class ContentFinderCondition {
-  Name: string;
-  ClassJobLevelRequired: number;
-  ItemLevelRequired: number;
-
-  constructor(
-    Name: string,
-    ClassJobLevelRequired: number,
-    ItemLevelRequired: number
-  ) {
-    this.Name = Name;
-    this.ClassJobLevelRequired = ClassJobLevelRequired;
-    this.ItemLevelRequired = ItemLevelRequired;
-  }
-
-  static async getContentFinderConditionList(
-    classJobLevel: number,
-    token: string | undefined
-  ) {
-    try {
-      const minClassJobLevel = classJobLevel - 5;
-      console.log("minClassJobLevel ✅", minClassJobLevel, typeof minClassJobLevel)
-      console.log("classJobLevel ✅", classJobLevel, typeof classJobLevel)
-
-      const response = await axios.get(
-        `${process.env.BACKEND_URL}/conditions`,
-        {
-          params: {
-            minLevel: minClassJobLevel,
-            maxLevel: classJobLevel,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      return response;
-      
-    } catch (error) {
-      console.error(error);
-    }
-  }
-}
-
 // Dungeon class
 
 export class Dungeon {

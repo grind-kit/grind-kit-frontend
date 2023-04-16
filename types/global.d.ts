@@ -1,8 +1,10 @@
-export interface IGetServerSidePropsContext<Q extends ParsedUrlQuery = ParsedUrlQuery> {
-  req: IncomingMessage & { cookies: Record<string, string> }
-  res: ServerResponse
-  query: Q
-  resolvedUrl: string
+export interface IGetServerSidePropsContext<
+  Q extends ParsedUrlQuery = ParsedUrlQuery
+> {
+  req: IncomingMessage & { cookies: Record<string, string> };
+  res: ServerResponse;
+  query: Q;
+  resolvedUrl: string;
 }
 
 export type TClassJob = {
@@ -48,23 +50,29 @@ export type TInstanceContentTypeListProps = {
   classJobCode: string | string[] | undefined;
 };
 
-export type TInstanceContentResults = {
+export type TContentFinderCondition = {
   id: number;
   name: string;
   class_job_level_required: number;
   item_level_required: number;
   url: string;
   content_type_id: number;
-  accept_class_job_category: any;
+  accept_class_job_category: JSON;
 };
 
 export type TInstanceContentResultsListProps = {
-  results: Array<TInstanceContentResults>;
+  id: number;
+  name: string;
+  class_job_level_required: number;
+  item_level_required: number;
+  url: string;
+  content_type_id: number;
+  accept_class_job_category: JSON;
   instanceContentType: string;
 };
 
-export type TDungeonPageProps = {
-  results: Array<TDungeonList>;
+export type TInstanceContentPageProps = {
+  arrayOfContentFinderConditions: Array<TContentFinderCondition>;
 };
 
 export type TDungeonId = {
@@ -80,10 +88,6 @@ export type TDungeonId = {
   ContentFinderCondition: {
     ClassJobLevelRequired: number;
   };
-};
-
-export type TDungeonIdProps = {
-  initialResults: TDungeonId;
 };
 
 export type TCharacter = {

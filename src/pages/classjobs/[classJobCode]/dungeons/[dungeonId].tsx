@@ -1,10 +1,9 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useRouter } from "next/router";
-import { TDungeonIdProps } from "types/global";
 import { GetServerSideProps } from "next";
 import { Dungeon } from "@/pages/api/api-handler";
 
-export default function DungeonId({ initialResults }: TDungeonIdProps) {
+export default function DungeonId({ initialResults }: any) {
   const router = useRouter();
   const { dungeonId } = router.query;
   return (
