@@ -3,10 +3,12 @@ function getData() {
     {
       instanceContentId: 0,
       instanceContentType: "dungeons",
+      contentTypeId: 2,
     },
     {
       instanceContentId: 1,
       instanceContentType: "trials",
+      contentTypeId: 4,
     },
   ];
 

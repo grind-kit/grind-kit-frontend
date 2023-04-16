@@ -3,6 +3,7 @@ import { TInstanceContentTypeListProps } from "types/global";
 
 function InstanceContentTypeList({
   // Takes in data as props to display the list depending on the type of instance content
+  contentTypeId,
   instanceContentType,
   classJobCode,
 }: TInstanceContentTypeListProps) {
@@ -13,7 +14,7 @@ function InstanceContentTypeList({
     router.push({
       pathname: `/classjobs/${classJobCode}/${instanceContentType}`,
       // Pass in the level as a query for the filter
-      query: { level: level },
+      query: { level: level, contentTypeId: contentTypeId },
     });
   };
 

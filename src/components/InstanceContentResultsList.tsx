@@ -1,8 +1,12 @@
-import { TDungeonListProps } from "types/global";
+import { TInstanceContentResultsListProps } from "types/global";
 import { useRouter } from "next/router";
 
-function DungeonList({ results, contentType, jobCode }: TDungeonListProps) {
+function InstanceContentResultsList({
+  results,
+  instanceContentType,
+}: TInstanceContentResultsListProps) {
   const router = useRouter();
+  const { classJobCode } = router.query;
 
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
@@ -13,7 +17,9 @@ function DungeonList({ results, contentType, jobCode }: TDungeonListProps) {
             key={instance.id}
             className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"
             onClick={() =>
-              router.push(`/jobs/${jobCode}/${contentType}/${instance.id}`)
+              router.push(
+                `/classjobs/${classJobCode}/${instanceContentType}/${instance.id}`
+              )
             }
           >
             <div className="flex flex-row items-center justify-between text-2xl">
@@ -29,4 +35,4 @@ function DungeonList({ results, contentType, jobCode }: TDungeonListProps) {
   );
 }
 
-export default DungeonList;
+export default InstanceContentResultsList;

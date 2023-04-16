@@ -36,10 +36,12 @@ export type TRoleAccordionProps = {
 export type TInstanceContentTypeListProps = {
   instanceContentId: number;
   instanceContentType: string;
+  contentTypeId: number;
+  // Query
   classJobCode: string | string[] | undefined;
 };
 
-export type TDungeonList = {
+export type TInstanceContentResults = {
   id: number;
   name: string;
   class_job_level_required: number;
@@ -49,13 +51,12 @@ export type TDungeonList = {
   accept_class_job_category: any;
 };
 
-export type TDungeonListProps = {
-  results: Array<TDungeonList>;
-  jobCode: string | string[] | undefined;
-  contentType: string;
+export type TInstanceContentResultsListProps = {
+  results: Array<TInstanceContentResults>;
+  instanceContentType: string;
 };
 
-export type TDungeonListPageProps = {
+export type TDungeonPageProps = {
   results: Array<TDungeonList>;
 };
 

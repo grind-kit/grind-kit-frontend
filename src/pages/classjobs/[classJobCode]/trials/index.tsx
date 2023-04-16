@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { TDungeonListPageProps } from "types/global";
+import { TDungeonPageProps } from "types/global";
 import DungeonList from "@/components/InstanceContentTypeList";
 import { useRouter } from "next/router";
 
-export default function Trials({ results }: TDungeonListPageProps) {
+export default function Trials({ results }: TDungeonPageProps) {
   const contentType = "trials";
 
   const router = useRouter();

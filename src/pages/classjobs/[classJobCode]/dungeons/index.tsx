@@ -1,26 +1,22 @@
 import React from "react";
 import { ContentFinderCondition } from "@/pages/api/api-handler";
+import InstanceContentResultsList from "@/components/InstanceContentResultsList";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { TDungeonListPageProps } from "types/global";
-import DungeonList from "@/components/DungeonList";
-import { useRouter } from "next/router";
+import { TDungeonPageProps } from "types/global";
 import { parseCookies } from "nookies";
 
-export default function Dungeons({ results }: TDungeonListPageProps) {
-  const contentType = "dungeons";
-  const router = useRouter();
-  const { jobCode } = router.query;
-
+export default function DungeonsPage({ results }: TDungeonPageProps) {
+  const instanceContentType = "dungeons";
+  
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
         <h1 className="text-3xl font-bold text-slate-900">
           Recommended Dungeons
         </h1>
-        <DungeonList
+        <InstanceContentResultsList
           results={results}
-          contentType={contentType}
-          jobCode={jobCode}
+          instanceContentType={instanceContentType}
         />
       </div>
     </ProtectedRoute>
@@ -28,11 +24,11 @@ export default function Dungeons({ results }: TDungeonListPageProps) {
 }
 
 export const getServerSideProps = async (context: any) => {
+  console.log(context);
   const { level } = context.query;
-  let parsedLevel = Number(level);
+  const parsedLevel = Number(level);
   const { token } = parseCookies(context);
 
-  // Implement item level required later
   const response = await ContentFinderCondition.getContentFinderConditionList(
     parsedLevel,
     token
