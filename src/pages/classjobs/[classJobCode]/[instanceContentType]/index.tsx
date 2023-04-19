@@ -8,19 +8,17 @@ import {
   IGetServerSidePropsContext,
 } from "types/global";
 import { parseCookies } from "nookies";
-const loadStrings = require("@/locales/en/strings");
 
-export default function DungeonsPage({
+export default function InstanceContentTypePage({
   arrayOfContentFinderConditions,
+  instanceContentTypeHeader,
+  instanceContentType,
 }: TInstanceContentPageProps) {
-  const strings = loadStrings;
-  const instanceContentType = strings.DUNGEONS_CONTENT_TYPE;
-
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
         <h1 className="text-3xl font-bold text-slate-900">
-          {strings.DUNGEONS_HEADER}
+          {instanceContentTypeHeader}
         </h1>
         {/* Convert this to a modular function */}
         {arrayOfContentFinderConditions
@@ -43,10 +41,15 @@ export default function DungeonsPage({
 export const getServerSideProps = async (
   context: IGetServerSidePropsContext
 ) => {
+  const loadStrings = require("@/locales/en/strings");
+  const strings = loadStrings;
   const { level, contentTypeId } = context.query;
   const parsedLevel = Number(level);
   const { token } = parseCookies(context);
+
   let response = null;
+  let instanceContentType = null;
+  let instanceContentTypeHeader = null;
 
   if (level && token && response === null) {
     response = await ContentFinderCondition.getContentFinderConditionList(
@@ -56,9 +59,21 @@ export const getServerSideProps = async (
     );
   }
 
+  switch (contentTypeId) {
+    case "2":
+      instanceContentTypeHeader = strings.DUNGEONS_HEADER;
+      instanceContentType = strings.DUNGEONS_CONTENT_TYPE;
+      break;
+    case "4":
+      instanceContentTypeHeader = strings.TRIALS_HEADER;
+      instanceContentType = strings.TRIALS_CONTENT_TYPE;
+  }
+
   return {
     props: {
       arrayOfContentFinderConditions: response,
+      instanceContentTypeHeader: instanceContentTypeHeader,
+      instanceContentType: instanceContentType,
     },
   };
 };

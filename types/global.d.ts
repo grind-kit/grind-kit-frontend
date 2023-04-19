@@ -67,6 +67,8 @@ export type TInstanceContentResultsListProps = {
 
 export type TInstanceContentPageProps = {
   arrayOfContentFinderConditions: Array<TContentFinderCondition>;
+  instanceContentTypeHeader: string;
+  instanceContentType: string;
 };
 
 export type TDungeonId = {
