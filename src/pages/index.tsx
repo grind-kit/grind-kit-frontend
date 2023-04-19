@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
-import { User } from "@/pages/api/api-client";
+import { User } from "@/api/api-client";
 
 export default function Home() {
   const { user } = useAuth();

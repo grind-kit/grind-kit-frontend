@@ -1,5 +1,5 @@
 import React from "react";
-import { ContentFinderCondition } from "@/pages/api/api-client";
+import { ContentFinderCondition } from "@/api/api-client";
 import InstanceContentResultsList from "@/components/InstanceContentResultsList";
 import { TContentFinderCondition } from "types/global";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -19,7 +19,7 @@ export default function DungeonsPage({
           Recommended Dungeons
         </h1>
         {arrayOfContentFinderConditions
-        // Improve this time complexity
+          // Improve this time complexity (O (n log n))
           ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
           .slice(0, 5)
           .map((contentFinderCondition: TContentFinderCondition) => {
@@ -44,7 +44,7 @@ export const getServerSideProps = async (
   const { token } = parseCookies(context);
   let response = null;
 
-  if (level && token) {
+  if (level && token && response === null) {
     response = await ContentFinderCondition.getContentFinderConditionList(
       parsedLevel,
       contentTypeId,

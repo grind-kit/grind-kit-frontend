@@ -1,7 +1,7 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import { Dungeon } from "@/pages/api/api-handler";
+import { Dungeon } from "@/api/api-handler";
 
 export default function DungeonId({ initialResults }: any) {
   const router = useRouter();

@@ -2,7 +2,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import { User } from "@/pages/api/api-client";
+import { User } from "@/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { TCharacter } from "types/global";
