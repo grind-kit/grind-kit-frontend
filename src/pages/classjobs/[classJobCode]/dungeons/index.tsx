@@ -6,22 +6,22 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { TInstanceContentPageProps } from "types/global";
 import { parseCookies } from "nookies";
 import { IGetServerSidePropsContext } from "types/global";
+const loadStrings = require("@/locales/en/strings");
 
 export default function DungeonsPage({
   arrayOfContentFinderConditions,
 }: TInstanceContentPageProps) {
-  const instanceContentType = "dungeons";
+  const instanceContentType = loadStrings.DUNGEONS_CONTENT_TYPE;
 
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
         <h1 className="text-3xl font-bold text-slate-900">
-          Recommended Dungeons
+          {loadStrings.DUNGEONS_HEADER}
         </h1>
         {arrayOfContentFinderConditions
-          // Improve this time complexity (O (n log n))
           ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
-          .slice(0, 5)
+          .slice(0, 4)
           .map((contentFinderCondition: TContentFinderCondition) => {
             return (
               <InstanceContentResultsList
