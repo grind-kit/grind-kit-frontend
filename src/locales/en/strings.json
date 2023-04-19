@@ -1,4 +1,22 @@
 {
-    "DUNGEONS_HEADER": "Recommended Dungeons",
-    "DUNGEONS_CONTENT_TYPE": "dungeons"
+  "INDEX_TITLE": "Grind Kit - A Final Fantasy XIV Raiding Tool",
+
+  "LOGIN_HEADER": "Login to Grind Kit",
+  "SIGNUP_HEADER": "Register for Grind Kit",
+  "AUTH_EMAIL_LABEL": "Email",
+  "AUTH_PASSWORD_LABEL": "Password",
+  "AUTH_PASSWORD_CONFIRM_LABEL": "Confirm Password",
+  "LOGIN_BUTTON": "Login",
+  "SIGNUP_BUTTON": "Register",
+  "LOGIN_ERROR_MESSAGE": "Invalid email or password",
+
+  "START_HEADER": "Choose a Class / Job",
+
+  "INSTANCECONTENT_HEADER": "Choose an Instance Content Type",
+
+  "DUNGEONS_HEADER": "Recommended Dungeons",
+  "DUNGEONS_CONTENT_TYPE": "dungeons",
+
+  "TRIALS_HEADER": "Recommended Trials",
+  "TRIALS_CONTENT_TYPE": "trials"
 }

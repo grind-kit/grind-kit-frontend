@@ -7,11 +7,9 @@ import { AuthContextProvider } from "@/context/AuthContext";
 import { Router } from "next/router";
 import Loading from "./loading";
 import CookiePopup from "@/components/CookiePopup";
-import { parseCookies } from "nookies";
 
 function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
-  const cookies = parseCookies();
 
   useEffect(() => {
     const start = () => {

@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
+const loadStrings = require("@/locales/en/strings");
 
 interface SignupType {
   email: string;
@@ -10,6 +11,7 @@ interface SignupType {
 }
 
 const SignupPage = () => {
+  const strings = loadStrings;
   const methods = useForm<SignupType>({ mode: "onBlur" });
   const { signUp } = useAuth();
   const router = useRouter();
@@ -32,7 +34,7 @@ const SignupPage = () => {
   return (
     <div className="sign-up-form container mx-auto w-96 my-12 border-2 rounded-md border-gray-200">
       <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-        Sign Up
+        {strings.SIGNUP_HEADER}
       </h2>
       <FormProvider {...methods}>
         <form
@@ -43,7 +45,7 @@ const SignupPage = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label htmlFor="" className="block mb-3 font-sans text-blue-500">
-                Email
+                {strings.AUTH_EMAIL_LABEL}
               </label>
             </div>
 
@@ -59,7 +61,7 @@ const SignupPage = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label htmlFor="" className="block mb-3 font-sans text-blue-500">
-                Password
+                {strings.AUTH_PASSWORD_LABEL}
               </label>
             </div>
 
@@ -75,7 +77,7 @@ const SignupPage = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label htmlFor="" className="block mb-3 font-sans text-blue-500">
-                Confirm Password
+                {strings.AUTH_PASSWORD_CONFIRM_LABEL}
               </label>
             </div>
 
@@ -95,7 +97,9 @@ const SignupPage = () => {
               type="submit"
               className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
             >
-              <p className="capitalize text-white font-normal">sign up</p>
+              <p className="capitalize text-white font-normal">
+                {strings.SIGNUP_BUTTON}
+              </p>
             </button>
           </div>
         </form>

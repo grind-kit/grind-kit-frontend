@@ -3,8 +3,10 @@ import Head from "next/head";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
+const loadStrings = require("@/locales/en/strings");
 
 export default function Home() {
+  const strings = loadStrings;
   const { user } = useAuth();
   const [token, setToken] = useState<string | undefined | null>(null);
   const [lodestoneId, setLodestoneId] = useState<string | undefined | null>(
@@ -34,7 +36,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Grind Kit</title>
+        <title>{strings.INDEX_TITLE}</title>
       </Head>
     </div>
   );

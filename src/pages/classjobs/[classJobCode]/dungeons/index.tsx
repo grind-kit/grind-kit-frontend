@@ -1,24 +1,28 @@
 import React from "react";
 import { ContentFinderCondition } from "@/api/api-client";
 import InstanceContentResultsList from "@/components/InstanceContentResultsList";
-import { TContentFinderCondition } from "types/global";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { TInstanceContentPageProps } from "types/global";
+import {
+  TContentFinderCondition,
+  TInstanceContentPageProps,
+  IGetServerSidePropsContext,
+} from "types/global";
 import { parseCookies } from "nookies";
-import { IGetServerSidePropsContext } from "types/global";
 const loadStrings = require("@/locales/en/strings");
 
 export default function DungeonsPage({
   arrayOfContentFinderConditions,
 }: TInstanceContentPageProps) {
-  const instanceContentType = loadStrings.DUNGEONS_CONTENT_TYPE;
+  const strings = loadStrings;
+  const instanceContentType = strings.DUNGEONS_CONTENT_TYPE;
 
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
         <h1 className="text-3xl font-bold text-slate-900">
-          {loadStrings.DUNGEONS_HEADER}
+          {strings.DUNGEONS_HEADER}
         </h1>
+        {/* Convert this to a modular function */}
         {arrayOfContentFinderConditions
           ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
           .slice(0, 4)

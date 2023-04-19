@@ -4,12 +4,14 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { setCookie } from "nookies";
+const loadStrings = require("@/locales/en/strings");
 
 interface LoginType {
   email: string;
   password: string;
 }
 const LoginPage = () => {
+  const strings = loadStrings;
   const methods = useForm<LoginType>({ mode: "onBlur" });
   const { logIn } = useAuth();
   const router = useRouter();
@@ -35,7 +37,7 @@ const LoginPage = () => {
   return (
     <div className="sign-up-form container mx-auto w-96 my-12 border-2 rounded-md border-gray-200">
       <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-        Log In
+        {strings.LOGIN_HEADER}
       </h2>
       <FormProvider {...methods}>
         <form
@@ -46,7 +48,7 @@ const LoginPage = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label htmlFor="" className="block mb-3 font-sans text-blue-500">
-                Email
+                {strings.LOGIN_EMAIL_LABEL}
               </label>
             </div>
             <input
@@ -61,7 +63,7 @@ const LoginPage = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label htmlFor="" className="block mb-3 font-sans text-blue-500">
-                Password
+                {strings.LOGIN_PASSWORD_LABEL}
               </label>
             </div>
 
@@ -80,12 +82,14 @@ const LoginPage = () => {
                 type="submit"
                 className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
               >
-                <p className="capitalize text-white font-normal">log in</p>
+                <p className="capitalize text-white font-normal">
+                  {strings.LOGIN_BUTTON}
+                </p>
               </button>
             </div>
             {loginError && (
               <p className="text-red-500 text-center">
-                Email or password is incorrect
+                {strings.LOGIN_ERROR_MESSAGE}
               </p>
             )}
           </div>
