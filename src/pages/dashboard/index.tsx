@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import useSWR from "swr";
+const loadStrings = require("@/locales/en/strings");
 
 const DashboardPage = () => {
+  const strings = loadStrings;
   const { lodestoneId } = parseCookies();
 
   const fetcher = async (url: string) =>
@@ -41,21 +43,27 @@ const DashboardPage = () => {
     <ProtectedRoute>
       <div className="flex py-2 container mx-auto text-slate-900">
         <div className="px-12 py-24 mt-24 overflow-y-hidden mx-auto">
-          <h2 className="text-2xl font-semibold">Character Stats</h2>
+          <h2 className="text-2xl font-semibold">{strings.DASHBOARD_HEADER}</h2>
           {!lodestoneId ? (
             <div>
               <h3 className="text-1xl my-4">
-                Your character has not been set up yet.
+                {strings.DASHBOARD_NO_CHARACTER_MESSAGE}
               </h3>
               <Link legacyBehavior href="/dashboard/settings">
-                <a className="hover:underline">Settings</a>
+                <a className="hover:underline">
+                  {strings.DASHBOARD_NO_CHARACTER_BUTTON}
+                </a>
               </Link>
             </div>
           ) : (
             <div>
-              <h3 className="text-1xl my-4">Your character is set up.</h3>
+              <h3 className="text-1xl my-4">
+                {strings.DASHBOARD_CHARACTER_EXISTS_MESSAGE}
+              </h3>
               <Link legacyBehavior href="/dashboard/settings">
-                <a className="hover:underline">Go to settings</a>
+                <a className="hover:underline">
+                  {strings.DASHBOARD_CHARACTER_EXISTS_BUTTON}
+                </a>
               </Link>
             </div>
           )}

@@ -10,6 +10,22 @@
   "SIGNUP_BUTTON": "Register",
   "LOGIN_ERROR_MESSAGE": "Invalid email or password",
 
+  "DASHBOARD_HEADER": "Dashboard",
+  "DASHBOARD_NO_CHARACTER_MESSAGE": "You have no characters. Please add one to get started.",
+  "DASHBOARD_NO_CHARACTER_BUTTON": "Add Character",
+  "DASHBOARD_CHARACTER_EXISTS_MESSAGE": "Your character is already set up. You can change your character below.",
+  "DASHBOARD_CHARACTER_EXISTS_BUTTON": "Change Character",
+
+  "SETTINGS_HEADER": "Character Settings",
+  "SETTINGS_CHARACTER_NAME_LABEL": "Character Name",
+  "SETTINGS_SERVER_LABEL": "Server",
+  "SETTINGS_SEARCH_BUTTON": "Search",
+  "SETTINGS_SEARCHING_MESSAGE": "Searching for character...",
+  "SETTINGS_CHARACTER_CONFIRMATION_HEADER": "Is this your character?",
+  "SETTINGS_CHARACTER_CONFIRMATION_MESSAGE": "If this is not your character, please include both first/last name.",
+  "SETTINGS_CHARACTER_CONFIRMATION_BACK_BUTTON": "Back",
+  "SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON": "Confirm",
+
   "START_HEADER": "Choose a Class / Job",
 
   "INSTANCECONTENT_HEADER": "Choose an Instance Content Type",

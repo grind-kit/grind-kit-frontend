@@ -7,6 +7,7 @@ import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { TCharacter } from "types/global";
 import ChangesSavedPopup from "@/components/ChangesSavedPopup";
+const loadStrings = require("@/locales/en/strings");
 
 type TSettingsPageProps = {
   servers: string[];
@@ -24,6 +25,7 @@ export default function SettingsPage({
   token,
   uid,
 }: TSettingsPageProps) {
+  const strings = loadStrings;
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
     register,
@@ -60,7 +62,7 @@ export default function SettingsPage({
     <ProtectedRoute>
       <div className="settings-form container mx-auto w-80 my-12 border-2 rounded-md border-gray-200">
         <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-          Character Settings
+          {strings.SETTINGS_HEADER}
         </h2>
         <FormProvider {...methods}>
           <form
@@ -73,7 +75,7 @@ export default function SettingsPage({
                   htmlFor="characterName"
                   className="block mb-3 font-sans text-blue-500"
                 >
-                  Character Name
+                  {strings.SETTINGS_CHARACTER_NAME_LABEL}
                 </label>
               </div>
 
@@ -97,7 +99,7 @@ export default function SettingsPage({
                   htmlFor="server"
                   className="block mb-3 font-sans text-blue-500"
                 >
-                  Server
+                  {strings.SETTINGS_SERVER_LABEL}
                 </label>
               </div>
 
@@ -122,10 +124,14 @@ export default function SettingsPage({
                   type="submit"
                   className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
                 >
-                  <p className="capitalize text-white font-normal">Search</p>
+                  <p className="capitalize text-white font-normal">
+                    {strings.SETTINGS_SEARCH_BUTTON}
+                  </p>
                 </button>
               ) : (
-                <p className="text-blue-500">Searching...</p>
+                <p className="text-blue-500">
+                  {strings.SETTINGS_SEARCHING_MESSAGE}
+                </p>
               )}
             </div>
           </form>
@@ -136,28 +142,38 @@ export default function SettingsPage({
             <div className="relative max-w-screen-md mx-auto w-1/3 p-6 bg-white rounded-md flex gap-3 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
               <div className="w-full">
                 <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-                  Confirm Character
+                  {strings.SETTINGS_CHARACTER_CONFIRMATION_HEADER}
                 </h2>
-                <div className="flex flex-row mt-8 items-center justify-center">
-                  <Image
-                    src={character.Avatar}
-                    alt="Character Avatar"
-                    width={75}
-                    height={75}
-                    className="rounded-full"
-                  />
-                  <h3 className="text-xl ml-4 font-semibold text-slate-900">
-                    {character.Name} - {character.Server}
-                  </h3>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-row mt-8 items-center justify-center">
+                    <Image
+                      src={character.Avatar}
+                      alt="Character Avatar"
+                      width={75}
+                      height={75}
+                      className="rounded-full"
+                    />
+                    <h3 className="text-xl ml-4 font-semibold text-slate-900">
+                      {character.Name} - {character.Server}
+                    </h3>
+                  </div>
+                  <h4 className="text-sm font-semibold mt-8 text-slate-900">
+                    {strings.SETTINGS_CHARACTER_CONFIRMATION_MESSAGE}
+                  </h4>
                 </div>
                 <div className="flex flex-row mt-8 items-center justify-center">
                   <button
                     aria-label="Back"
                     type="submit"
-                    onClick={() => setCharacter(null)}
+                    onClick={() => {
+                      setCharacter(null);
+                      setSubmitted(false);
+                    }}
                     className={`h-12 text-center w-2/3 bg-gray-500 border-2 rounded-md hover:shadow-lg hover:bg-gray-400 text-lg transition`}
                   >
-                    <p className="capitalize text-white font-normal">Back</p>
+                    <p className="capitalize text-white font-normal">
+                      {strings.SETTINGS_CHARACTER_CONFIRMATION_BACK_BUTTON}
+                    </p>
                   </button>
                   <button
                     aria-label="Confirm"
@@ -165,7 +181,9 @@ export default function SettingsPage({
                     onClick={handleSave}
                     className={`h-12 text-center w-2/3 ml-4 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
                   >
-                    <p className="capitalize text-white font-normal">Confirm</p>
+                    <p className="capitalize text-white font-normal">
+                      {strings.SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON}
+                    </p>
                   </button>
                 </div>
               </div>
