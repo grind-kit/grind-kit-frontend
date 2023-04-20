@@ -1,34 +1,34 @@
+import { HandlerContentFinderCondition } from "@/api/api-handler";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
-import { Dungeon } from "@/api/api-handler";
+import { IGetServerSidePropsContext } from "types/global";
 
-export default function DungeonId({ initialResults }: any) {
-  const router = useRouter();
-  const { dungeonId } = router.query;
+export default function IdPage({ arrayOfContentFinderConditionDetails }: any) {
   return (
     <ProtectedRoute>
       <div>
-        <p>Dungeon #{dungeonId}</p>
-        <p>Name: {initialResults.Name}</p>
-        <p>Description: {initialResults.Description}</p>
-        <p>
-          Minimum Level:{" "}
-          {initialResults.ContentFinderCondition.ClassJobLevelRequired}
-        </p>
+        <p>Test</p>
       </div>
     </ProtectedRoute>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.query.dungeonId;
+export const getServerSideProps: GetServerSideProps = async (
+  context: IGetServerSidePropsContext
+) => {
+  const id = context.query.id;
+  const parsedId = Number(id);
 
-  const fetchedData = await Dungeon.getDungeonInfo(id);
+  const response =
+    await HandlerContentFinderCondition.getHandlerContentFinderCondition(
+      parsedId
+    );
+
+  console.log(response);
 
   return {
     props: {
-      initialResults: fetchedData,
+      arrayOfContentFinderConditionDetails: response,
     },
   };
 };

@@ -14,13 +14,11 @@ function InstanceContentResultsList({
   instanceContentType,
 }: TInstanceContentResultsListProps) {
   const router = useRouter();
-  const { level, classJobCode } = router.query;
+  const { classJobCode } = router.query;
 
   const handleInstanceContentResultClick = () => {
     router.push({
       pathname: `/classjobs/${classJobCode}/${instanceContentType}/${id}`,
-      // Pass in the level as a query for the filter
-      query: { level: level, contentTypeId: contentTypeId },
     });
   };
 

@@ -104,7 +104,7 @@ export class Bookmark {
 
 // ContentFinderCondition class
 
-export class ContentFinderCondition {
+export class ClientContentFinderCondition {
   Name: string;
   ClassJobLevelRequired: number;
   ItemLevelRequired: number;
@@ -119,7 +119,7 @@ export class ContentFinderCondition {
     this.ItemLevelRequired = ItemLevelRequired;
   }
 
-  static async getContentFinderConditionList(
+  static async getClientContentFinderConditionList(
     classJobLevel: number,
     contentTypeId: number,
     token: string | undefined

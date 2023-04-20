@@ -1,5 +1,5 @@
 import React from "react";
-import { ContentFinderCondition } from "@/api/api-client";
+import { ClientContentFinderCondition } from "@/api/api-client";
 import InstanceContentResultsList from "@/components/InstanceContentResultsList";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import {
@@ -47,22 +47,24 @@ export const getServerSideProps = async (
   const parsedLevel = Number(level);
   const { token } = parseCookies(context);
 
-  let response = null;
+  let response;
   let instanceContentType;
   let instanceContentTypeHeader;
 
-  if (level && token && response === null) {
-    response = await ContentFinderCondition.getContentFinderConditionList(
-      parsedLevel,
-      contentTypeId,
-      token
-    );
-  }
+  response =
+    level && token
+      ? await ClientContentFinderCondition.getClientContentFinderConditionList(
+          parsedLevel,
+          contentTypeId,
+          token
+        )
+      : null;
 
   switch (contentTypeId) {
     default:
       instanceContentTypeHeader = "";
       instanceContentType = "";
+      break;
     case "2":
       instanceContentTypeHeader = strings.DUNGEONS_HEADER;
       instanceContentType = strings.DUNGEONS_CONTENT_TYPE;
@@ -70,9 +72,11 @@ export const getServerSideProps = async (
     case "4":
       instanceContentTypeHeader = strings.TRIALS_HEADER;
       instanceContentType = strings.TRIALS_CONTENT_TYPE;
+      break;
     case "5":
       instanceContentTypeHeader = strings.RAIDS_HEADER;
       instanceContentType = strings.RAIDS_CONTENT_TYPE;
+      break;
   }
 
   return {

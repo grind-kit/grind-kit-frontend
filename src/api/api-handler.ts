@@ -1,4 +1,6 @@
 import axios from "axios";
+const loadQueryStrings = require("./queryStrings/queryStrings");
+const queryStrings = loadQueryStrings;
 
 // Character class
 
@@ -16,52 +18,24 @@ export class Character {
   }
 }
 
-// Dungeon class
+// ContentFinderCondition class
 
-export class Dungeon {
+export class HandlerContentFinderCondition {
+  ID: number;
   Name: string;
-  Description: string;
-  Banner: string;
-  InstanceClearExp: number;
-  InstanceClearGil: number;
-  ContentType: {
-    IconHD: string;
-  };
-  ItemLevelRequired: number;
-  ContentFinderCondition: {
-    ClassJobLevelRequired: number;
-  };
+  Image: string;
 
-  constructor(
-    Name: string,
-    Description: string,
-    Banner: string,
-    InstanceClearExp: number,
-    InstanceClearGil: number,
-    ContentType: {
-      IconHD: string;
-    },
-    ItemLevelRequired: number,
-    ContentFinderCondition: {
-      ClassJobLevelRequired: number;
-    }
-  ) {
+  constructor(ID: number, Name: string, Image: string) {
+    this.ID = ID;
     this.Name = Name;
-    this.Description = Description;
-    this.Banner = Banner;
-    this.InstanceClearExp = InstanceClearExp;
-    this.InstanceClearGil = InstanceClearGil;
-    this.ContentType = ContentType;
-    this.ItemLevelRequired = ItemLevelRequired;
-    this.ContentFinderCondition = ContentFinderCondition;
+    this.Image = Image;
   }
 
-  static async getDungeonInfo(id: string | string[] | undefined) {
+  static async getHandlerContentFinderCondition(id: number) {
     try {
       const response = await axios.get(
-        `${process.env.XIVAPI_URL}InstanceContent/${id}?private_key=${process.env.XIVAPI_KEY}&language=en&columns=Name,Description,Banner,InstanceClearExp,InstanceClearGil,ContentType.IconHD,ItemLevelRequired,ContentFinderCondition.ClassJobLevelRequired`
+        `${process.env.XIVAPI_URL}contentfindercondition/${id}?private_key=${process.env.XIVAPI_KEY}&${queryStrings.GET_HANDLER_CONTENT_FINDER_CONDITION}`
       );
-
       return response.data;
     } catch (error) {
       console.error(error);

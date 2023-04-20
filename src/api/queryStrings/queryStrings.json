@@ -1,0 +1,3 @@
+{
+    "GET_HANDLER_CONTENT_FINDER_CONDITION": "columns=ID,Name,Image,Description"
+}
