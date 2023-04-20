@@ -3,6 +3,7 @@ function getData() {
     {
       instanceContentId: 0,
       instanceContentType: "dungeons",
+      // The contentTypeId is set by the API
       contentTypeId: 2,
     },
     {
@@ -10,6 +11,11 @@ function getData() {
       instanceContentType: "trials",
       contentTypeId: 4,
     },
+    {
+      instanceContentId: 2,
+      instanceContentType: "raids",
+      contentTypeId: 5,
+    }
   ];
 
   const data = localStorage.getItem("characterData");

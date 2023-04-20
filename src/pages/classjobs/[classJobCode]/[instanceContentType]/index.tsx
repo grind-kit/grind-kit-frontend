@@ -70,6 +70,9 @@ export const getServerSideProps = async (
     case "4":
       instanceContentTypeHeader = strings.TRIALS_HEADER;
       instanceContentType = strings.TRIALS_CONTENT_TYPE;
+    case "5":
+      instanceContentTypeHeader = strings.RAIDS_HEADER;
+      instanceContentType = strings.RAIDS_CONTENT_TYPE;
   }
 
   return {
