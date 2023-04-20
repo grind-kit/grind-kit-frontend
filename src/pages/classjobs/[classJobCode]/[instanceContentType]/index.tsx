@@ -48,8 +48,8 @@ export const getServerSideProps = async (
   const { token } = parseCookies(context);
 
   let response = null;
-  let instanceContentType = null;
-  let instanceContentTypeHeader = null;
+  let instanceContentType;
+  let instanceContentTypeHeader;
 
   if (level && token && response === null) {
     response = await ContentFinderCondition.getContentFinderConditionList(
@@ -60,6 +60,9 @@ export const getServerSideProps = async (
   }
 
   switch (contentTypeId) {
+    default:
+      instanceContentTypeHeader = "";
+      instanceContentType = "";
     case "2":
       instanceContentTypeHeader = strings.DUNGEONS_HEADER;
       instanceContentType = strings.DUNGEONS_CONTENT_TYPE;
@@ -72,8 +75,8 @@ export const getServerSideProps = async (
   return {
     props: {
       arrayOfContentFinderConditions: response,
-      instanceContentTypeHeader: instanceContentTypeHeader,
-      instanceContentType: instanceContentType,
+      instanceContentTypeHeader,
+      instanceContentType,
     },
   };
 };
