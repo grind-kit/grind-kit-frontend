@@ -1,5 +1,16 @@
 {
   "INDEX_TITLE": "Grind Kit - A Final Fantasy XIV Raiding Tool",
+  "FOOTER_COPYRIGHT": "Grind Kit",
+
+  "NAV_START": "Start",
+  "NAV_DASHBOARD": "Dashboard",
+  "NAV_LOGOUT": "Logout",
+  "NAV_LOGIN": "Login",
+  "NAV_SIGNUP": "Register",
+
+  "COOKIES_POPUP_MESSAGE": "We use cookies to ensure you get the best experience on our website.",
+  "COOKIES_POPUP_BUTTON": "Got it!",
+  "COOKIES_POPUP_LINK": "Learn More",
 
   "LOGIN_HEADER": "Login to Grind Kit",
   "SIGNUP_HEADER": "Register for Grind Kit",
@@ -17,7 +28,7 @@
   "DASHBOARD_CHARACTER_EXISTS_BUTTON": "Change Character",
 
   "SETTINGS_HEADER": "Character Settings",
-  "SETTINGS_CHARACTER_NAME_LABEL": "Character Name",
+  "SETTINGS_CHARACTER_NAME_LABEL": "Full Character Name",
   "SETTINGS_SERVER_LABEL": "Server",
   "SETTINGS_SEARCH_BUTTON": "Search",
   "SETTINGS_SEARCHING_MESSAGE": "Searching for character...",

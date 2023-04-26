@@ -1,6 +1,9 @@
 import Navigation from "./navigation";
+const loadStrings = require("@/locales/en/strings");
 
 export default function Layout(props: any) {
+  const strings = loadStrings;
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navigation />
@@ -8,7 +11,7 @@ export default function Layout(props: any) {
         {props.children}
       </main>
       <footer className="flex items-center justify-center w-full h-20 text-sm border-t">
-        <>&copy; {new Date().getFullYear()} Grind Kit</>
+        <>&copy; {new Date().getFullYear()} {strings.FOOTER_COPYRIGHT}</>
       </footer>
     </div>
   );
