@@ -7,24 +7,36 @@ const loadStrings = require("@/locales/en/strings");
 function ClassJobCodePage() {
   const strings = loadStrings;
   const router = useRouter();
-  const { classJobCode } = router.query;
+  const { level, classJobCode } = router.query;
+  const parsedLevel = Number(level);
   const { arrayOfInstanceContent } = getData();
 
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-slate-900">
-          {strings.INSTANCECONTENT_HEADER}
-        </h1>
-        {arrayOfInstanceContent?.map((instanceContent) => {
-          return (
-            <InstanceContentTypeList
-              key={instanceContent.instanceContentId}
-              classJobCode={classJobCode}
-              {...instanceContent}
-            />
-          );
-        })}
+        {parsedLevel < 90 ? (
+          <>
+            <h1 className="text-3xl font-bold text-slate-900">
+              {strings.INSTANCECONTENT_HEADER}
+            </h1>
+            {arrayOfInstanceContent?.map((instanceContent) => {
+              return (
+                <InstanceContentTypeList
+                  key={instanceContent.instanceContentId}
+                  classJobCode={classJobCode}
+                  {...instanceContent}
+                />
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <h1 className="text-3xl font-bold text-slate-900">
+              {strings.MAX_LEVEL_HEADER}
+            </h1>
+            <p className="text-slate-900 mt-5">{strings.MAX_LEVEL_MESSAGE}</p>
+          </>
+        )}
       </div>
     </ProtectedRoute>
   );

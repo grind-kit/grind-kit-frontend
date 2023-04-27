@@ -38,6 +38,8 @@
   "SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON": "Confirm",
 
   "START_HEADER": "Choose a Class / Job",
+  "MAX_LEVEL_HEADER": "Congratulations!",
+  "MAX_LEVEL_MESSAGE": "You have reached the maximum level for this class / job.",
 
   "INSTANCECONTENT_HEADER": "Choose an Instance Content Type",
 

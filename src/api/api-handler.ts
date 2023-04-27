@@ -18,7 +18,7 @@ export class Character {
   }
 }
 
-// ContentFinderCondition class
+// HandlerContentFinderCondition class
 
 export class HandlerContentFinderCondition {
   ID: number;
@@ -31,7 +31,7 @@ export class HandlerContentFinderCondition {
     this.Image = Image;
   }
 
-  static async getHandlerContentFinderCondition(id: number) {
+  static async getHandlerContentFinderConditionDetails(id: number) {
     try {
       const response = await axios.get(
         `${process.env.XIVAPI_URL}contentfindercondition/${id}?private_key=${process.env.XIVAPI_KEY}&${queryStrings.GET_HANDLER_CONTENT_FINDER_CONDITION}`

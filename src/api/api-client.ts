@@ -102,7 +102,7 @@ export class Bookmark {
   }
 }
 
-// ContentFinderCondition class
+// ClientContentFinderCondition class
 
 export class ClientContentFinderCondition {
   Name: string;

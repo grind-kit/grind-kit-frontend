@@ -15,6 +15,8 @@ export default function Home() {
 
   useEffect(() => {
     const getTokenAndLodestoneId = async () => {
+      if (!user) return;
+      
       if (auth.currentUser) {
         const token = await auth.currentUser?.getIdToken();
         setToken(token);
@@ -31,7 +33,7 @@ export default function Home() {
       }
     };
     getTokenAndLodestoneId();
-  }, [user, token, lodestoneId]);
+  }, [user]);
 
   return (
     <div>

@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const parsedId = Number(id);
 
   const response =
-    await HandlerContentFinderCondition.getHandlerContentFinderCondition(
+    await HandlerContentFinderCondition.getHandlerContentFinderConditionDetails(
       parsedId
     );
 

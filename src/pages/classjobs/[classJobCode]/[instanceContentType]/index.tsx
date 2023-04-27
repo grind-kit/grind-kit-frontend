@@ -52,7 +52,7 @@ export const getServerSideProps = async (
   let instanceContentTypeHeader;
 
   response =
-    level && token
+    parsedLevel < 90 && token
       ? await ClientContentFinderCondition.getClientContentFinderConditionList(
           parsedLevel,
           contentTypeId,
