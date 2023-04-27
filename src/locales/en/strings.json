@@ -40,6 +40,8 @@
   "START_HEADER": "Choose a Class / Job",
   "MAX_LEVEL_HEADER": "Congratulations!",
   "MAX_LEVEL_MESSAGE": "You have reached the maximum level for this class / job.",
+  "MIN_LEVEL_HEADER": "Uh oh!",
+  "MIN_LEVEL_MESSAGE": "You have not reached the minimum level for this type of content.",
 
   "INSTANCECONTENT_HEADER": "Choose an Instance Content Type",
 

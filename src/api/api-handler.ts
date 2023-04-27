@@ -24,17 +24,19 @@ export class HandlerContentFinderCondition {
   ID: number;
   Name: string;
   Image: string;
+  Description: string;
 
-  constructor(ID: number, Name: string, Image: string) {
+  constructor(ID: number, Name: string, Image: string, Description: string) {
     this.ID = ID;
     this.Name = Name;
     this.Image = Image;
+    this.Description = Description;
   }
 
   static async getHandlerContentFinderConditionDetails(id: number) {
     try {
       const response = await axios.get(
-        `${process.env.XIVAPI_URL}contentfindercondition/${id}?private_key=${process.env.XIVAPI_KEY}&${queryStrings.GET_HANDLER_CONTENT_FINDER_CONDITION}`
+        `${process.env.XIVAPI_URL}contentfindercondition/${id}?private_key=${process.env.XIVAPI_KEY}&${queryStrings.GET_HANDLER_CONTENT_FINDER_CONDITION_DETAILS}`
       );
       return response.data;
     } catch (error) {

@@ -8,31 +8,44 @@ import {
   IGetServerSidePropsContext,
 } from "types/global";
 import { parseCookies } from "nookies";
+const loadStrings = require("@/locales/en/strings");
 
 export default function InstanceContentTypePage({
   arrayOfContentFinderConditions,
   instanceContentTypeHeader,
   instanceContentType,
 }: TInstanceContentPageProps) {
+  const strings = loadStrings;
+
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-slate-900">
-          {instanceContentTypeHeader}
-        </h1>
-        {/* Convert this to a modular function */}
-        {arrayOfContentFinderConditions
-          ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
-          .slice(0, 4)
-          .map((contentFinderCondition: TContentFinderCondition) => {
-            return (
-              <InstanceContentResultsList
-                key={contentFinderCondition.id}
-                contentFinderCondition={contentFinderCondition}
-                instanceContentType={instanceContentType}
-              />
-            );
-          })}
+        {arrayOfContentFinderConditions ? (
+          <>
+            <h1 className="text-3xl font-bold text-slate-900">
+              {instanceContentTypeHeader}
+            </h1>
+            {arrayOfContentFinderConditions
+              ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
+              .slice(0, 4)
+              .map((contentFinderCondition: TContentFinderCondition) => {
+                return (
+                  <InstanceContentResultsList
+                    key={contentFinderCondition.id}
+                    contentFinderCondition={contentFinderCondition}
+                    instanceContentType={instanceContentType}
+                  />
+                );
+              })}
+          </>
+        ) : (
+          <>
+            <h1 className="text-3xl font-bold text-slate-900">
+              {strings.MIN_LEVEL_HEADER}
+            </h1>
+            <p className="text-slate-900 mt-5">{strings.MIN_LEVEL_MESSAGE}</p>
+          </>
+        )}
       </div>
     </ProtectedRoute>
   );
@@ -51,14 +64,18 @@ export const getServerSideProps = async (
   let instanceContentType;
   let instanceContentTypeHeader;
 
-  response =
-    parsedLevel < 90 && token
-      ? await ClientContentFinderCondition.getClientContentFinderConditionList(
-          parsedLevel,
-          contentTypeId,
-          token
-        )
-      : null;
+  if (parsedLevel < 90 && token) {
+    response =
+      await ClientContentFinderCondition.getClientContentFinderConditionList(
+        parsedLevel,
+        contentTypeId,
+        token
+      );
+  }
+
+  if (typeof response === "undefined") {
+    response = null;
+  }
 
   switch (contentTypeId) {
     default:

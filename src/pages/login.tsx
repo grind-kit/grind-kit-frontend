@@ -63,7 +63,7 @@ const LoginPage = () => {
           <div className="mt-8">
             <div className="flex items-center justify-between">
               <label htmlFor="" className="block mb-3 font-sans text-blue-500">
-                {strings.AUTH_EMAIL_LABEL}
+                {strings.AUTH_PASSWORD_LABEL}
               </label>
             </div>
 

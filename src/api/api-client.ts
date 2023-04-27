@@ -125,7 +125,11 @@ export class ClientContentFinderCondition {
     token: string | undefined
   ) {
     try {
-      const minClassJobLevel = classJobLevel - 2;
+      let minClassJobLevel;
+
+      if (classJobLevel <= 2) {
+        minClassJobLevel = 0;
+      } else minClassJobLevel = classJobLevel - 2;
 
       const response = await axios.get(
         `${process.env.BACKEND_URL}/conditions`,
@@ -140,7 +144,9 @@ export class ClientContentFinderCondition {
           },
         }
       );
-      
+
+      if (response.data === undefined) return null;
+
       const data = camelcaseKeys(response.data, { deep: true });
 
       return data;

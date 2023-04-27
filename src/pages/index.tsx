@@ -17,7 +17,7 @@ export default function Home() {
     const getTokenAndLodestoneId = async () => {
       if (!user) return;
       
-      if (auth.currentUser) {
+      else if (auth.currentUser) {
         const token = await auth.currentUser?.getIdToken();
         setToken(token);
         document.cookie = `token=${token}; path=/`;
