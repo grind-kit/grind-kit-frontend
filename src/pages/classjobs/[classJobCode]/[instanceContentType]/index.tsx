@@ -1,13 +1,12 @@
 import React from "react";
 import { ClientContentFinderCondition } from "@/api/api-client";
-import InstanceContentResultsList from "@/components/InstanceContentResultsList";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import {
-  TContentFinderCondition,
   TInstanceContentPageProps,
   IGetServerSidePropsContext,
 } from "types/global";
 import { parseCookies } from "nookies";
+import ContentSorter from "@/components/ContentSorter";
 const loadStrings = require("@/locales/en/strings");
 
 export default function InstanceContentTypePage({
@@ -25,18 +24,7 @@ export default function InstanceContentTypePage({
             <h1 className="text-3xl font-bold text-slate-900">
               {instanceContentTypeHeader}
             </h1>
-            {arrayOfContentFinderConditions
-              ?.sort((a, b) => b.itemLevelRequired - a.itemLevelRequired)
-              .slice(0, 4)
-              .map((contentFinderCondition: TContentFinderCondition) => {
-                return (
-                  <InstanceContentResultsList
-                    key={contentFinderCondition.id}
-                    contentFinderCondition={contentFinderCondition}
-                    instanceContentType={instanceContentType}
-                  />
-                );
-              })}
+            <ContentSorter arrayOfContentFinderConditions={arrayOfContentFinderConditions} instanceContentType={instanceContentType} />
           </>
         ) : (
           <>

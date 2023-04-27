@@ -60,6 +60,11 @@ export type TContentFinderCondition = {
   acceptClassJobCategory: JSON;
 };
 
+export type TContentSorterProps = {
+  arrayOfContentFinderConditions: Array<TContentFinderCondition>  | null;
+  instanceContentType: string;
+}
+
 export type TInstanceContentResultsListProps = {
   contentFinderCondition: TContentFinderCondition;
   instanceContentType: string;
