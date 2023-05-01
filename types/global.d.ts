@@ -104,8 +104,13 @@ export type TCharacter = {
 
 export type TIdPage = {
   id: number;
-  icon: string;
+  typeName: string;
+  typeIcon: string;
   name: string;
   description: string;
   banner: string;
+  classJobLevel: number;
+  itemLevel: number;
+  regionIcon: string;
+  regionName: string;
 };

@@ -8,10 +8,15 @@ const loadStrings = require("@/locales/en/strings");
 
 export default function IdPage({
   id,
-  icon,
+  typeName,
+  typeIcon,
   name,
   description,
   banner,
+  classJobLevel,
+  itemLevel,
+  regionIcon,
+  regionName,
 }: TIdPage) {
   const strings = loadStrings;
 
@@ -27,9 +32,12 @@ export default function IdPage({
         </h2>
         <div className="mt-5 grid grid-cols-2 gap-5">
           <div className="w-full flex flex-col bg-gray-200 p-4 rounded-md">
-            <div className="flex flex-row justify-center gap-5">
+            <span className="text-slate-900 uppercase font-bold tracking-wide text-center">
+              {typeName}
+            </span>
+            <div className="flex flex-row justify-center gap-5 mt-5">
               <Image
-                src={handleImage(icon)}
+                src={handleImage(typeIcon)}
                 alt="The icon for the instance content type"
                 width={32}
                 height={32}
@@ -45,6 +53,36 @@ export default function IdPage({
               width={376}
               height={120}
             />
+            <div className="mt-5 grid grid-cols-2 grid-rows-2">
+              <h4 className="text-slate-900 text-xl uppercase font-bold tracking-wide">
+                {strings.DETAILS_REQUIREMENTS_LABEL}
+              </h4>
+              <div className="flex flex-row gap-3">
+                <span className="text-slate-900 capitalize font-bold tracking-wide">
+                  {strings.DETAILS_LEVEL_LABEL} {classJobLevel}
+                </span>
+                <span className="text-slate-900 capitalize font-bold tracking-wide">
+                  {strings.DETAILS_ILVL_LABEL} {itemLevel}
+                </span>
+              </div>
+              <h4 className="text-slate-900 text-xl uppercase font-bold tracking-wide">
+                {strings.DETAILS_LOCATION_LABEL}
+              </h4>
+              <div className="flex flex-row gap-3">
+                <Image
+                  src={handleImage(regionIcon)}
+                  alt="The icon for the region the instance content is located in"
+                  width={32}
+                  height={32}
+                />
+                <span className="text-slate-900 capitalize font-bold tracking-wide">
+                  {regionName}
+                </span>
+              </div>
+            </div>
+            <span className="text-slate-900 uppercase font-bold tracking-wide mt-5 text-center">
+              {strings.DETAILS_DESCRIPTION_LABEL}
+            </span>
             <p className="mt-5 text-slate-900 leading-relaxed">{description}</p>
           </div>
           <div>02</div>
@@ -76,10 +114,15 @@ export const getServerSideProps: GetServerSideProps = async (
   return {
     props: {
       id: response.ID,
-      icon: response.ContentType.Icon,
+      typeName: response.ContentType.Name,
+      typeIcon: response.ContentType.Icon,
       name: response.Name,
       description: response.Description,
       banner: response.Image,
+      classJobLevel: response.ClassJobLevelRequired,
+      itemLevel: response.ItemLevelRequired,
+      regionIcon: response.TerritoryType.Map.PlaceNameRegion.Icon,
+      regionName: response.TerritoryType.Map.PlaceNameRegion.Name,
     },
   };
 };
