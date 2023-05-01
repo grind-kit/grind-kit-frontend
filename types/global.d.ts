@@ -107,5 +107,5 @@ export type TIdPage = {
   icon: string;
   name: string;
   description: string;
-  image: string;
+  banner: string;
 };

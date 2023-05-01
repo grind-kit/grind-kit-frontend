@@ -3,6 +3,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { GetServerSideProps } from "next";
 import { IGetServerSidePropsContext } from "types/global";
 import { TIdPage } from "types/global";
+import Image from "next/image";
 const loadStrings = require("@/locales/en/strings");
 
 export default function IdPage({
@@ -10,9 +11,13 @@ export default function IdPage({
   icon,
   name,
   description,
-  image,
+  banner,
 }: TIdPage) {
   const strings = loadStrings;
+
+  function handleImage(src: string) {
+    return `${process.env.XIVAPI_URL}` + src;
+  }
 
   return (
     <ProtectedRoute>
@@ -22,13 +27,24 @@ export default function IdPage({
         </h2>
         <div className="mt-5 grid grid-cols-2 gap-5">
           <div className="w-full flex flex-col bg-gray-200 p-4 rounded-md">
-            <div className="flex flex-row justify-center">
-              <img src={icon} />
-              <h3 className="ml-5 capitalize text-2xl font-bold text-slate-900">
+            <div className="flex flex-row justify-center gap-5">
+              <Image
+                src={handleImage(icon)}
+                alt="The icon for the instance content type"
+                width={32}
+                height={32}
+              />
+              <h3 className="capitalize text-2xl font-bold text-slate-900">
                 {name}
               </h3>
             </div>
-            <img className="mt-5" src={image} />
+            <Image
+              className="mt-5 mx-auto"
+              src={handleImage(banner)}
+              alt="The banner image for the instance content"
+              width={376}
+              height={120}
+            />
             <p className="mt-5 text-slate-900 leading-relaxed">{description}</p>
           </div>
           <div>02</div>
@@ -44,28 +60,26 @@ export const getServerSideProps: GetServerSideProps = async (
   const id = context.query.id;
   const parsedId = Number(id);
   let response = null;
-  let iconSrc = null;
-  let imageSrc = null;
 
   response =
     await HandlerContentFinderCondition.getHandlerContentFinderConditionDetails(
       parsedId
     );
 
-  if (response) {
-    imageSrc = `${process.env.XIVAPI_URL}` + response.Image;
-    iconSrc = `${process.env.XIVAPI_URL}` + response.ContentType.Icon;
-  } else if (typeof response === "undefined") response = null;
+  if (typeof response === "undefined") response = null;
+
+  // Set cache-control header for images
+  context.res.setHeader("Cache-Control", "public, max-age=86400");
 
   console.log(response);
 
   return {
     props: {
       id: response.ID,
-      icon: iconSrc,
+      icon: response.ContentType.Icon,
       name: response.Name,
       description: response.Description,
-      image: imageSrc,
+      banner: response.Image,
     },
   };
 };
