@@ -24,7 +24,10 @@ export default function InstanceContentTypePage({
             <h2 className="text-3xl font-bold text-slate-900">
               {instanceContentTypeHeader}
             </h2>
-            <ContentSorter arrayOfContentFinderConditions={arrayOfContentFinderConditions} instanceContentType={instanceContentType} />
+            <ContentSorter
+              arrayOfContentFinderConditions={arrayOfContentFinderConditions}
+              instanceContentType={instanceContentType}
+            />
           </>
         ) : (
           <>
@@ -61,9 +64,7 @@ export const getServerSideProps = async (
       );
   }
 
-  if (typeof response === "undefined") {
-    response = null;
-  }
+  if (typeof response === "undefined") response = null;
 
   switch (contentTypeId) {
     default:

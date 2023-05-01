@@ -61,9 +61,9 @@ export type TContentFinderCondition = {
 };
 
 export type TContentSorterProps = {
-  arrayOfContentFinderConditions: Array<TContentFinderCondition>  | null;
+  arrayOfContentFinderConditions: Array<TContentFinderCondition> | null;
   instanceContentType: string;
-}
+};
 
 export type TInstanceContentResultsListProps = {
   contentFinderCondition: TContentFinderCondition;
@@ -100,4 +100,12 @@ export type TCharacter = {
   Rank: number | null;
   RankIcon: string | null;
   Server: string;
+};
+
+export type TIdPage = {
+  id: number;
+  icon: string;
+  name: string;
+  description: string;
+  image: string;
 };
