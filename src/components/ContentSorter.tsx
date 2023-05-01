@@ -2,7 +2,6 @@ import React from "react";
 import { TContentFinderCondition } from "types/global";
 import InstanceContentResultsList from "@/components/InstanceContentResultsList";
 import { TContentSorterProps } from "types/global";
-import { render } from "react-dom";
 
 // Sorts the content finder conditions by item level required and returns the first 4 in O(n log n) time complexity
 

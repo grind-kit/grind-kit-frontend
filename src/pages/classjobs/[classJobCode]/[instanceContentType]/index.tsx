@@ -21,9 +21,9 @@ export default function InstanceContentTypePage({
       <div className="w-full flex flex-col items-center">
         {arrayOfContentFinderConditions ? (
           <>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h2 className="text-3xl font-bold text-slate-900">
               {instanceContentTypeHeader}
-            </h1>
+            </h2>
             <ContentSorter arrayOfContentFinderConditions={arrayOfContentFinderConditions} instanceContentType={instanceContentType} />
           </>
         ) : (

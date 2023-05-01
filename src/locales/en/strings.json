@@ -52,5 +52,7 @@
   "TRIALS_CONTENT_TYPE": "trials",
 
   "RAIDS_HEADER": "Recommended Raids",
-  "RAIDS_CONTENT_TYPE": "raids"
+  "RAIDS_CONTENT_TYPE": "raids",
+
+  "DETAILS_HEADER": "Additional Details"
 }

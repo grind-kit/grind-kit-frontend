@@ -20,9 +20,9 @@ function ClassJobsPage() {
   return (
     <ProtectedRoute>
       <div className="w-full flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-slate-900">
+        <h2 className="text-3xl font-bold text-slate-900">
           {strings.START_HEADER}
-        </h1>
+        </h2>
         {arrayOfRoles?.map((role) => {
           return <RoleAccordion key={role.roleId} {...role} />;
         })}

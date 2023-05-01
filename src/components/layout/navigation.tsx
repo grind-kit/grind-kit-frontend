@@ -24,7 +24,9 @@ export default function Navigation() {
     <header className="container flex flex-row items-center mx-auto px-5 py-14 max-w-screen-lg">
       <Link legacyBehavior href="/">
         {/* To be replaced with a logo */}
-        <a className="text-4xl font-bold text-blue-500">Grind Kit</a>
+        <a>
+          <h1 className="text-4xl font-bold text-blue-500">Grind Kit</h1>
+        </a>
       </Link>
       <nav className="ml-auto text-slate-900">
         {authenticated && authenticated !== "false" ? (
