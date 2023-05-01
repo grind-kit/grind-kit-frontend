@@ -66,10 +66,10 @@ export const getServerSideProps: GetServerSideProps = async (
       parsedId
     );
 
-  if (typeof response === "undefined") response = null;
-
-  // Set cache-control header for images
-  context.res.setHeader("Cache-Control", "public, max-age=86400");
+  if (response) {
+    // Set cache-control header for images
+    context.res.setHeader("Cache-Control", "public, max-age=86400");
+  } else if (typeof response === "undefined") response = null;
 
   console.log(response);
 
