@@ -16,9 +16,9 @@ function ClassJobCodePage() {
       <div className="w-full flex flex-col items-center">
         {parsedLevel < 90 ? (
           <>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h2 className="text-3xl font-bold text-slate-900">
               {strings.INSTANCECONTENT_HEADER}
-            </h1>
+            </h2>
             {arrayOfInstanceContent?.map((instanceContent) => {
               return (
                 <InstanceContentTypeList
@@ -31,9 +31,9 @@ function ClassJobCodePage() {
           </>
         ) : (
           <>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h2 className="text-3xl font-bold text-slate-900">
               {strings.MAX_LEVEL_HEADER}
-            </h1>
+            </h2>
             <p className="text-slate-900 mt-5">{strings.MAX_LEVEL_MESSAGE}</p>
           </>
         )}
