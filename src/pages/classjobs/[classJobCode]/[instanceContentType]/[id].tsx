@@ -36,7 +36,7 @@ export default function IdPage({
         </thead>
         <tbody>
           <tr className="mt-5 grid grid-cols-2 gap-5">
-            <td className="w-full flex flex-col bg-gray-200 p-4 rounded-md">
+            <td className="w-full flex flex-col bg-gray-200 p-4 rounded-md shadow-md">
               <header className="flex flex-col items-center font-bold">
                 <h3 className="uppercase tracking-wide">{typeName}</h3>
                 <div className="flex flex-row justify-center gap-5 mt-5">

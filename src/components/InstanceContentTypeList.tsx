@@ -21,7 +21,7 @@ function InstanceContentTypeList({
   return (
     <div className="w-full flex flex-col items-center font-bold text-slate-900">
       <div
-        className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 rounded-md mt-5 p-4 text-transform: capitalize"
+        className="w-full hover:cursor-pointer bg-gray-200 hover:bg-gray-300 shadow-md rounded-md mt-5 p-4 text-transform: capitalize"
         onClick={handleInstanceContentTypeClick}
       >
         <div className="flex flex-row items-center justify-between text-2xl">

@@ -31,7 +31,7 @@ function getData() {
     {
       roleId: 0,
       roleType: "tank",
-      bg: "bg-blue-600",
+      bg: "bg-blue-600 shadow-md",
       hover: "hover:bg-blue-700",
       roleData: [
         {
@@ -67,7 +67,7 @@ function getData() {
     {
       roleId: 1,
       roleType: "healer",
-      bg: "bg-green-600",
+      bg: "bg-green-600 shadow-md",
       hover: "hover:bg-green-700",
       roleData: [
         {
@@ -103,7 +103,7 @@ function getData() {
     {
       roleId: 2,
       roleType: "melee DPS",
-      bg: "bg-red-600",
+      bg: "bg-red-600 shadow-md",
       hover: "hover:bg-red-700",
       roleData: [
         {
@@ -146,7 +146,7 @@ function getData() {
     {
       roleId: 3,
       roleType: "physical ranged DPS",
-      bg: "bg-red-600",
+      bg: "bg-red-600 shadow-md",
       hover: "hover:bg-red-700",
       roleData: [
         {
@@ -175,7 +175,7 @@ function getData() {
     {
       roleId: 4,
       roleType: "magical ranged DPS",
-      bg: "bg-red-600",
+      bg: "bg-red-600 shadow-md",
       hover: "hover:bg-red-700",
       roleData: [
         {
