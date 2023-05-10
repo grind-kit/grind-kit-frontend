@@ -16,7 +16,6 @@ export default function Home() {
   useEffect(() => {
     const getTokenAndLodestoneId = async () => {
       if (!user) return;
-      
       else if (auth.currentUser) {
         const token = await auth.currentUser?.getIdToken();
         setToken(token);
@@ -34,6 +33,27 @@ export default function Home() {
     };
     getTokenAndLodestoneId();
   }, [user]);
+
+  useEffect(() => {
+    handleNewToken();
+
+    const interval = setInterval(() => {
+      handleNewToken();
+      // Time: 1 hour
+    }, 60 * 60 * 1000);
+
+    // Clear interval if the component is unmounted
+    return () => clearInterval(interval);
+  }, []);
+
+  async function handleNewToken() {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const token = await user.getIdToken();
+    setToken(token);
+    document.cookie = `token=${token}; path=/`;
+  }
 
   return (
     <div>
