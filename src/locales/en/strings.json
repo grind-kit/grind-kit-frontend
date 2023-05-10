@@ -55,9 +55,9 @@
   "RAIDS_CONTENT_TYPE": "raids",
 
   "DETAILS_HEADER": "Additional Details",
-  "DETAILS_REQUIREMENTS_LABEL": "Requirements:",
-  "DETAILS_LEVEL_LABEL": "Lvl:",
-  "DETAILS_ILVL_LABEL": "ILvl:",
-  "DETAILS_LOCATION_LABEL": "Where to Unlock:",
+  "DETAILS_REQUIREMENTS_LABEL": "Requirements",
+  "DETAILS_LEVEL_LABEL": "Lvl: ",
+  "DETAILS_ILVL_LABEL": "ILvl: ",
+  "DETAILS_LOCATION_LABEL": "Where to Unlock",
   "DETAILS_DESCRIPTION_LABEL": "Description"
 }
