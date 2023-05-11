@@ -29,14 +29,14 @@ export default function IdPage({
       <table className="text-slate-900">
         <thead className="w-full flex flex-col items-center">
           <tr>
-            <th colSpan={2} className="w-full">
+            <th colSpan={2}>
               <h2 className="text-3xl font-bold">{strings.DETAILS_HEADER}</h2>
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="w-full">
           <tr className="mt-5 grid grid-cols-2 gap-5">
-            <td className="w-full flex flex-col bg-gray-200 p-4 rounded-md shadow-md">
+            <td className="flex flex-col bg-gray-200 p-4 rounded-md shadow-md">
               <header className="flex flex-col items-center font-bold">
                 <h3 className="uppercase tracking-wide">{typeName}</h3>
                 <div className="flex flex-row justify-center gap-5 mt-5">
@@ -91,7 +91,17 @@ export default function IdPage({
               </section>
             </td>
 
-            <td>02</td>
+            <td className="flex flex-col bg-gray-200 p-4 rounded-md shadow-md">
+              <header className="flex flex-col items-center font-bold">
+                <h3 className="tracking-wide uppercase">
+                  {strings.DETAILS_INTERACT_LABEL}
+                </h3>
+              </header>
+
+              <section className="mt-5 flex flex-col items-center">
+                
+              </section>
+            </td>
           </tr>
         </tbody>
       </table>
