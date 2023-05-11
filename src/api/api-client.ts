@@ -8,20 +8,20 @@ export class User {
   username: string;
   email: string;
   created: string;
-  lodestone_id: number | null;
+  lodestoneId: number | null;
 
   constructor(
     id: number,
     username: string,
     email: string,
     created: string,
-    lodestone_id: number | null
+    lodestoneId: number | null
   ) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.created = created;
-    this.lodestone_id = lodestone_id;
+    this.lodestoneId = lodestoneId;
   }
 
   static async getUserInfo(username: string, token: string | null | undefined) {
@@ -69,26 +69,39 @@ export class User {
 
 export class Bookmark {
   user: number;
-  instance_id: number;
-  value: boolean;
+  contentTypeId: number;
+  contentFinderConditionId: number;
+  value: number;
   created: string;
 
   constructor(
     user: number,
-    instance_id: number,
-    value: boolean,
+    contentTypeId: number,
+    contentFinderConditionId: number,
+    value: number,
     created: string
   ) {
     this.user = user;
-    this.instance_id = instance_id;
+    this.contentTypeId = contentTypeId;
+    this.contentFinderConditionId = contentFinderConditionId;
     this.value = value;
     this.created = created;
   }
 
-  static async getBookmarks(user: number, token: string) {
+  static async postBookmark(
+    user: number,
+    token: string,
+    contentTypeId: number,
+    contentFinderConditionId: number
+  ) {
     try {
-      const response = await axios.get(
-        `${process.env.BACKEND_URL}/bookmarks/${user}`,
+      const response = await axios.post(
+        `${process.env.BACKEND_URL}/users/${user}/bookmarks`,
+        {
+          user: user,
+          content_type_id: contentTypeId,
+          content_finder_condition_id: contentFinderConditionId,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -9,6 +9,8 @@ const DashboardPage = () => {
   const strings = loadStrings;
   const { lodestoneId } = parseCookies();
 
+  console.log(lodestoneId);
+
   const fetcher = async (url: string) =>
     await fetch(url).then((res) => {
       if (res.ok) {

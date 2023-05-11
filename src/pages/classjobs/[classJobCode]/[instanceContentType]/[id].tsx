@@ -4,6 +4,7 @@ import { GetServerSideProps } from "next";
 import { IGetServerSidePropsContext } from "types/global";
 import { TIdPage } from "types/global";
 import Image from "next/image";
+import { Bookmark } from "@/api/api-client";
 const loadStrings = require("@/locales/en/strings");
 
 export default function IdPage({
@@ -99,7 +100,7 @@ export default function IdPage({
               </header>
 
               <section className="mt-5 flex flex-col items-center">
-                
+                <Bookmark contentFinderConditionId={id} />
               </section>
             </td>
           </tr>
