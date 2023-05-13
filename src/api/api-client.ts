@@ -1,5 +1,6 @@
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
+import { auth } from "@/firebase/firebase";
 
 // User class
 
@@ -65,23 +66,23 @@ export class User {
   }
 }
 
-// Bookmark class
+// InstanceContentBookmark class
 
 export class Bookmark {
-  user: number;
+  userId: number;
   contentTypeId: number;
   contentFinderConditionId: number;
   value: number;
   created: string;
 
   constructor(
-    user: number,
+    userId: number,
     contentTypeId: number,
     contentFinderConditionId: number,
     value: number,
     created: string
   ) {
-    this.user = user;
+    this.userId = userId;
     this.contentTypeId = contentTypeId;
     this.contentFinderConditionId = contentFinderConditionId;
     this.value = value;
@@ -89,18 +90,18 @@ export class Bookmark {
   }
 
   static async postBookmark(
-    user: number,
+    userId: number,
     token: string,
     contentTypeId: number,
     contentFinderConditionId: number
   ) {
     try {
       const response = await axios.post(
-        `${process.env.BACKEND_URL}/users/${user}/bookmarks`,
+        `${process.env.BACKEND_URL}/users/${userId}/bookmarks`,
         {
-          user: user,
           content_type_id: contentTypeId,
-          content_finder_condition_id: contentFinderConditionId,
+          content_finder_condition: contentFinderConditionId,
+          value: 1,
         },
         {
           headers: {
@@ -108,6 +109,7 @@ export class Bookmark {
           },
         }
       );
+
       return response.data;
     } catch (error) {
       console.error(error);

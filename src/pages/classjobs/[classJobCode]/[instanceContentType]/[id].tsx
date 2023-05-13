@@ -4,11 +4,12 @@ import { GetServerSideProps } from "next";
 import { IGetServerSidePropsContext } from "types/global";
 import { TIdPage } from "types/global";
 import Image from "next/image";
-import { Bookmark } from "@/api/api-client";
+import BookmarkIcon from "@/components/BookmarkIcon";
 const loadStrings = require("@/locales/en/strings");
 
 export default function IdPage({
   id,
+  typeId,
   typeName,
   typeIcon,
   name,
@@ -100,7 +101,10 @@ export default function IdPage({
               </header>
 
               <section className="mt-5 flex flex-col items-center">
-                <Bookmark contentFinderConditionId={id} />
+                <BookmarkIcon
+                  contentFinderConditionId={id}
+                  contentTypeId={typeId}
+                />
               </section>
             </td>
           </tr>
@@ -127,11 +131,10 @@ export const getServerSideProps: GetServerSideProps = async (
     context.res.setHeader("Cache-Control", "public, max-age=86400");
   } else if (typeof response === "undefined") response = null;
 
-  console.log(response);
-
   return {
     props: {
       id: response.ID,
+      typeId: response.ContentType.ID,
       typeName: response.ContentType.Name,
       typeIcon: response.ContentType.Icon,
       name: response.Name,
