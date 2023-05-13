@@ -104,6 +104,7 @@ export type TCharacter = {
 
 export type TIdPage = {
   id: number;
+  typeId: number;
   typeName: string;
   typeIcon: string;
   name: string;

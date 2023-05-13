@@ -1,3 +1,3 @@
 {
-  "GET_HANDLER_CONTENT_FINDER_CONDITION_DETAILS": "language=en&columns=ID,Name,Image,Description,ContentType.Icon,ContentType.Name,ClassJobLevelRequired,ItemLevelRequired,TerritoryType.Map.PlaceNameRegion.Icon,TerritoryType.Map.PlaceNameRegion.Name"
+  "GET_HANDLER_CONTENT_FINDER_CONDITION_DETAILS": "language=en&columns=ID,Name,Image,Description,ContentType.ID,ContentType.Icon,ContentType.Name,ClassJobLevelRequired,ItemLevelRequired,TerritoryType.Map.PlaceNameRegion.Icon,TerritoryType.Map.PlaceNameRegion.Name"
 }

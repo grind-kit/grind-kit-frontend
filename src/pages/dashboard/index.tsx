@@ -7,9 +7,9 @@ const loadStrings = require("@/locales/en/strings");
 
 const DashboardPage = () => {
   const strings = loadStrings;
-  const { lodestoneId } = parseCookies();
+  const { id, token, lodestoneId } = parseCookies();
 
-  const fetcher = async (url: string) =>
+  const characterDataFetcher = async (url: string) =>
     await fetch(url).then((res) => {
       if (res.ok) {
         return res.json();
@@ -18,9 +18,48 @@ const DashboardPage = () => {
       }
     });
 
-  const { data, error } = useSWR(
-    `https://xivapi.com/character/${lodestoneId}`,
-    fetcher,
+  const bookmarkDataFetcher = async (url: string) => {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Character data
+
+  useSWR(`https://xivapi.com/character/${lodestoneId}`, characterDataFetcher, {
+    refreshInterval: 60000, // fetch every 60 seconds
+    dedupingInterval: 300000, // wait 5 minutes before fetching again
+    revalidateOnFocus: false, // don't revalidate when the window is focused
+    shouldRetryOnError: false, // don't retry on error
+    errorRetryCount: 1, // retry once
+    errorRetryInterval: 5000, // retry after 5 seconds
+    compare: (prevData, newData) =>
+      JSON.stringify(prevData) === JSON.stringify(newData),
+    initialData: localStorage.getItem("characterData")
+      ? JSON.parse(localStorage.getItem("characterData")!)
+      : undefined,
+    onSuccess: (data) => {
+      localStorage.setItem("characterData", JSON.stringify(data));
+    },
+  });
+
+  // Bookmarks
+
+  useSWR(
+    `${process.env.BACKEND_URL}/users/${id}/bookmarks`,
+    bookmarkDataFetcher,
     {
       refreshInterval: 60000, // fetch every 60 seconds
       dedupingInterval: 300000, // wait 5 minutes before fetching again
@@ -30,14 +69,17 @@ const DashboardPage = () => {
       errorRetryInterval: 5000, // retry after 5 seconds
       compare: (prevData, newData) =>
         JSON.stringify(prevData) === JSON.stringify(newData),
-      initialData: localStorage.getItem("characterData")
-        ? JSON.parse(localStorage.getItem("characterData")!)
+      initialData: localStorage.getItem("bookmarkData")
+        ? JSON.parse(localStorage.getItem("bookmarkData")!)
         : undefined,
       onSuccess: (data) => {
-        localStorage.setItem("characterData", JSON.stringify(data));
+        localStorage.setItem("bookmarkData", JSON.stringify(data));
       },
     }
   );
+
+  console.log(localStorage.getItem("bookmarkData"));
+  console.log(localStorage.getItem("characterData"));
 
   return (
     <ProtectedRoute>

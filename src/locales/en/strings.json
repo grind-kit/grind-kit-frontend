@@ -2,7 +2,7 @@
   "INDEX_TITLE": "Grind Kit - A Final Fantasy XIV Raiding Tool",
   "FOOTER_COPYRIGHT": "Grind Kit",
 
-  "NAV_START": "Start",
+  "NAV_START": "Finder",
   "NAV_DASHBOARD": "Dashboard",
   "NAV_LOGOUT": "Logout",
   "NAV_LOGIN": "Login",
@@ -55,9 +55,12 @@
   "RAIDS_CONTENT_TYPE": "raids",
 
   "DETAILS_HEADER": "Additional Details",
-  "DETAILS_REQUIREMENTS_LABEL": "Requirements:",
-  "DETAILS_LEVEL_LABEL": "Lvl:",
-  "DETAILS_ILVL_LABEL": "ILvl:",
-  "DETAILS_LOCATION_LABEL": "Where to Unlock:",
-  "DETAILS_DESCRIPTION_LABEL": "Description"
+
+  "DETAILS_REQUIREMENTS_LABEL": "Requirements",
+  "DETAILS_LEVEL_LABEL": "Level: ",
+  "DETAILS_ILVL_LABEL": "Item Level: ",
+  "DETAILS_LOCATION_LABEL": "Where to Unlock",
+  "DETAILS_DESCRIPTION_LABEL": "Description",
+
+  "DETAILS_INTERACT_LABEL": "Interact"
 }
