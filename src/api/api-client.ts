@@ -68,7 +68,7 @@ export class User {
 
 // InstanceContentBookmark class
 
-export class Bookmark {
+export class InstanceContentBookmark {
   userId: number;
   contentTypeId: number;
   contentFinderConditionId: number;

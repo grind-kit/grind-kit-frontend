@@ -50,6 +50,9 @@ export default function Home() {
 
       const response = await User.getUserInfo(user.uid, token);
 
+      // Remove this line later
+      console.log(token, '✅');
+
       if (response && response.lodestone_id && response.id) {
         setLodestoneId(response.lodestone_id);
         setId(response.id);
