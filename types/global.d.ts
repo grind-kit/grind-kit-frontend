@@ -102,6 +102,14 @@ export type TCharacter = {
   Server: string;
 };
 
+export type TBookmarkData = {
+  user: number,
+  content_finder_condition: number,
+  content_type_id: number,
+  value: number,
+  created: string,
+}
+
 export type TIdPage = {
   id: number;
   typeId: number;

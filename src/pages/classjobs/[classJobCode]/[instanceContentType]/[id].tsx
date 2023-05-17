@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { HandlerContentFinderCondition } from "@/api/api-handler";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { GetServerSideProps } from "next";
 import { IGetServerSidePropsContext } from "types/global";
-import { TIdPage } from "types/global";
+import { TIdPage, TBookmarkData } from "types/global";
 import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
 const loadStrings = require("@/locales/en/strings");
@@ -20,10 +21,32 @@ export default function IdPage({
   regionIcon,
   regionName,
 }: TIdPage) {
+  const [bookmarkData, setBookmarkData] = useState<TBookmarkData | null>(null);
   const strings = loadStrings;
+
+  useEffect(() => {
+    handleBookmarkData();
+  }, [bookmarkData]);
 
   function handleImage(src: string): string {
     return `${process.env.XIVAPI_URL}` + src;
+  }
+
+  async function handleBookmarkData() {
+    const bookmarkData: string | null = await localStorage.getItem(
+      "bookmarkData"
+    );
+    let parsedBookmarkData = null;
+
+    if (bookmarkData) {
+      parsedBookmarkData = await JSON.parse(bookmarkData).filter(
+        (item: TBookmarkData) => {
+          return item.content_finder_condition === id;
+        }
+      );
+    }
+
+    setBookmarkData(parsedBookmarkData[0]);
   }
 
   return (
@@ -102,6 +125,7 @@ export default function IdPage({
 
               <section className="mt-5 flex flex-col items-center">
                 <BookmarkIcon
+                  bookmarkData={bookmarkData}
                   contentFinderConditionId={id}
                   contentTypeId={typeId}
                 />
