@@ -78,6 +78,8 @@ const DashboardPage = () => {
     }
   );
 
+  // Delete this later
+
   console.log(localStorage.getItem("bookmarkData"));
   console.log(localStorage.getItem("characterData"));
 
