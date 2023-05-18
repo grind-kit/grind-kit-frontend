@@ -89,6 +89,30 @@ export class InstanceContentBookmark {
     this.created = created;
   }
 
+  static async patchBookmark(
+    userId: number,
+    token: string,
+    bookmarkId: number,
+    value: number
+  ) {
+    try {
+      const response = await axios.patch(
+        `${process.env.BACKEND_URL}/users/${userId}/bookmarks/${bookmarkId}`,
+        {
+          value: value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   static async postBookmark(
     userId: number,
     token: string,

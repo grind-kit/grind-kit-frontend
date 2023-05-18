@@ -62,5 +62,8 @@
   "DETAILS_LOCATION_LABEL": "Where to Unlock",
   "DETAILS_DESCRIPTION_LABEL": "Description",
 
-  "DETAILS_INTERACT_LABEL": "Interact"
+  "DETAILS_INTERACT_LABEL": "Interact",
+  
+  "SAVE_BUTTON": "Save",
+  "SAVED_BUTTON": "Saved"
 }

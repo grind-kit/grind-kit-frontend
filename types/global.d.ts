@@ -103,6 +103,7 @@ export type TCharacter = {
 };
 
 export type TBookmarkData = {
+  id: number;
   user: number,
   content_finder_condition: number,
   content_type_id: number,
