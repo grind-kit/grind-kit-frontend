@@ -6,10 +6,12 @@ import { IGetServerSidePropsContext } from "types/global";
 import { TIdPage, TBookmarkData } from "types/global";
 import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
+import { parseCookies } from "nookies";
+import { InstanceContentBookmark } from "@/api/api-client";
 const loadStrings = require("@/locales/en/strings");
 
 export default function IdPage({
-  id,
+  instanceContentId,
   typeId,
   typeName,
   typeIcon,
@@ -22,31 +24,122 @@ export default function IdPage({
   regionName,
 }: TIdPage) {
   const [bookmarkData, setBookmarkData] = useState<TBookmarkData | null>(null);
+  const [bookmarked, setBookmarked] = useState<boolean>(false);
+  const { id, token } = parseCookies();
   const strings = loadStrings;
 
   useEffect(() => {
-    handleBookmarkData();
-  }, [bookmarkData]);
+    fetchBookmarkData();
+  }, []);
 
   function handleImage(src: string): string {
     return `${process.env.XIVAPI_URL}` + src;
   }
 
-  async function handleBookmarkData() {
+  async function handleBookmarkClick() {
+    const parsedId = Number(id);
+    let response = null;
+
+    if (!bookmarkData) {
+      response = await InstanceContentBookmark.postBookmark(
+        parsedId,
+        token,
+        typeId,
+        instanceContentId
+      );
+      setBookmarked(true); // Update bookmarked state when bookmark is created
+    } else if (bookmarkData.value === 0) {
+      response = await InstanceContentBookmark.patchBookmark(
+        parsedId,
+        token,
+        bookmarkData.id,
+        1
+      );
+      setBookmarked(true); // Update bookmarked state when bookmark is updated
+    } else if (bookmarkData.value === 1) {
+      response = await InstanceContentBookmark.patchBookmark(
+        parsedId,
+        token,
+        bookmarkData.id,
+        0
+      );
+      setBookmarked(false); // Update bookmarked state when bookmark is updated
+    }
+
+    setBookmarkData(response); // Update bookmark data state when bookmark is created
+    updateLocalStorageCache(response); // Update local storage cache
+    return response;
+  }
+
+  async function updateLocalStorageCache(updatedBookmarkData: TBookmarkData) {
+    const existingBookmarkCache = await localStorage.getItem("bookmarkData");
+    let parsedBookmarkCache = [];
+
+    if (existingBookmarkCache) {
+      parsedBookmarkCache = await JSON.parse(existingBookmarkCache);
+
+      const existingBookmark = parsedBookmarkCache.filter(
+        (item: TBookmarkData) =>
+          item.content_finder_condition === instanceContentId
+      );
+
+      if (existingBookmark.length > 0) {
+        const updatedBookmarkCache = parsedBookmarkCache.map(
+          (item: TBookmarkData) => {
+            if (item.content_finder_condition === instanceContentId) {
+              return {
+                ...item,
+                value: updatedBookmarkData ? updatedBookmarkData.value : 0,
+              };
+            }
+            return item;
+          }
+        );
+        await localStorage.setItem(
+          "bookmarkData",
+          JSON.stringify(updatedBookmarkCache)
+        );
+      } else {
+        const updatedBookmarkCache = [
+          ...parsedBookmarkCache,
+          updatedBookmarkData,
+        ];
+        await localStorage.setItem(
+          "bookmarkData",
+          JSON.stringify(updatedBookmarkCache)
+        );
+      }
+    } else {
+      await localStorage.setItem(
+        "bookmarkData",
+        JSON.stringify([updatedBookmarkData])
+      );
+    }
+  }
+
+  async function fetchBookmarkData() {
     const bookmarkData: string | null = await localStorage.getItem(
       "bookmarkData"
     );
+    
     let parsedBookmarkData = null;
 
     if (bookmarkData) {
-      parsedBookmarkData = await JSON.parse(bookmarkData).filter(
-        (item: TBookmarkData) => {
-          return item.content_finder_condition === id;
-        }
-      );
+      const parsedData = await JSON.parse(bookmarkData);
+      const filteredData = await parsedData.filter((item: TBookmarkData) => {
+        return item.content_finder_condition === instanceContentId;
+      });
+
+      if (filteredData.length > 0) parsedBookmarkData = filteredData[0];
     }
 
-    setBookmarkData(parsedBookmarkData[0]);
+    if (parsedBookmarkData) {
+      setBookmarkData(parsedBookmarkData);
+      setBookmarked(parsedBookmarkData.value === 1);
+    } else {
+      setBookmarkData(null);
+      setBookmarked(false);
+    }
   }
 
   return (
@@ -125,9 +218,9 @@ export default function IdPage({
 
               <section className="mt-5 flex flex-col items-center">
                 <BookmarkIcon
+                  bookmarked={bookmarked}
                   bookmarkData={bookmarkData}
-                  contentFinderConditionId={id}
-                  contentTypeId={typeId}
+                  handleBookmarkClick={handleBookmarkClick}
                 />
               </section>
             </td>
@@ -157,7 +250,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   return {
     props: {
-      id: response.ID,
+      instanceContentId: response.ID,
       typeId: response.ContentType.ID,
       typeName: response.ContentType.Name,
       typeIcon: response.ContentType.Icon,

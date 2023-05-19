@@ -112,7 +112,7 @@ export type TBookmarkData = {
 }
 
 export type TIdPage = {
-  id: number;
+  instanceContentId: number;
   typeId: number;
   typeName: string;
   typeIcon: string;

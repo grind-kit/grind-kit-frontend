@@ -1,6 +1,5 @@
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
-import { auth } from "@/firebase/firebase";
 
 // User class
 

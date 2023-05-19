@@ -8,6 +8,7 @@ const loadStrings = require("@/locales/en/strings");
 const DashboardPage = () => {
   const strings = loadStrings;
   const { id, token, lodestoneId } = parseCookies();
+  const parsedId = Number(id);
 
   const characterDataFetcher = async (url: string) =>
     await fetch(url).then((res) => {
@@ -58,7 +59,7 @@ const DashboardPage = () => {
   // Bookmarks
 
   useSWR(
-    `${process.env.BACKEND_URL}/users/${id}/bookmarks`,
+    `${process.env.BACKEND_URL}/users/${parsedId}/bookmarks`,
     bookmarkDataFetcher,
     {
       refreshInterval: 60000, // fetch every 60 seconds
