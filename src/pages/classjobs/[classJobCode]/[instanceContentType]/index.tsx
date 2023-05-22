@@ -15,29 +15,25 @@ export default function InstanceContentTypePage({
   instanceContentType,
 }: TInstanceContentPageProps) {
   const strings = loadStrings;
+  const header: string = arrayOfContentFinderConditions ? instanceContentTypeHeader : strings.MIN_LEVEL_HEADER;
 
   return (
     <ProtectedRoute>
-      <div className="w-full flex flex-col items-center">
+      <section className="w-full flex flex-col items-center text-slate-900">
+        <header>
+          <h2 className="text-3xl font-bold">
+            {header}
+          </h2>
+        </header>
         {arrayOfContentFinderConditions ? (
-          <>
-            <h2 className="text-3xl font-bold text-slate-900">
-              {instanceContentTypeHeader}
-            </h2>
             <ContentSorter
               arrayOfContentFinderConditions={arrayOfContentFinderConditions}
               instanceContentType={instanceContentType}
             />
-          </>
         ) : (
-          <>
-            <h1 className="text-3xl font-bold text-slate-900">
-              {strings.MIN_LEVEL_HEADER}
-            </h1>
-            <p className="text-slate-900 mt-5">{strings.MIN_LEVEL_MESSAGE}</p>
-          </>
+            <p className="mt-5">{strings.MIN_LEVEL_MESSAGE}</p>
         )}
-      </div>
+      </section>
     </ProtectedRoute>
   );
 }

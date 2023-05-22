@@ -10,15 +10,19 @@ function ClassJobCodePage() {
   const { level, classJobCode } = router.query;
   const parsedLevel = Number(level);
   const { arrayOfInstanceContent } = getData();
+  const header =
+    parsedLevel < 90
+      ? strings.INSTANCECONTENT_HEADER
+      : strings.MAX_LEVEL_HEADER;
 
   return (
     <ProtectedRoute>
-      <div className="w-full flex flex-col items-center">
+      <section className="w-full flex flex-col items-center">
+        <header>
+          <h2 className="text-3xl font-bold text-slate-900">{header}</h2>
+        </header>
         {parsedLevel < 90 ? (
           <>
-            <h2 className="text-3xl font-bold text-slate-900">
-              {strings.INSTANCECONTENT_HEADER}
-            </h2>
             {arrayOfInstanceContent?.map((instanceContent) => {
               return (
                 <InstanceContentTypeList
@@ -30,14 +34,9 @@ function ClassJobCodePage() {
             })}
           </>
         ) : (
-          <>
-            <h2 className="text-3xl font-bold text-slate-900">
-              {strings.MAX_LEVEL_HEADER}
-            </h2>
-            <p className="text-slate-900 mt-5">{strings.MAX_LEVEL_MESSAGE}</p>
-          </>
+          <p className="mt-5">{strings.MAX_LEVEL_MESSAGE}</p>
         )}
-      </div>
+      </section>
     </ProtectedRoute>
   );
 }
