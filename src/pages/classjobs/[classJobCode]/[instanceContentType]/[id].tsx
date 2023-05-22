@@ -100,6 +100,7 @@ export default function IdPage({
           JSON.stringify(updatedBookmarkCache)
         );
       } else {
+        // Cache exists, but no bookmark for this instance content
         const updatedBookmarkCache = [
           ...parsedBookmarkCache,
           updatedBookmarkData,
@@ -110,6 +111,7 @@ export default function IdPage({
         );
       }
     } else {
+      // No cache exists yet
       await localStorage.setItem(
         "bookmarkData",
         JSON.stringify([updatedBookmarkData])
