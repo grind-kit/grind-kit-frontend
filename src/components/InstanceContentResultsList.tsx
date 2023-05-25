@@ -7,9 +7,6 @@ function InstanceContentResultsList({
     name,
     classJobLevelRequired,
     itemLevelRequired,
-    url,
-    contentTypeId,
-    acceptClassJobCategory,
   },
   instanceContentType,
 }: TInstanceContentResultsListProps) {

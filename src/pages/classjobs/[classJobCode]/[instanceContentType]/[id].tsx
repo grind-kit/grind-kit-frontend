@@ -8,7 +8,7 @@ import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
 import { parseCookies } from "nookies";
 import { InstanceContentBookmark } from "@/api/api-client";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 export default function IdPage({
   instanceContentId,
@@ -26,14 +26,17 @@ export default function IdPage({
   const [bookmarkData, setBookmarkData] = useState<TBookmarkData | null>(null);
   const [bookmarked, setBookmarked] = useState<boolean>(false);
   const { id, token } = parseCookies();
-  const strings = loadStrings;
 
   useEffect(() => {
     fetchBookmarkData();
   }, []);
 
   function handleImage(src: string): string {
-    return `${process.env.XIVAPI_URL}` + src;
+    const url: string | undefined = process.env.XIVAPI_URL;
+
+    if (url) return url + src;
+
+    return "";
   }
 
   async function handleBookmarkClick() {
@@ -72,7 +75,7 @@ export default function IdPage({
   }
 
   async function updateLocalStorageCache(updatedBookmarkData: TBookmarkData) {
-    const existingBookmarkCache = await localStorage.getItem("bookmarkData");
+    const existingBookmarkCache = localStorage.getItem("bookmarkData");
     let parsedBookmarkCache = [];
 
     if (existingBookmarkCache) {
@@ -123,7 +126,7 @@ export default function IdPage({
     const bookmarkData: string | null = await localStorage.getItem(
       "bookmarkData"
     );
-    
+
     let parsedBookmarkData = null;
 
     if (bookmarkData) {
