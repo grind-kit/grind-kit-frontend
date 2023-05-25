@@ -9,7 +9,6 @@ type TBookmarkIconProps = {
 
 export default function BookmarkIcon({
   bookmarked,
-  bookmarkData,
   handleBookmarkClick,
 }: TBookmarkIconProps) {
   const strings = loadStrings;
