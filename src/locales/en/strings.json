@@ -36,6 +36,7 @@
   "SETTINGS_CHARACTER_CONFIRMATION_MESSAGE": "If this is not your character, please include both first/last name.",
   "SETTINGS_CHARACTER_CONFIRMATION_BACK_BUTTON": "Back",
   "SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON": "Confirm",
+  "SETTINGS_CHARACTER_CONFIRMED_MESSAGE": "Changes saved! Please log in again to view the updated information.",
 
   "START_HEADER": "Choose a Class / Job",
   "MAX_LEVEL_HEADER": "Congratulations!",

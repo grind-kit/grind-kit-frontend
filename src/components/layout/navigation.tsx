@@ -2,28 +2,28 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { setCookie, parseCookies } from "nookies";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 export default function Navigation() {
   const { logOut } = useAuth();
   const { authenticated } = parseCookies();
   const router = useRouter();
-  const strings = loadStrings;
 
   const handleLogout = async () => {
     try {
       await logOut();
       await setCookie(null, "authenticated", "false");
       router.push("/login");
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      console.error(error);
+
+      throw error;
     }
   };
 
   return (
     <header className="container flex flex-row items-center mx-auto px-5 py-14 max-w-screen-lg">
       <Link legacyBehavior href="/">
-        {/* To be replaced with a logo */}
         <a>
           <h1 className="text-4xl font-bold text-blue-500">Grind Kit</h1>
         </a>

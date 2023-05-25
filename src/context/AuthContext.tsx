@@ -15,7 +15,7 @@ interface UserType {
 
 const AuthContext = createContext({});
 
-export const useAuth = () => useContext<any>(AuthContext);
+export const useAuth = () => useContext<object>(AuthContext);
 
 export const AuthContextProvider = ({
   children,
@@ -69,6 +69,9 @@ export const AuthContextProvider = ({
       return userCredential;
     } catch (error) {
       console.error(error);
+
+      // Throw the error from Firebase
+      throw error;
     }
   };
 

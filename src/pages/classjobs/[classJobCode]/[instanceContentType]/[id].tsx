@@ -71,7 +71,7 @@ export default function IdPage({
 
     setBookmarkData(response); // Update bookmark data state when bookmark is created
     updateLocalStorageCache(response); // Update local storage cache
-    return response;
+    return;
   }
 
   async function updateLocalStorageCache(updatedBookmarkData: TBookmarkData) {

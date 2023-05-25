@@ -1,18 +1,16 @@
 import { TBookmarkData } from "types/global";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 type TBookmarkIconProps = {
   bookmarked: boolean;
   bookmarkData: TBookmarkData | null;
-  handleBookmarkClick: Function;
+  handleBookmarkClick: () => Promise<void>;
 };
 
 export default function BookmarkIcon({
   bookmarked,
   handleBookmarkClick,
 }: TBookmarkIconProps) {
-  const strings = loadStrings;
-
   return (
     <button
       onClick={() => handleBookmarkClick()}

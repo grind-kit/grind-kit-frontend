@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import * as strings from "@/locales/en/strings.json";
 
 type TChangesSavedPopupProps = {
   isVisible: boolean;
-  setIsVisible: Function;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function ChangesSavedPopup({
@@ -23,7 +24,7 @@ function ChangesSavedPopup({
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
-      <p>Changes saved! Please log in again to view the updated information.</p>
+      <span>{strings.SETTINGS_CHARACTER_CONFIRMED_MESSAGE}</span>
     </div>
   );
 }

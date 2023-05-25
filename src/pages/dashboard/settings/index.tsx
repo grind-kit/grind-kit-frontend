@@ -7,7 +7,7 @@ import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { TCharacter } from "types/global";
 import ChangesSavedPopup from "@/components/ChangesSavedPopup";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 type TSettingsPageProps = {
   servers: string[];
@@ -25,7 +25,6 @@ export default function SettingsPage({
   token,
   uid,
 }: TSettingsPageProps) {
-  const strings = loadStrings;
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
     register,
