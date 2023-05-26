@@ -3,12 +3,13 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import useSWR from "swr";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 const DashboardPage = () => {
-  const strings = loadStrings;
   const { id, token, lodestoneId } = parseCookies();
   const parsedId = Number(id);
+  const characterData: string | null = localStorage.getItem("characterData");
+  const bookmarkData: string | null = localStorage.getItem("bookmarkData");
 
   const characterDataFetcher = async (url: string) =>
     await fetch(url).then((res) => {
@@ -20,21 +21,17 @@ const DashboardPage = () => {
     });
 
   const bookmarkDataFetcher = async (url: string) => {
-    try {
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw error;
+    if (!response.ok) {
+      throw new Error(response.statusText);
     }
+    const data = await response.json();
+    return data;
   };
 
   // Character data
@@ -48,9 +45,7 @@ const DashboardPage = () => {
     errorRetryInterval: 5000, // retry after 5 seconds
     compare: (prevData, newData) =>
       JSON.stringify(prevData) === JSON.stringify(newData),
-    initialData: localStorage.getItem("characterData")
-      ? JSON.parse(localStorage.getItem("characterData")!)
-      : undefined,
+    initialData: characterData ? JSON.parse(characterData) : undefined,
     onSuccess: (data) => {
       localStorage.setItem("characterData", JSON.stringify(data));
     },
@@ -70,9 +65,7 @@ const DashboardPage = () => {
       errorRetryInterval: 5000, // retry after 5 seconds
       compare: (prevData, newData) =>
         JSON.stringify(prevData) === JSON.stringify(newData),
-      initialData: localStorage.getItem("bookmarkData")
-        ? JSON.parse(localStorage.getItem("bookmarkData")!)
-        : undefined,
+      initialData: bookmarkData ? JSON.parse(bookmarkData) : undefined,
       onSuccess: (data) => {
         localStorage.setItem("bookmarkData", JSON.stringify(data));
       },

@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 export default function Home() {
-  const strings = loadStrings;
   const { user } = useAuth();
-  const [token, setToken] = useState<string | undefined | null>(null);
-  const [lodestoneId, setLodestoneId] = useState<string | undefined | null>(
-    null
-  );
-  const [id, setId] = useState<string | undefined | null>(null);
 
   useEffect(() => {
     handleCookies();
@@ -35,7 +29,6 @@ export default function Home() {
     if (!user) return;
 
     const token = await user.getIdToken();
-    setToken(token);
     document.cookie = `token=${token}; path=/`;
   }
 
@@ -43,7 +36,7 @@ export default function Home() {
     if (!user) return;
     else if (auth.currentUser) {
       const token = await auth.currentUser?.getIdToken();
-      setToken(token);
+      
       document.cookie = `token=${token}; path=/`;
       document.cookie = `uid=${user.uid}; path=/`;
       document.cookie = `authenticated=true; path=/`;
@@ -54,8 +47,6 @@ export default function Home() {
       console.log(token, '✅');
 
       if (response && response.lodestone_id && response.id) {
-        setLodestoneId(response.lodestone_id);
-        setId(response.id);
 
         document.cookie = `lodestoneId=${response.lodestone_id}; path=/`;
         document.cookie = `id=${response.id}; path=/`;
