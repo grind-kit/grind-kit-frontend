@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 function CookiePopup() {
   const [acceptedCookies, setAcceptedCookies] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
-  const strings = loadStrings;
 
   const acceptCookies = () => {
     setShowPopup(false);

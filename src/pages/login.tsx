@@ -4,14 +4,13 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { setCookie } from "nookies";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 interface LoginType {
   email: string;
   password: string;
 }
 const LoginPage = () => {
-  const strings = loadStrings;
   const methods = useForm<LoginType>({ mode: "onBlur" });
   const { logIn } = useAuth();
   const router = useRouter();
@@ -28,9 +27,11 @@ const LoginPage = () => {
       await logIn(data.email, data.password);
       await setCookie(null, "authenticated", "true");
       router.push("/");
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      console.error(error);
       setLoginError(true);
+
+      throw error;
     }
   };
 

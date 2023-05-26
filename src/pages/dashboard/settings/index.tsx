@@ -5,7 +5,7 @@ import { parseCookies } from "nookies";
 import { User } from "@/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
-import { TCharacter } from "types/global";
+import { IGetServerSidePropsContext, TCharacter } from "types/global";
 import ChangesSavedPopup from "@/components/ChangesSavedPopup";
 import * as strings from "@/locales/en/strings.json";
 
@@ -194,7 +194,7 @@ export default function SettingsPage({
   );
 }
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: IGetServerSidePropsContext) => {
   const response = await axios.get(
     `https://xivapi.com/servers?private_key=${process.env.XIVAPI_KEY}`
   );

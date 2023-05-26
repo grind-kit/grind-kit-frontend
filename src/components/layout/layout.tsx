@@ -1,8 +1,7 @@
 import Navigation from "./navigation";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 export default function Layout(props: any) {
-  const strings = loadStrings;
 
   return (
     <body className="flex flex-col min-h-screen">

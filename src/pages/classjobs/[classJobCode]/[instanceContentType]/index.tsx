@@ -7,14 +7,13 @@ import {
 } from "types/global";
 import { parseCookies } from "nookies";
 import ContentSorter from "@/components/ContentSorter";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 export default function InstanceContentTypePage({
   arrayOfContentFinderConditions,
   instanceContentTypeHeader,
   instanceContentType,
 }: TInstanceContentPageProps) {
-  const strings = loadStrings;
   const header: string = arrayOfContentFinderConditions ? instanceContentTypeHeader : strings.MIN_LEVEL_HEADER;
 
   return (

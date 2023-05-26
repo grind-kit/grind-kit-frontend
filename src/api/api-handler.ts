@@ -1,6 +1,5 @@
 import axios from "axios";
-const loadQueryStrings = require("./queryStrings/queryStrings");
-const queryStrings = loadQueryStrings;
+import * as queryStrings from "./queryStrings/queryStrings.json";
 
 // Character class
 

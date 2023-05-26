@@ -3,10 +3,9 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import RoleAccordion from "@/components/RoleAccordion";
 import getData from "@/data";
 import { useRouter } from "next/router";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 function ClassJobsPage() {
-  const strings = loadStrings;
   const data = localStorage.getItem("characterData");
   const { arrayOfRoles } = getData();
   const router = useRouter();

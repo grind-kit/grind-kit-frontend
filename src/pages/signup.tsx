@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 interface SignupType {
   email: string;
@@ -11,7 +11,7 @@ interface SignupType {
 }
 
 const SignupPage = () => {
-  const strings = loadStrings;
+  
   const methods = useForm<SignupType>({ mode: "onBlur" });
   const { signUp } = useAuth();
   const router = useRouter();
@@ -26,8 +26,10 @@ const SignupPage = () => {
     try {
       await signUp(data.email, data.password);
       router.push("/dashboard");
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      console.error(error);
+
+      throw error;
     }
   };
 
