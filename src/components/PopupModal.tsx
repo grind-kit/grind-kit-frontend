@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
-import * as strings from "@/locales/en/strings.json";
 
-type TChangesSavedPopupProps = {
+type TPopupModalProps = {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  message: string;
 };
 
-function ChangesSavedPopup({
-  isVisible,
-  setIsVisible,
-}: TChangesSavedPopupProps) {
+function PopupModal({ isVisible, setIsVisible, message }: TPopupModalProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -24,9 +21,9 @@ function ChangesSavedPopup({
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
-      <span>{strings.SETTINGS_CHARACTER_CONFIRMED_MESSAGE}</span>
+      <span>{message}</span>
     </div>
   );
 }
 
-export default ChangesSavedPopup;
+export default PopupModal;
