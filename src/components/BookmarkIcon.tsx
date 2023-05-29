@@ -1,5 +1,6 @@
 import { TBookmarkData } from "types/global";
-import { SAVE_BUTTON, SAVED_BUTTON } from "@/locales/en/strings";
+// eslint-disable-next-line import/no-named-default
+import * as strings from "@/locales/en/strings.json";
 
 type TBookmarkIconProps = {
   bookmarked: boolean;
@@ -35,7 +36,7 @@ export default function BookmarkIcon({
         />
       </svg>
       <span className="inline">
-        {bookmarked === false ? SAVE_BUTTON : SAVED_BUTTON}
+        {bookmarked === false ? strings.SAVE_BUTTON : strings.SAVED_BUTTON}
       </span>
     </button>
   );

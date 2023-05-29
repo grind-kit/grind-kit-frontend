@@ -2,13 +2,8 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { setCookie, parseCookies } from "nookies";
-import {
-  NAV_START,
-  NAV_SIGNUP,
-  NAV_DASHBOARD,
-  NAV_LOGIN,
-  NAV_LOGOUT,
-} from "@/locales/en/strings";
+// eslint-disable-next-line import/no-named-default
+import * as strings from "@/locales/en/strings.json";
 
 export default function Navigation() {
   const { logOut } = useAuth();
@@ -38,26 +33,26 @@ export default function Navigation() {
         {authenticated && authenticated !== "false" ? (
           <>
             <Link legacyBehavior href="/classjobs">
-              <a className="mr-5 hover:underline">{NAV_START}</a>
+              <a className="mr-5 hover:underline">{strings.NAV_START}</a>
             </Link>
             <Link legacyBehavior href="/dashboard">
-              <a className="mr-5 hover:underline">{NAV_DASHBOARD}</a>
+              <a className="mr-5 hover:underline">{strings.NAV_DASHBOARD}</a>
             </Link>
 
             <div
               className="inline-block cursor-pointer hover:underline"
               onClick={handleLogout}
             >
-              {NAV_LOGOUT}
+              {strings.NAV_LOGOUT}
             </div>
           </>
         ) : (
           <>
             <Link legacyBehavior href="/login">
-              <a className="mr-5 hover:underline">{NAV_LOGIN}</a>
+              <a className="mr-5 hover:underline">{strings.NAV_LOGIN}</a>
             </Link>
             <Link legacyBehavior href="/signup">
-              <a className="mr-5 hover:underline">{NAV_SIGNUP}</a>
+              <a className="mr-5 hover:underline">{strings.NAV_SIGNUP}</a>
             </Link>
           </>
         )}

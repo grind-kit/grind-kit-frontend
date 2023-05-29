@@ -3,6 +3,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import RoleAccordion from "@/components/RoleAccordion";
 import getData from "@/data";
 import { useRouter } from "next/router";
+// eslint-disable-next-line import/no-named-default
 import * as strings from "@/locales/en/strings.json";
 
 function ClassJobsPage() {

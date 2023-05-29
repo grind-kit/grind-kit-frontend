@@ -3,6 +3,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import useSWR from "swr";
+// eslint-disable-next-line import/no-named-default
 import * as strings from "@/locales/en/strings.json";
 
 const DashboardPage = () => {

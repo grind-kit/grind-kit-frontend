@@ -6,18 +6,8 @@ import { User } from "@/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { IGetServerSidePropsContext, TCharacter } from "types/global";
-import {
-  SETTINGS_CHARACTER_CONFIRMATION_HEADER,
-  SETTINGS_CHARACTER_CONFIRMATION_MESSAGE,
-  SETTINGS_CHARACTER_CONFIRMATION_BACK_BUTTON,
-  SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON,
-  SETTINGS_CHARACTER_CONFIRMED_MESSAGE,
-  SETTINGS_HEADER,
-  SETTINGS_CHARACTER_NAME_LABEL,
-  SETTINGS_SERVER_LABEL,
-  SETTINGS_SEARCH_BUTTON,
-  SETTINGS_SEARCHING_MESSAGE,
-} from "@/locales/en/strings";
+// eslint-disable-next-line import/no-named-default
+import * as strings from "@/locales/en/strings.json";
 import PopupModal from "@/components/PopupModal";
 
 type TSettingsPageProps = {
@@ -65,14 +55,15 @@ export default function SettingsPage({
     const response = await axios.get(
       `https://xivapi.com/character/search?name=${characterName}&server=${server}&private_key=${process.env.XIVAPI_KEY}`
     );
-    setCharacter(response.data.Results[0]);
+    const fetchedCharacter = response.data.Results[0];
+    setCharacter(fetchedCharacter);
   };
 
   return (
     <ProtectedRoute>
       <div className="settings-form container mx-auto w-80 my-12 border-2 rounded-md border-gray-200">
         <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-          {SETTINGS_HEADER}
+          {strings.SETTINGS_HEADER}
         </h2>
         <FormProvider {...methods}>
           <form
@@ -85,7 +76,7 @@ export default function SettingsPage({
                   htmlFor="characterName"
                   className="block mb-3 font-sans text-blue-500"
                 >
-                  {SETTINGS_CHARACTER_NAME_LABEL}
+                  {strings.SETTINGS_CHARACTER_NAME_LABEL}
                 </label>
               </div>
 
@@ -109,7 +100,7 @@ export default function SettingsPage({
                   htmlFor="server"
                   className="block mb-3 font-sans text-blue-500"
                 >
-                  {SETTINGS_SERVER_LABEL}
+                  {strings.SETTINGS_SERVER_LABEL}
                 </label>
               </div>
 
@@ -135,11 +126,13 @@ export default function SettingsPage({
                   className={`h-12 text-center w-2/3 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
                 >
                   <p className="capitalize text-white font-normal">
-                    {SETTINGS_SEARCH_BUTTON}
+                    {strings.SETTINGS_SEARCH_BUTTON}
                   </p>
                 </button>
               ) : (
-                <p className="text-blue-500">{SETTINGS_SEARCHING_MESSAGE}</p>
+                <p className="text-blue-500">
+                  {strings.SETTINGS_SEARCHING_MESSAGE}
+                </p>
               )}
             </div>
           </form>
@@ -147,14 +140,14 @@ export default function SettingsPage({
         <PopupModal
           isVisible={isVisible}
           setIsVisible={setIsVisible}
-          message={SETTINGS_CHARACTER_CONFIRMED_MESSAGE}
+          message={strings.SETTINGS_CHARACTER_CONFIRMED_MESSAGE}
         />
         {character && (
           <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">
             <div className="relative max-w-screen-md mx-auto w-1/3 p-6 bg-white rounded-md flex gap-3 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
               <div className="w-full">
                 <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-500">
-                  {SETTINGS_CHARACTER_CONFIRMATION_HEADER}
+                  {strings.SETTINGS_CHARACTER_CONFIRMATION_HEADER}
                 </h2>
                 <div className="flex flex-col items-center justify-center">
                   <div className="flex flex-row mt-8 items-center justify-center">
@@ -170,7 +163,7 @@ export default function SettingsPage({
                     </h3>
                   </div>
                   <h4 className="text-sm font-semibold mt-8 text-slate-900">
-                    {SETTINGS_CHARACTER_CONFIRMATION_MESSAGE}
+                    {strings.SETTINGS_CHARACTER_CONFIRMATION_MESSAGE}
                   </h4>
                 </div>
                 <div className="flex flex-row mt-8 items-center justify-center">
@@ -184,7 +177,7 @@ export default function SettingsPage({
                     className={`h-12 text-center w-2/3 bg-gray-500 border-2 rounded-md hover:shadow-lg hover:bg-gray-400 text-lg transition`}
                   >
                     <p className="capitalize text-white font-normal">
-                      {SETTINGS_CHARACTER_CONFIRMATION_BACK_BUTTON}
+                      {strings.SETTINGS_CHARACTER_CONFIRMATION_BACK_BUTTON}
                     </p>
                   </button>
                   <button
@@ -194,7 +187,7 @@ export default function SettingsPage({
                     className={`h-12 text-center w-2/3 ml-4 bg-blue-500 border-2 rounded-md hover:shadow-lg hover:bg-blue-400 text-lg transition`}
                   >
                     <p className="capitalize text-white font-normal">
-                      {SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON}
+                      {strings.SETTINGS_CHARACTER_CONFIRMATION_CONFIRM_BUTTON}
                     </p>
                   </button>
                 </div>

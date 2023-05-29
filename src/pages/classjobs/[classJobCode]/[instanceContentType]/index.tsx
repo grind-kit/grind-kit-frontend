@@ -7,6 +7,7 @@ import {
 } from "types/global";
 import { parseCookies } from "nookies";
 import ContentSorter from "@/components/ContentSorter";
+// eslint-disable-next-line import/no-named-default
 import * as strings from "@/locales/en/strings.json";
 
 export default function InstanceContentTypePage({

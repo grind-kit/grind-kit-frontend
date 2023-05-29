@@ -1,8 +1,8 @@
 import Navigation from "./navigation";
-import { FOOTER_COPYRIGHT } from "@/locales/en/strings";
+// eslint-disable-next-line import/no-named-default
+import * as strings from "@/locales/en/strings.json";
 
 export default function Layout(props: any) {
-
   return (
     <body className="flex flex-col min-h-screen">
       <Navigation />
@@ -11,7 +11,7 @@ export default function Layout(props: any) {
       </main>
       <footer className="flex items-center justify-center w-full h-20 text-sm border-t">
         <p>
-          &copy; {new Date().getFullYear()} {FOOTER_COPYRIGHT}
+          &copy; {new Date().getFullYear()} {strings.FOOTER_COPYRIGHT}
         </p>
       </footer>
     </body>

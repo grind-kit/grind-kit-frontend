@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
+// eslint-disable-next-line import/no-named-default
 import * as strings from "@/locales/en/strings.json";
 
 export default function Home() {

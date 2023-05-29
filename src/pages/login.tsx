@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { setCookie } from "nookies";
+// eslint-disable-next-line import/no-named-default
 import * as strings from "@/locales/en/strings.json";
 
 interface LoginType {

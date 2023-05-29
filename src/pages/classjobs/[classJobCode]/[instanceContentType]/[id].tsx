@@ -8,6 +8,7 @@ import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
 import { parseCookies } from "nookies";
 import { InstanceContentBookmark } from "@/api/api-client";
+// eslint-disable-next-line import/no-named-default
 import * as strings from "@/locales/en/strings.json";
 
 export default function IdPage({
