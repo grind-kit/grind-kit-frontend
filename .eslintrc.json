@@ -3,6 +3,9 @@
     "next",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
+
+    // Add this line if you're using typescript
+
     // "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "parser": "@typescript-eslint/parser",

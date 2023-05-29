@@ -1,4 +1,4 @@
-import NextAuth, { Account } from "next-auth";
+import { Account } from "next-auth";
 
 export interface IAuthenticatedAccount extends Account {
   accessToken?: string;

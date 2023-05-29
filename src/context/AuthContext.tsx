@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  UserCredential,
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 import axios from "axios";
@@ -13,9 +14,29 @@ interface UserType {
   uid: string | null;
 }
 
-const AuthContext = createContext({});
+interface ContextType {
+  signUp: (email: string, password: string) => Promise<UserCredential>;
+  logIn: (email: string, password: string) => Promise<UserCredential>;
+  logOut: () => Promise<void>;
+  user: UserType;
+}
 
-export const useAuth = () => useContext<object>(AuthContext);
+// If the context is not initialized, throw an error
+
+const AuthContext = createContext<ContextType>({
+  signUp: async () => {
+    throw new Error("AuthContext not initialized");
+  },
+  logIn: async () => {
+    throw new Error("AuthContext not initialized");
+  },
+  logOut: async () => {
+    throw new Error("AuthContext not initialized");
+  },
+  user: { email: null, uid: null },
+});
+
+export const useAuth = () => useContext<ContextType>(AuthContext);
 
 export const AuthContextProvider = ({
   children,
