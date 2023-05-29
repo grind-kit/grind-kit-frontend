@@ -2,10 +2,9 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import getData from "@/data";
 import InstanceContentTypeList from "@/components/InstanceContentTypeList";
 import { useRouter } from "next/router";
-const loadStrings = require("@/locales/en/strings");
+import * as strings from "@/locales/en/strings.json";
 
 function ClassJobCodePage() {
-  const strings = loadStrings;
   const router = useRouter();
   const { level, classJobCode } = router.query;
   const parsedLevel = Number(level);

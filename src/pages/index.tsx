@@ -33,22 +33,21 @@ export default function Home() {
   }
 
   async function handleCookies() {
-    if (!user) return;
+    if (!user || !user.uid) return;
+    
     else if (auth.currentUser) {
       const token = await auth.currentUser?.getIdToken();
-      let response = null;
-      
+
       document.cookie = `token=${token}; path=/`;
       document.cookie = `uid=${user.uid}; path=/`;
       document.cookie = `authenticated=true; path=/`;
-      
-      if (user.uid && token) response = await User.getUserInfo(user.uid, token);
+
+      const response = await User.getUserInfo(user.uid, token);
 
       // Remove this line later
-      console.log(token, '✅');
+      console.log(token, "✅");
 
       if (response && response.lodestone_id && response.id) {
-
         document.cookie = `lodestoneId=${response.lodestone_id}; path=/`;
         document.cookie = `id=${response.id}; path=/`;
       }

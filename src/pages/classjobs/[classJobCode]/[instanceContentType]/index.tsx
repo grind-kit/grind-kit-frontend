@@ -40,8 +40,6 @@ export default function InstanceContentTypePage({
 export const getServerSideProps = async (
   context: IGetServerSidePropsContext
 ) => {
-  const loadStrings = require("@/locales/en/strings");
-  const strings = loadStrings;
   const { level, contentTypeId } = context.query;
   const parsedLevel = Number(level);
   const { token } = parseCookies(context);
