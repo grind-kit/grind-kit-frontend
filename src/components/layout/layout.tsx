@@ -1,5 +1,5 @@
 import Navigation from "./navigation";
-import * as strings from "@/locales/en/strings.json";
+import { FOOTER_COPYRIGHT } from "@/locales/en/strings";
 
 export default function Layout(props: any) {
 
@@ -11,7 +11,7 @@ export default function Layout(props: any) {
       </main>
       <footer className="flex items-center justify-center w-full h-20 text-sm border-t">
         <p>
-          &copy; {new Date().getFullYear()} {strings.FOOTER_COPYRIGHT}
+          &copy; {new Date().getFullYear()} {FOOTER_COPYRIGHT}
         </p>
       </footer>
     </body>
