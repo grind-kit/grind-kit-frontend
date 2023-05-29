@@ -36,12 +36,13 @@ export default function Home() {
     if (!user) return;
     else if (auth.currentUser) {
       const token = await auth.currentUser?.getIdToken();
+      let response = null;
       
       document.cookie = `token=${token}; path=/`;
       document.cookie = `uid=${user.uid}; path=/`;
       document.cookie = `authenticated=true; path=/`;
-
-      const response = await User.getUserInfo(user.uid, token);
+      
+      if (user.uid && token) response = await User.getUserInfo(user.uid, token);
 
       // Remove this line later
       console.log(token, '✅');
