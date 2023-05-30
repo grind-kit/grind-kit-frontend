@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 import axios from "axios";
+import { destroyCookie } from "nookies";
 
 interface UserType {
   email: string | null;
@@ -102,6 +103,14 @@ export const AuthContextProvider = ({
 
   const logOut = async () => {
     setUser({ email: null, uid: null });
+
+    // Remove all cookies
+    destroyCookie(null, "token");
+    destroyCookie(null, "uid");
+    destroyCookie(null, "authenticated");
+    destroyCookie(null, "lodestoneId");
+    destroyCookie(null, "id");
+
     await signOut(auth);
   };
 
