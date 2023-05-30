@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 // eslint-disable-next-line import/no-named-default
-import * as strings from "@/locales/en/strings.json";
+import * as strings from "@/resources/locales/en";
 
 interface SignupType {
   email: string;

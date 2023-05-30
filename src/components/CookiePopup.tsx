@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // eslint-disable-next-line import/no-named-default
-import * as strings from "@/locales/en/strings.json";
+import * as strings from "@/resources/locales/en";
 
 function CookiePopup() {
   const [acceptedCookies, setAcceptedCookies] = useState(false);

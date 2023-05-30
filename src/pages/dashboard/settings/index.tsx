@@ -7,7 +7,7 @@ import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { IGetServerSidePropsContext, TCharacter } from "types/global";
 // eslint-disable-next-line import/no-named-default
-import * as strings from "@/locales/en/strings.json";
+import * as strings from "@/resources/locales/en";
 import PopupModal from "@/components/PopupModal";
 
 type TSettingsPageProps = {

@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
 // eslint-disable-next-line import/no-named-default
-import * as strings from "@/locales/en/strings.json";
+import * as strings from "@/resources/locales/en";
 
 export default function Home() {
   const { user } = useAuth();

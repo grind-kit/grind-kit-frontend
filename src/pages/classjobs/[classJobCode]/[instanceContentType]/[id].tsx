@@ -9,7 +9,7 @@ import BookmarkIcon from "@/components/BookmarkIcon";
 import { parseCookies } from "nookies";
 import { InstanceContentBookmark } from "@/api/api-client";
 // eslint-disable-next-line import/no-named-default
-import * as strings from "@/locales/en/strings.json";
+import * as strings from "@/resources/locales/en";
 
 export default function IdPage({
   instanceContentId,
