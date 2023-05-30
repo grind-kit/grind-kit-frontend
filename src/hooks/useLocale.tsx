@@ -1,7 +1,9 @@
 import en from "@/resources/locales/en";
 
-export default function useLocale() {
+const useLocale = () => {
   const strings = en;
 
   return { strings };
 }
+
+export default useLocale;

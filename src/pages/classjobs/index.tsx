@@ -3,10 +3,10 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import RoleAccordion from "@/components/RoleAccordion";
 import getData from "@/data";
 import { useRouter } from "next/router";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 function ClassJobsPage() {
+  const { strings } = useLocale();
   const data = localStorage.getItem("characterData");
   const { arrayOfRoles } = getData();
   const router = useRouter();

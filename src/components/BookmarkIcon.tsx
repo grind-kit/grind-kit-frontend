@@ -1,6 +1,5 @@
 import { TBookmarkData } from "types/global";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 type TBookmarkIconProps = {
   bookmarked: boolean;
@@ -12,6 +11,8 @@ export default function BookmarkIcon({
   bookmarked,
   handleBookmarkClick,
 }: TBookmarkIconProps) {
+  const { strings } = useLocale();
+  
   return (
     <button
       onClick={() => handleBookmarkClick()}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 function CookiePopup() {
+  const { strings } = useLocale();
   const [acceptedCookies, setAcceptedCookies] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
 

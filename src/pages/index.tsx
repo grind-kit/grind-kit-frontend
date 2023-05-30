@@ -3,10 +3,10 @@ import Head from "next/head";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 export default function Home() {
+  const { strings } = useLocale();
   const { user } = useAuth();
 
   useEffect(() => {

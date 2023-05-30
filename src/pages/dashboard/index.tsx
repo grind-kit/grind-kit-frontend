@@ -3,10 +3,10 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import useSWR from "swr";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 const DashboardPage = () => {
+  const { strings } = useLocale();
   const { id, token, lodestoneId } = parseCookies();
   const parsedId = Number(id);
   const characterData: string | null = localStorage.getItem("characterData");

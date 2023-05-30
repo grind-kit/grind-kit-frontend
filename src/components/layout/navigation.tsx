@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { setCookie, parseCookies } from "nookies";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 export default function Navigation() {
   const { logOut } = useAuth();
   const { authenticated } = parseCookies();
+  const { strings } = useLocale();
   const router = useRouter();
 
   const handleLogout = async () => {

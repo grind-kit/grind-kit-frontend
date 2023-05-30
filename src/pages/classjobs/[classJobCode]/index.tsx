@@ -2,10 +2,10 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import getData from "@/data";
 import InstanceContentTypeList from "@/components/InstanceContentTypeList";
 import { useRouter } from "next/router";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 function ClassJobCodePage() {
+  const { strings } = useLocale();
   const router = useRouter();
   const { level, classJobCode } = router.query;
   const parsedLevel = Number(level);

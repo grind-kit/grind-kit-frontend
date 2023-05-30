@@ -1,8 +1,8 @@
 import Navigation from "./navigation";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 export default function Layout(props: any) {
+  const { strings } = useLocale();
   return (
     <body className="flex flex-col min-h-screen">
       <Navigation />

@@ -7,31 +7,32 @@ import {
 } from "types/global";
 import { parseCookies } from "nookies";
 import ContentSorter from "@/components/ContentSorter";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
+import en from "@/resources/locales/en";
 
 export default function InstanceContentTypePage({
   arrayOfContentFinderConditions,
   instanceContentTypeHeader,
   instanceContentType,
 }: TInstanceContentPageProps) {
-  const header: string = arrayOfContentFinderConditions ? instanceContentTypeHeader : strings.MIN_LEVEL_HEADER;
+  const { strings } = useLocale();
+  const header: string = arrayOfContentFinderConditions
+    ? instanceContentTypeHeader
+    : strings.MIN_LEVEL_HEADER;
 
   return (
     <ProtectedRoute>
       <section className="w-full flex flex-col items-center text-slate-900">
         <header>
-          <h2 className="text-3xl font-bold">
-            {header}
-          </h2>
+          <h2 className="text-3xl font-bold">{header}</h2>
         </header>
         {arrayOfContentFinderConditions ? (
-            <ContentSorter
-              arrayOfContentFinderConditions={arrayOfContentFinderConditions}
-              instanceContentType={instanceContentType}
-            />
+          <ContentSorter
+            arrayOfContentFinderConditions={arrayOfContentFinderConditions}
+            instanceContentType={instanceContentType}
+          />
         ) : (
-            <p className="mt-5">{strings.MIN_LEVEL_MESSAGE}</p>
+          <p className="mt-5">{strings.MIN_LEVEL_MESSAGE}</p>
         )}
       </section>
     </ProtectedRoute>
@@ -41,6 +42,11 @@ export default function InstanceContentTypePage({
 export const getServerSideProps = async (
   context: IGetServerSidePropsContext
 ) => {
+  const getLocaleData = () => {
+    const strings = en;
+    return { strings };
+  };
+  const { strings } = getLocaleData();
   const { level, contentTypeId } = context.query;
   const parsedLevel = Number(level);
   const { token } = parseCookies(context);

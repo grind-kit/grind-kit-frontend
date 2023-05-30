@@ -8,8 +8,7 @@ import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
 import { parseCookies } from "nookies";
 import { InstanceContentBookmark } from "@/api/api-client";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 
 export default function IdPage({
   instanceContentId,
@@ -24,6 +23,7 @@ export default function IdPage({
   regionIcon,
   regionName,
 }: TIdPage) {
+  const { strings } = useLocale();
   const [bookmarkData, setBookmarkData] = useState<TBookmarkData | null>(null);
   const [bookmarked, setBookmarked] = useState<boolean>(false);
   const { id, token } = parseCookies();

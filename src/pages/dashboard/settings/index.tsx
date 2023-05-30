@@ -6,8 +6,7 @@ import { User } from "@/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
 import { IGetServerSidePropsContext, TCharacter } from "types/global";
-// eslint-disable-next-line import/no-named-default
-import * as strings from "@/resources/locales/en";
+import useLocale from "@/hooks/useLocale";
 import PopupModal from "@/components/PopupModal";
 
 type TSettingsPageProps = {
@@ -26,6 +25,7 @@ export default function SettingsPage({
   token,
   uid,
 }: TSettingsPageProps) {
+  const { strings } = useLocale();
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
     register,
