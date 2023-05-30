@@ -46,6 +46,13 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserType>({ email: null, uid: null });
   const [loading, setLoading] = useState<boolean>(true);
+  const cookiesToRemove: Array<string> = [
+    "token",
+    "uid",
+    "authenticated",
+    "lodestoneId",
+    "id",
+  ];
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -105,11 +112,7 @@ export const AuthContextProvider = ({
     setUser({ email: null, uid: null });
 
     // Remove all cookies
-    destroyCookie(null, "token");
-    destroyCookie(null, "uid");
-    destroyCookie(null, "authenticated");
-    destroyCookie(null, "lodestoneId");
-    destroyCookie(null, "id");
+    cookiesToRemove.forEach((cookie: string) => destroyCookie(null, cookie));
 
     await signOut(auth);
   };
