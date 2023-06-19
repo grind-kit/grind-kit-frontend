@@ -79,20 +79,37 @@ export const AuthContextProvider = ({
         password
       );
 
-      // Send relevant data to our API
-      const response = await axios(`${process.env.BACKEND_URL}/users`, {
-        method: "POST",
-        data: {
-          username: userCredential.user.uid,
-          email: email,
-          password: password,
-        },
-      });
+      const idToken = await userCredential.user.getIdToken();
+      const refreshToken = userCredential.user.refreshToken;
 
-      // If the API call fails, throw a new error
-      if (!response.data) {
-        throw new Error("Failed to create user in our database");
-      }
+      // Initialize data for our API
+      const userData = {
+        username: userCredential.user.uid,
+        email: email,
+        password: password,
+      };
+
+      const tokenData = {
+        username: userCredential.user.uid,
+        password: password,
+        id_token: idToken,
+        refresh_token: refreshToken,
+      };
+
+      // Send relevant data to our API
+      await axios
+        .all([
+          axios.post(`${process.env.BACKEND_URL}/users`, userData),
+          axios.post(`${process.env.BACKEND_URL}/tokens`, tokenData, {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          }),
+        ])
+        .catch((error) => {
+          console.error(error);
+          throw error;
+        });
 
       // Return the userCredential object from Firebase
       return userCredential;

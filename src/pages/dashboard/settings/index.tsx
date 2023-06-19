@@ -55,8 +55,9 @@ export default function SettingsPage({
     const response = await axios.get(
       `https://xivapi.com/character/search?name=${characterName}&server=${server}&private_key=${process.env.XIVAPI_KEY}`
     );
-    const fetchedCharacter = response.data.Results[0];
-    setCharacter(fetchedCharacter);
+    const fetchedCharacter = await response.data.Results[0];
+    await setCharacter(fetchedCharacter);
+    document.cookie = `lodestoneId=${character?.ID}; path=/`;
   };
 
   return (

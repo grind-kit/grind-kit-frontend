@@ -46,11 +46,11 @@ export default function Home() {
       const response = await User.getUserInfo(user.uid, token);
 
       // Remove this line later
-      console.log(token, "✅");
-
+      
       if (response && response.lodestone_id && response.id) {
         document.cookie = `lodestoneId=${response.lodestone_id}; path=/`;
         document.cookie = `id=${response.id}; path=/`;
+        console.log(token, user.uid, response.lodestone_id, "✅");
       }
     }
   }
