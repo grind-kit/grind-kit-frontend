@@ -24,10 +24,34 @@ export class User {
     this.lodestoneId = lodestoneId;
   }
 
-  static async getUserInfo(username: string, token: string) {
+  static async postUser(
+    userData: {
+      username: string;
+      email: string;
+      password: string;
+    },
+    token: string
+  ) {
+    try {
+      const response = await axios.post(
+        `${process.env.BACKEND_URL}/users/auth/signup/`,
+        userData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  static async getUserInfo(userId: number, token: string) {
     try {
       const response = await axios.get(
-        `${process.env.BACKEND_URL}/users/${username}`,
+        `${process.env.BACKEND_URL}/users/${userId}/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,13 +65,14 @@ export class User {
   }
 
   static async putUserInfo(
+    userId: number,
     username: string,
     token: string | undefined,
     lodestoneId: number | undefined
   ) {
     try {
-      const response = await axios.put(
-        `${process.env.BACKEND_URL}/users/${username}`,
+      const response = await axios.patch(
+        `${process.env.BACKEND_URL}/users/${userId}`,
         {
           username: username,
           lodestone_id: lodestoneId,

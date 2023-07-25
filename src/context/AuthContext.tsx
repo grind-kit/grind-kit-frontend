@@ -7,7 +7,7 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
-import axios from "axios";
+import { User } from "@/api/api-client";
 import { destroyCookie } from "nookies";
 
 interface UserType {
@@ -70,6 +70,13 @@ export const AuthContextProvider = ({
     return () => unsubscribe();
   }, []);
 
+  // const setAuthCookie = (name: string, value: string) => {
+  //   setCookie(null, name, value, {
+  //     path: "/",
+  //     maxAge: 60 * 60 * 24 * 7, // 1 week
+  //   });
+  // };
+
   const signUp = async (email: string, password: string) => {
     try {
       // Create user in Firebase
@@ -79,8 +86,7 @@ export const AuthContextProvider = ({
         password
       );
 
-      const idToken = await userCredential.user.getIdToken();
-      const refreshToken = userCredential.user.refreshToken;
+      const token = await userCredential.user.getIdToken();
 
       // Initialize data for our API
       const userData = {
@@ -89,27 +95,13 @@ export const AuthContextProvider = ({
         password: password,
       };
 
-      const tokenData = {
-        username: userCredential.user.uid,
-        password: password,
-        id_token: idToken,
-        refresh_token: refreshToken,
-      };
-
       // Send relevant data to our API
-      await axios
-        .all([
-          axios.post(`${process.env.BACKEND_URL}/users`, userData),
-          axios.post(`${process.env.BACKEND_URL}/tokens`, tokenData, {
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-            },
-          }),
-        ])
-        .catch((error) => {
-          console.error(error);
-          throw error;
-        });
+      const response = await User.postUser(userData, token);
+
+      console.log(response);
+
+      // Set cookies for the user
+
 
       // Return the userCredential object from Firebase
       return userCredential;
@@ -122,6 +114,7 @@ export const AuthContextProvider = ({
   };
 
   const logIn = async (email: string, password: string) => {
+
     return signInWithEmailAndPassword(auth, email, password);
   };
 
