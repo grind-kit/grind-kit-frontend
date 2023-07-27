@@ -24,15 +24,13 @@ export class User {
     this.lodestoneId = lodestoneId;
   }
 
-  static async postUser(
-    userData: {
-      username: string;
-      email: string;
-      password: string;
-      idToken: string;
-      refreshToken: string;
-    },
-  ) {
+  static async postUser(userData: {
+    username: string;
+    email: string;
+    password: string;
+    idToken: string;
+    refreshToken: string;
+  }) {
     try {
       const response = await axios.post(
         `${process.env.BACKEND_URL}/users/auth/signup/`,
@@ -58,6 +56,21 @@ export class User {
             Authorization: `Bearer ${token}`,
           },
         }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  static async patchUserToken(userData: {
+    username: string;
+    newToken: string;
+  }) {
+    try {
+      const response = await axios.patch(
+        `${process.env.BACKEND_URL}/users/auth/token/refresh/`,
+        userData
       );
       return response.data;
     } catch (error) {

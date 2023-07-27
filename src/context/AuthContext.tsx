@@ -45,7 +45,11 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState<UserType>({ email: null, uid: null });
+  const [user, setUser] = useState<UserType>({
+    email: null,
+    uid: null,
+    idToken: null,
+  });
   const [loading, setLoading] = useState<boolean>(true);
   const cookiesToRemove: Array<string> = [];
   const tokenRefreshThreshold = 10 * 60 * 1000; // 10 minutes (in milliseconds)
@@ -53,9 +57,11 @@ export const AuthContextProvider = ({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        // Set the user in the context
         setUser({
           email: user.email,
           uid: user.uid,
+          idToken: await user.getIdToken(),
         });
 
         // Handle token refresh
@@ -65,13 +71,20 @@ export const AuthContextProvider = ({
               ...prevUser,
               idToken: refreshedToken,
             }));
+
+            // Send the new token to our API
+            const userData = {
+              username: user.uid,
+              newToken: refreshedToken,
+            };
+
+            User.patchUserToken(userData);
           });
         }, tokenRefreshThreshold);
 
         return () => clearTimeout(tokenRefreshTimeout);
-
       } else {
-        setUser({ email: null, uid: null });
+        setUser({ email: null, uid: null, idToken: null });
       }
     });
     setLoading(false);
@@ -89,7 +102,7 @@ export const AuthContextProvider = ({
       );
 
       const idToken = await userCredential.user.getIdToken();
-      const refreshToken = userCredential.user.refreshToken;
+      const refreshToken = await userCredential.user.refreshToken;
 
       // Initialize data for our API
       const userData = {
