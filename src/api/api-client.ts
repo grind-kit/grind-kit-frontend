@@ -29,8 +29,9 @@ export class User {
       username: string;
       email: string;
       password: string;
+      idToken: string;
+      refreshToken: string;
     },
-    token: string
   ) {
     try {
       const response = await axios.post(
@@ -38,7 +39,7 @@ export class User {
         userData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${userData.idToken}`,
           },
         }
       );

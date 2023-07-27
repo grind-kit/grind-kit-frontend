@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
-import { destroyCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
 
 interface UserType {
   email: string | null;
@@ -70,12 +70,12 @@ export const AuthContextProvider = ({
     return () => unsubscribe();
   }, []);
 
-  // const setAuthCookie = (name: string, value: string) => {
-  //   setCookie(null, name, value, {
-  //     path: "/",
-  //     maxAge: 60 * 60 * 24 * 7, // 1 week
-  //   });
-  // };
+  const setAuthCookie = (name: string, value: string) => {
+    setCookie(null, name, value, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 1 week
+    });
+  };
 
   const signUp = async (email: string, password: string) => {
     try {
@@ -86,22 +86,23 @@ export const AuthContextProvider = ({
         password
       );
 
-      const token = await userCredential.user.getIdToken();
+      const idToken = await userCredential.user.getIdToken();
+      const refreshToken = userCredential.user.refreshToken;
 
       // Initialize data for our API
       const userData = {
         username: userCredential.user.uid,
         email: email,
         password: password,
+        idToken: idToken,
+        refreshToken: refreshToken,
       };
 
       // Send relevant data to our API
-      const response = await User.postUser(userData, token);
+      const response = await User.postUser(userData);
 
+      // Set cookies for the user, this needs to be more secure
       console.log(response);
-
-      // Set cookies for the user
-
 
       // Return the userCredential object from Firebase
       return userCredential;
