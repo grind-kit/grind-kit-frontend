@@ -8,11 +8,12 @@ import {
 } from "firebase/auth";
 import { auth } from "@/firebase/firebase";
 import { User } from "@/api/api-client";
-import { destroyCookie, setCookie } from "nookies";
+import { destroyCookie } from "nookies";
 
 interface UserType {
   email: string | null;
   uid: string | null;
+  idToken?: string | null;
 }
 
 interface ContextType {
@@ -34,7 +35,7 @@ const AuthContext = createContext<ContextType>({
   logOut: async () => {
     throw new Error("AuthContext not initialized");
   },
-  user: { email: null, uid: null },
+  user: { email: null, uid: null, idToken: null },
 });
 
 export const useAuth = () => useContext<ContextType>(AuthContext);
@@ -46,13 +47,8 @@ export const AuthContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserType>({ email: null, uid: null });
   const [loading, setLoading] = useState<boolean>(true);
-  const cookiesToRemove: Array<string> = [
-    "token",
-    "uid",
-    "authenticated",
-    "lodestoneId",
-    "id",
-  ];
+  const cookiesToRemove: Array<string> = [];
+  const tokenRefreshThreshold = 10 * 60 * 1000; // 10 minutes (in milliseconds)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -61,6 +57,19 @@ export const AuthContextProvider = ({
           email: user.email,
           uid: user.uid,
         });
+
+        // Handle token refresh
+        const tokenRefreshTimeout = setTimeout(() => {
+          user.getIdToken(true).then((refreshedToken) => {
+            setUser((prevUser) => ({
+              ...prevUser,
+              idToken: refreshedToken,
+            }));
+          });
+        }, tokenRefreshThreshold);
+
+        return () => clearTimeout(tokenRefreshTimeout);
+
       } else {
         setUser({ email: null, uid: null });
       }
@@ -69,13 +78,6 @@ export const AuthContextProvider = ({
 
     return () => unsubscribe();
   }, []);
-
-  const setAuthCookie = (name: string, value: string) => {
-    setCookie(null, name, value, {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
-  };
 
   const signUp = async (email: string, password: string) => {
     try {
@@ -99,10 +101,7 @@ export const AuthContextProvider = ({
       };
 
       // Send relevant data to our API
-      const response = await User.postUser(userData);
-
-      // Set cookies for the user, this needs to be more secure
-      console.log(response);
+      await User.postUser(userData);
 
       // Return the userCredential object from Firebase
       return userCredential;
@@ -115,7 +114,6 @@ export const AuthContextProvider = ({
   };
 
   const logIn = async (email: string, password: string) => {
-
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -123,7 +121,7 @@ export const AuthContextProvider = ({
     setUser({ email: null, uid: null });
 
     // Remove all cookies
-    cookiesToRemove.forEach((cookie: string) => destroyCookie(null, cookie));
+    cookiesToRemove.forEach((cookie) => destroyCookie(null, cookie));
 
     await signOut(auth);
   };
