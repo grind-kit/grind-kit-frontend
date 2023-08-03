@@ -63,13 +63,24 @@ export class User {
     }
   }
 
-  static async refreshIdToken(userData: {
-    username: string;
-  }) {
+  static async refreshIdToken(
+    userData: {
+      username: string;
+    },
+    token: string
+  ) {
     try {
       const response = await axios.post(
-        `${process.env.BACKEND_URL}/users/auth/token/refresh/`,
-        userData
+        `${process.env.BACKEND_URL}/users/auth/login/`,
+        {
+          username: userData.username,
+          idToken: token,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       return response.data;
     } catch (error) {

@@ -51,7 +51,6 @@ export const AuthContextProvider = ({
   const [loading, setLoading] = useState<boolean>(true);
   const cookiesToRemove: Array<string> = [];
   // 10 seconds
-  const tokenRefreshThreshold = 10 * 1000;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -63,22 +62,6 @@ export const AuthContextProvider = ({
         });
 
         console.log(user, "user");
-
-        // Handle token refresh
-        const tokenRefreshTimeout = setTimeout(async () => {
-          console.log("Running token refresh");
-
-          // Payload for our API
-          const userData = {
-            username: user.uid,
-          };
-
-          const response = await User.refreshIdToken(userData);
-
-          console.log(response);
-        }, tokenRefreshThreshold);
-
-        return () => clearTimeout(tokenRefreshTimeout);
       } else {
         setUser({ email: null, uid: null });
       }
@@ -101,7 +84,7 @@ export const AuthContextProvider = ({
 
       const idToken = await userCredential.user.getIdToken();
       const refreshToken = await userCredential.user.refreshToken;
-      
+
       // Initialize data to be stored in our API
       const userData = {
         username: userCredential.user.uid,
@@ -110,10 +93,10 @@ export const AuthContextProvider = ({
         idToken: idToken,
         refreshToken: refreshToken,
       };
-      
+
       // Store the idToken in sessionStorage
       sessionStorage.setItem("idToken", idToken);
-      
+
       // Send relevant data to our API
       await User.postUser(userData);
 
@@ -128,7 +111,27 @@ export const AuthContextProvider = ({
   };
 
   const logIn = async (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // Reinitalize idToken
+    const newIdToken = await userCredential.user.getIdToken();
+
+    // Reinitalize data to be stored in our API
+    const newUserData = {
+      username: userCredential.user.uid,
+    };
+
+    // Send new relevant data to our API
+    const res = await User.refreshIdToken(newUserData, newIdToken);
+
+    console.log(res);
+
+    // Return the userCredential object from Firebase
+    return userCredential;
   };
 
   const logOut = async () => {
