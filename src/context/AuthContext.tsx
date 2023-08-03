@@ -13,7 +13,6 @@ import { destroyCookie } from "nookies";
 interface UserType {
   email: string | null;
   uid: string | null;
-  idToken?: string | null;
 }
 
 interface ContextType {
@@ -35,7 +34,7 @@ const AuthContext = createContext<ContextType>({
   logOut: async () => {
     throw new Error("AuthContext not initialized");
   },
-  user: { email: null, uid: null, idToken: null },
+  user: { email: null, uid: null },
 });
 
 export const useAuth = () => useContext<ContextType>(AuthContext);
@@ -48,11 +47,11 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState<UserType>({
     email: null,
     uid: null,
-    idToken: null,
   });
   const [loading, setLoading] = useState<boolean>(true);
   const cookiesToRemove: Array<string> = [];
-  const tokenRefreshThreshold = 10 * 60 * 1000; // 10 minutes (in milliseconds)
+  // 10 seconds
+  const tokenRefreshThreshold = 10 * 1000;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -61,30 +60,27 @@ export const AuthContextProvider = ({
         setUser({
           email: user.email,
           uid: user.uid,
-          idToken: await user.getIdToken(),
         });
 
+        console.log(user, "user");
+
         // Handle token refresh
-        const tokenRefreshTimeout = setTimeout(() => {
-          user.getIdToken(true).then((refreshedToken) => {
-            setUser((prevUser) => ({
-              ...prevUser,
-              idToken: refreshedToken,
-            }));
+        const tokenRefreshTimeout = setTimeout(async () => {
+          console.log("Running token refresh");
 
-            // Send the new token to our API
-            const userData = {
-              username: user.uid,
-              newToken: refreshedToken,
-            };
+          // Payload for our API
+          const userData = {
+            username: user.uid,
+          };
 
-            User.patchUserToken(userData);
-          });
+          const response = await User.refreshIdToken(userData);
+
+          console.log(response);
         }, tokenRefreshThreshold);
 
         return () => clearTimeout(tokenRefreshTimeout);
       } else {
-        setUser({ email: null, uid: null, idToken: null });
+        setUser({ email: null, uid: null });
       }
     });
     setLoading(false);
@@ -101,10 +97,12 @@ export const AuthContextProvider = ({
         password
       );
 
+      // Initialize tokens
+
       const idToken = await userCredential.user.getIdToken();
       const refreshToken = await userCredential.user.refreshToken;
-
-      // Initialize data for our API
+      
+      // Initialize data to be stored in our API
       const userData = {
         username: userCredential.user.uid,
         email: email,
@@ -112,7 +110,10 @@ export const AuthContextProvider = ({
         idToken: idToken,
         refreshToken: refreshToken,
       };
-
+      
+      // Store the idToken in sessionStorage
+      sessionStorage.setItem("idToken", idToken);
+      
       // Send relevant data to our API
       await User.postUser(userData);
 

@@ -36,7 +36,6 @@ export default function Home() {
     if (!user || !user.uid) return;
 
     document.cookie = `uid=${user.uid}; path=/`;
-    console.log("Cookies set!");
   }
 
   return (

@@ -63,12 +63,11 @@ export class User {
     }
   }
 
-  static async patchUserToken(userData: {
+  static async refreshIdToken(userData: {
     username: string;
-    newToken: string;
   }) {
     try {
-      const response = await axios.patch(
+      const response = await axios.post(
         `${process.env.BACKEND_URL}/users/auth/token/refresh/`,
         userData
       );
