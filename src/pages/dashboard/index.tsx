@@ -30,8 +30,8 @@ export default function DashboardPage() {
     console.log(response);
 
     // If the user has a Lodestone ID, store it in a variable
-    if (response.data.lodestone_id) {
-      lodestoneId = response.data.lodestone_id;
+    if (response.lodestone_id) {
+      lodestoneId = response.lodestone_id;
     }
 
     setLodestoneId(lodestoneId);
