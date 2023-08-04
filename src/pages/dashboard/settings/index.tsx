@@ -1,18 +1,15 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import React, { useCallback, useState, useEffect } from "react";
 import axios from "axios";
-import { parseCookies } from "nookies";
 import { User } from "@/api/api-client";
 import Image from "next/image";
 import { FormProvider, useForm } from "react-hook-form";
-import { IGetServerSidePropsContext, TCharacter } from "types/global";
+import { TCharacter } from "types/global";
 import useLocale from "@/hooks/useLocale";
 import PopupModal from "@/components/PopupModal";
 
 type TSettingsPageProps = {
   servers: string[];
-  token: string | undefined;
-  uid: string;
 };
 
 interface SearchType {
@@ -22,8 +19,6 @@ interface SearchType {
 
 export default function SettingsPage({
   servers,
-  token,
-  uid,
 }: TSettingsPageProps) {
   const { strings } = useLocale();
   const methods = useForm<SearchType>({ mode: "onBlur" });
@@ -38,11 +33,22 @@ export default function SettingsPage({
   const [isVisible, setIsVisible] = useState(false);
 
   const handleSave = useCallback(async () => {
-    await User.putUserInfo(uid, token, character?.ID);
+    if (!character) return;
+
+    // Store userId and idToken from sessionStorage in variables
+    const idToken = sessionStorage.getItem("idToken");
+    const userId = sessionStorage.getItem("userId");
+    const userIdAsNumber = Number(userId);
+    console.log(userIdAsNumber);
+
+    // Update the user's Lodestone ID in our API
+    const response = await User.updateLodestoneId(userIdAsNumber, idToken, character.ID);
+    console.log(response);
+
     setSaved(true);
     setCharacter(null);
     setSubmitted(false);
-  }, [character, token, uid]);
+  }, [character]);
 
   useEffect(() => {
     if (saved) {
@@ -52,12 +58,12 @@ export default function SettingsPage({
 
   const onSubmit = async ({ characterName, server }: SearchType) => {
     setSubmitted(true);
+
     const response = await axios.get(
       `https://xivapi.com/character/search?name=${characterName}&server=${server}&private_key=${process.env.XIVAPI_KEY}`
     );
     const fetchedCharacter = await response.data.Results[0];
     await setCharacter(fetchedCharacter);
-    document.cookie = `lodestoneId=${character?.ID}; path=/`;
   };
 
   return (
@@ -201,22 +207,19 @@ export default function SettingsPage({
   );
 }
 
-export const getServerSideProps = async (
-  context: IGetServerSidePropsContext
-) => {
+export const getServerSideProps = async () => {
+  // Fetch a list of servers from XIVAPI
   const response = await axios.get(
     `https://xivapi.com/servers?private_key=${process.env.XIVAPI_KEY}`
   );
 
+  // Slice the unneeded servers from the response
   const servers = response.data.slice(0, 77);
 
-  const { uid, token } = parseCookies(context);
-
+  // Return the list of servers as props for the dropdown menu
   return {
     props: {
       servers,
-      uid,
-      token,
     },
   };
 };

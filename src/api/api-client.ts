@@ -88,22 +88,20 @@ export class User {
     }
   }
 
-  static async putUserInfo(
+  static async updateLodestoneId(
     userId: number,
-    username: string,
-    token: string | undefined,
+    idToken: string | null,
     lodestoneId: number | undefined
   ) {
     try {
       const response = await axios.patch(
-        `${process.env.BACKEND_URL}/users/${userId}`,
+        `${process.env.BACKEND_URL}/users/${userId}/`,
         {
-          username: username,
           lodestone_id: lodestoneId,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${idToken}`,
           },
         }
       );
