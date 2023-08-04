@@ -35,16 +35,16 @@ export default function SettingsPage({ servers }: TSettingsPageProps) {
 
     // Store userId and idToken from sessionStorage in variables
     const idToken = sessionStorage.getItem("idToken");
-    const userId = sessionStorage.getItem("userId");
-    const userIdAsNumber = Number(userId);
-    console.log(userIdAsNumber);
+    const userId = Number(sessionStorage.getItem("userId"));
+
+    // Initialize data to be stored in our API
+    const userData = {
+      userId: userId,
+      lodestoneId: character.ID,
+    };
 
     // Update the user's Lodestone ID in our API
-    const response = await User.updateLodestoneId(
-      userIdAsNumber,
-      idToken,
-      character.ID
-    );
+    const response = await User.updateLodestoneId(userData, idToken);
     console.log(response);
 
     setSaved(true);

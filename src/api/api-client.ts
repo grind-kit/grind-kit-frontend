@@ -47,10 +47,15 @@ export class User {
     }
   }
 
-  static async getUserInfo(userId: number, token: string) {
+  static async retrieve(
+    userData: {
+      userId: number;
+    },
+    token: string | null
+  ) {
     try {
       const response = await axios.get(
-        `${process.env.BACKEND_URL}/users/${userId}/`,
+        `${process.env.BACKEND_URL}/users/${userData.userId}/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -89,19 +94,21 @@ export class User {
   }
 
   static async updateLodestoneId(
-    userId: number,
-    idToken: string | null,
-    lodestoneId: number | undefined
+    userData: {
+      userId: number;
+      lodestoneId: number | undefined;
+    },
+    token: string | null
   ) {
     try {
       const response = await axios.patch(
-        `${process.env.BACKEND_URL}/users/${userId}/`,
+        `${process.env.BACKEND_URL}/users/${userData.userId}/`,
         {
-          lodestone_id: lodestoneId,
+          lodestone_id: userData.lodestoneId,
         },
         {
           headers: {
-            Authorization: `Bearer ${idToken}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

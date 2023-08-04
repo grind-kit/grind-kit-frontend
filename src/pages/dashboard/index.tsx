@@ -1,81 +1,41 @@
 import React from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Link from "next/link";
-import { parseCookies } from "nookies";
-import useSWR from "swr";
 import useLocale from "@/hooks/useLocale";
+import { User } from "@/api/api-client";
+import { useState, useEffect } from "react";
 
-const DashboardPage = () => {
+export default function DashboardPage() {
   const { strings } = useLocale();
-  const { id, token, lodestoneId } = parseCookies();
-  const parsedId = Number(id);
-  const characterData: string | null = localStorage.getItem("characterData");
-  const bookmarkData: string | null = localStorage.getItem("bookmarkData");
+  const [lodestoneId, setLodestoneId] = useState(null);
 
-  const characterDataFetcher = async (url: string) =>
-    await fetch(url).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(res);
-      }
-    });
+  useEffect(() => {
+    handleLodestoneId();
+  }, []);
 
-  const bookmarkDataFetcher = async (url: string) => {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async function handleLodestoneId() {
+    let lodestoneId = null;
 
-    if (!response.ok) {
-      throw new Error(response.statusText);
+    // Get the user's ID token and user ID from session storage
+    const idToken = sessionStorage.getItem("idToken");
+    const userId = Number(sessionStorage.getItem("userId"));
+
+    // Initialize data to be sent to our API
+    const userData = {
+      userId: userId,
+    };
+
+    const response = await User.retrieve(userData, idToken);
+
+    console.log(response);
+
+    // If the user has a Lodestone ID, store it in a variable
+    if (response.data.lodestone_id) {
+      lodestoneId = response.data.lodestone_id;
     }
-    const data = await response.json();
-    return data;
-  };
 
-  // Character data
-
-  useSWR(`https://xivapi.com/character/${lodestoneId}`, characterDataFetcher, {
-    refreshInterval: 60000, // fetch every 60 seconds
-    dedupingInterval: 300000, // wait 5 minutes before fetching again
-    revalidateOnFocus: false, // don't revalidate when the window is focused
-    shouldRetryOnError: false, // don't retry on error
-    errorRetryCount: 1, // retry once
-    errorRetryInterval: 5000, // retry after 5 seconds
-    compare: (prevData, newData) =>
-      JSON.stringify(prevData) === JSON.stringify(newData),
-    initialData: characterData ? JSON.parse(characterData) : undefined,
-    onSuccess: (data) => {
-      localStorage.setItem("characterData", JSON.stringify(data));
-    },
-  });
-
-  // Bookmarks
-
-  useSWR(
-    `${process.env.BACKEND_URL}/users/${parsedId}/bookmarks`,
-    bookmarkDataFetcher,
-    {
-      refreshInterval: 60000, // fetch every 60 seconds
-      dedupingInterval: 300000, // wait 5 minutes before fetching again
-      revalidateOnFocus: false, // don't revalidate when the window is focused
-      shouldRetryOnError: false, // don't retry on error
-      errorRetryCount: 1, // retry once
-      errorRetryInterval: 5000, // retry after 5 seconds
-      compare: (prevData, newData) =>
-        JSON.stringify(prevData) === JSON.stringify(newData),
-      initialData: bookmarkData ? JSON.parse(bookmarkData) : undefined,
-      onSuccess: (data) => {
-        localStorage.setItem("bookmarkData", JSON.stringify(data));
-      },
-    }
-  );
-
-  // Delete this later
-
-  console.log(localStorage.getItem("bookmarkData"));
+    setLodestoneId(lodestoneId);
+  }
 
   return (
     <ProtectedRoute>
@@ -109,6 +69,4 @@ const DashboardPage = () => {
       </div>
     </ProtectedRoute>
   );
-};
-
-export default DashboardPage;
+}
