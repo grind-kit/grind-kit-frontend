@@ -27,14 +27,13 @@ export default function DashboardPage() {
 
     const response = await User.retrieve(userData, idToken);
 
-    console.log(response);
-
     // If the user has a Lodestone ID, store it in a variable
     if (response.lodestone_id) {
       lodestoneId = response.lodestone_id;
+      setLodestoneId(lodestoneId);
     }
 
-    setLodestoneId(lodestoneId);
+    return;
   }
 
   return (

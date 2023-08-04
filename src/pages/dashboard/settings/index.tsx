@@ -33,6 +33,9 @@ export default function SettingsPage({ servers }: TSettingsPageProps) {
   const handleSave = useCallback(async () => {
     if (!character) return;
 
+    // Initialize variables
+    const lodestoneId = character.ID;
+
     // Store userId and idToken from sessionStorage in variables
     const idToken = sessionStorage.getItem("idToken");
     const userId = Number(sessionStorage.getItem("userId"));
@@ -40,23 +43,22 @@ export default function SettingsPage({ servers }: TSettingsPageProps) {
     // Initialize data to be stored in our API
     const userData = {
       userId: userId,
-      lodestoneId: character.ID,
+      lodestoneId: lodestoneId,
     };
 
     // Update the user's Lodestone ID in our API
-    const response = await User.updateLodestoneId(userData, idToken);
-    console.log(response);
+    await User.updateLodestoneId(userData, idToken);
+
+    // Fetch the user's job data from the Lodestone
+    const response = await axios.get(`https://xivapi.com/character/${lodestoneId}`)
+
+    // Store the user's job data in localStorage
+    localStorage.setItem("jobs", JSON.stringify(response.data.Character.ClassJobs));
 
     setSaved(true);
     setCharacter(null);
     setSubmitted(false);
   }, [character]);
-
-  useEffect(() => {
-    if (saved) {
-      setIsVisible(true);
-    }
-  }, [saved]);
 
   const onSubmit = async ({ characterName, server }: SearchType) => {
     setSubmitted(true);
@@ -67,6 +69,12 @@ export default function SettingsPage({ servers }: TSettingsPageProps) {
     const fetchedCharacter = await response.data.Results[0];
     await setCharacter(fetchedCharacter);
   };
+
+  useEffect(() => {
+    if (saved) {
+      setIsVisible(true);
+    }
+  }, [saved]);
 
   return (
     <ProtectedRoute>
