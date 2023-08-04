@@ -24,7 +24,7 @@ export class User {
     this.lodestoneId = lodestoneId;
   }
 
-  static async postUser(userData: {
+  static async create(userData: {
     username: string;
     email: string;
     password: string;

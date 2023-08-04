@@ -49,8 +49,9 @@ export const AuthContextProvider = ({
     uid: null,
   });
   const [loading, setLoading] = useState<boolean>(true);
+
+  // TODO: Add cookies to remove
   const cookiesToRemove: Array<string> = [];
-  // 10 seconds
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -60,8 +61,6 @@ export const AuthContextProvider = ({
           email: user.email,
           uid: user.uid,
         });
-
-        console.log(user, "user");
       } else {
         setUser({ email: null, uid: null });
       }
@@ -94,11 +93,12 @@ export const AuthContextProvider = ({
         refreshToken: refreshToken,
       };
 
-      // Store the idToken in sessionStorage
-      sessionStorage.setItem("idToken", idToken);
-
       // Send relevant data to our API
-      await User.postUser(userData);
+      const response = await User.create(userData);
+
+      // Store the idToken and userId in sessionStorage
+      sessionStorage.setItem("idToken", response.id_token);
+      sessionStorage.setItem("userId", response.id);
 
       // Return the userCredential object from Firebase
       return userCredential;
@@ -126,9 +126,11 @@ export const AuthContextProvider = ({
     };
 
     // Send new relevant data to our API
-    const res = await User.refreshIdToken(newUserData, newIdToken);
+    const response = await User.refreshIdToken(newUserData, newIdToken);
 
-    console.log(res);
+    // Store the refreshed idToken and userId in sessionStorage
+    sessionStorage.setItem("idToken", response.id_token);
+    sessionStorage.setItem("userId", response.id);
 
     // Return the userCredential object from Firebase
     return userCredential;
