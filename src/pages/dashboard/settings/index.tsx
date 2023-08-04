@@ -17,9 +17,7 @@ interface SearchType {
   server: string;
 }
 
-export default function SettingsPage({
-  servers,
-}: TSettingsPageProps) {
+export default function SettingsPage({ servers }: TSettingsPageProps) {
   const { strings } = useLocale();
   const methods = useForm<SearchType>({ mode: "onBlur" });
   const {
@@ -42,7 +40,11 @@ export default function SettingsPage({
     console.log(userIdAsNumber);
 
     // Update the user's Lodestone ID in our API
-    const response = await User.updateLodestoneId(userIdAsNumber, idToken, character.ID);
+    const response = await User.updateLodestoneId(
+      userIdAsNumber,
+      idToken,
+      character.ID
+    );
     console.log(response);
 
     setSaved(true);

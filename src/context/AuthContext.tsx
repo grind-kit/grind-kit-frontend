@@ -98,7 +98,7 @@ export const AuthContextProvider = ({
 
       // Store the idToken and userId in sessionStorage
       sessionStorage.setItem("idToken", response.id_token);
-      sessionStorage.setItem("userId", response.id);
+      sessionStorage.setItem("userId", response.user);
 
       // Return the userCredential object from Firebase
       return userCredential;
@@ -130,7 +130,7 @@ export const AuthContextProvider = ({
 
     // Store the refreshed idToken and userId in sessionStorage
     sessionStorage.setItem("idToken", response.id_token);
-    sessionStorage.setItem("userId", response.id);
+    sessionStorage.setItem("userId", response.user);
 
     // Return the userCredential object from Firebase
     return userCredential;
