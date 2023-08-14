@@ -6,7 +6,6 @@ import { IGetServerSidePropsContext } from "types/global";
 import { TIdPage, TBookmarkData } from "types/global";
 import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
-import { parseCookies } from "nookies";
 import { InstanceContentBookmark } from "@/api/api-client";
 import useLocale from "@/hooks/useLocale";
 
@@ -26,7 +25,6 @@ export default function IdPage({
   const { strings } = useLocale();
   const [bookmarkData, setBookmarkData] = useState<TBookmarkData | null>(null);
   const [bookmarked, setBookmarked] = useState<boolean>(false);
-  const { id, token } = parseCookies();
 
   useEffect(() => {
     fetchBookmarkData();
@@ -41,29 +39,32 @@ export default function IdPage({
   }
 
   async function handleBookmarkClick() {
-    const parsedId = Number(id);
+    const idToken: string | null = await sessionStorage.getItem("idToken");
+    const userId: string | null = await sessionStorage.getItem("userId");
+    const parsedUserId = Number(userId);
     let response = null;
 
     if (!bookmarkData) {
       response = await InstanceContentBookmark.postBookmark(
-        parsedId,
-        token,
+        parsedUserId,
+        idToken,
         typeId,
         instanceContentId
       );
+      
       setBookmarked(true); // Update bookmarked state when bookmark is created
     } else if (bookmarkData.value === 0) {
       response = await InstanceContentBookmark.patchBookmark(
-        parsedId,
-        token,
+        parsedUserId,
+        idToken,
         bookmarkData.id,
         1
       );
       setBookmarked(true); // Update bookmarked state when bookmark is updated
     } else if (bookmarkData.value === 1) {
       response = await InstanceContentBookmark.patchBookmark(
-        parsedId,
-        token,
+        parsedUserId,
+        idToken,
         bookmarkData.id,
         0
       );

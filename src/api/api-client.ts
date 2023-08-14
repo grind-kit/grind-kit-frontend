@@ -144,7 +144,7 @@ export class InstanceContentBookmark {
 
   static async patchBookmark(
     userId: number,
-    token: string,
+    token: string | null,
     bookmarkId: number,
     value: number
   ) {
@@ -168,16 +168,17 @@ export class InstanceContentBookmark {
 
   static async postBookmark(
     userId: number,
-    token: string,
+    token: string | null,
     contentTypeId: number,
     contentFinderConditionId: number
   ) {
     try {
       const response = await axios.post(
-        `${process.env.BACKEND_URL}/users/${userId}/bookmarks`,
+        `${process.env.BACKEND_URL}/users/${userId}/bookmarks/`,
         {
+          user_id: userId,
           content_type_id: contentTypeId,
-          content_finder_condition: contentFinderConditionId,
+          content_finder_condition_id: contentFinderConditionId,
           value: 1,
         },
         {

@@ -38,7 +38,7 @@ function RoleAccordionToggle({
           className="w-6 h-6"
         >
           <path
-            stroke-linecap="round"
+            strokeLinecap="round"
             stroke-linejoin="round"
             d="M8.25 4.5l7.5 7.5-7.5 7.5"
           />
