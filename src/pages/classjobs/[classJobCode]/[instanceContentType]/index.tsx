@@ -1,24 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ClientContentFinderCondition } from "@/api/api-client";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import {
   TInstanceContentPageProps,
   IGetServerSidePropsContext,
+  TContentFinderCondition,
 } from "types/global";
-import { parseCookies } from "nookies";
 import ContentSorter from "@/components/ContentSorter";
 import useLocale from "@/hooks/useLocale";
 import en from "@/resources/locales/en";
 
 export default function InstanceContentTypePage({
-  arrayOfContentFinderConditions,
+  level,
+  contentTypeId,
   instanceContentTypeHeader,
   instanceContentType,
 }: TInstanceContentPageProps) {
+  const [arrayOfContentFinderConditions, setArrayOfContentFinderConditions] =
+    useState<TContentFinderCondition[] | null>(null);
   const { strings } = useLocale();
   const header: string = arrayOfContentFinderConditions
     ? instanceContentTypeHeader
     : strings.MIN_LEVEL_HEADER;
+
+  useEffect(() => {
+    handleContentFinderConditions();
+  }, []);
+
+  async function handleContentFinderConditions() {
+    const idToken = sessionStorage.getItem("idToken");
+
+    const response =
+      await ClientContentFinderCondition.getClientContentFinderConditionList(
+        level,
+        contentTypeId,
+        idToken
+      );
+
+    if (response) {
+      setArrayOfContentFinderConditions(response);
+    }
+  }
 
   return (
     <ProtectedRoute>
@@ -48,23 +70,9 @@ export const getServerSideProps = async (
   };
   const { strings } = getLocaleData();
   const { level, contentTypeId } = context.query;
-  const parsedLevel = Number(level);
-  const { token } = parseCookies(context);
 
-  let response;
-  let instanceContentType;
-  let instanceContentTypeHeader;
-
-  if (parsedLevel < 90 && token) {
-    response =
-      await ClientContentFinderCondition.getClientContentFinderConditionList(
-        parsedLevel,
-        contentTypeId,
-        token
-      );
-  }
-
-  if (typeof response === "undefined") response = null;
+  let instanceContentType = null;
+  let instanceContentTypeHeader = null;
 
   switch (contentTypeId) {
     default:
@@ -87,7 +95,8 @@ export const getServerSideProps = async (
 
   return {
     props: {
-      arrayOfContentFinderConditions: response,
+      level,
+      contentTypeId,
       instanceContentTypeHeader,
       instanceContentType,
     },

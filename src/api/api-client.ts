@@ -214,17 +214,17 @@ export class ClientContentFinderCondition {
   static async getClientContentFinderConditionList(
     classJobLevel: number,
     contentTypeId: number,
-    token: string | undefined
+    token: string | null
   ) {
     try {
-      let minClassJobLevel;
+      let minClassJobLevel: number | null = null;
 
       if (classJobLevel <= 2) {
         minClassJobLevel = 0;
       } else minClassJobLevel = classJobLevel - 2;
 
       const response = await axios.get(
-        `${process.env.BACKEND_URL}/conditions`,
+        `${process.env.BACKEND_URL}/api/conditions`,
         {
           params: {
             type: contentTypeId,

@@ -71,7 +71,8 @@ export type TInstanceContentResultsListProps = {
 };
 
 export type TInstanceContentPageProps = {
-  arrayOfContentFinderConditions: Array<TContentFinderCondition>;
+  level: number;
+  contentTypeId: number;
   instanceContentTypeHeader: string;
   instanceContentType: string;
 };
