@@ -4,20 +4,32 @@ import RoleAccordion from "@/components/RoleAccordion";
 import getData from "@/data";
 import { useRouter } from "next/router";
 import useLocale from "@/hooks/useLocale";
-import { parseCookies } from "nookies";
+
+type TRole = {
+  roleId: number;
+  roleType: string;
+  bg: string;
+  hover: string;
+  roleData: 
+    {
+      classJobId: number;
+      classJobName: string;
+      classJobLevel: number;
+      classJobCode: string;
+    }[];
+};
 
 function ClassJobsPage() {
   const { strings } = useLocale();
   const data = localStorage.getItem("characterData");
-  const { lodestoneId } = parseCookies();
   const { arrayOfRoles } = getData();
   const router = useRouter();
 
   useEffect(() => {
-    if (!data || !lodestoneId) {
+    if (!data) {
       router.push("/dashboard");
     }
-  }, [data, router, lodestoneId]);
+  }, [data, router]);
 
   return (
     <ProtectedRoute>
@@ -25,7 +37,7 @@ function ClassJobsPage() {
         <h2 className="text-3xl font-bold text-slate-900">
           {strings.START_HEADER}
         </h2>
-        {arrayOfRoles?.map((role) => {
+        {arrayOfRoles?.map((role: TRole) => {
           return <RoleAccordion key={role.roleId} {...role} />;
         })}
       </div>

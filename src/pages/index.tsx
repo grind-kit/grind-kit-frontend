@@ -1,23 +1,15 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase/firebase";
 import useLocale from "@/hooks/useLocale";
 
 export default function Home() {
   const { strings } = useLocale();
-  const { user } = useAuth();
 
   useEffect(() => {
-    handleCookies();
-  }, [user]);
-
-  useEffect(() => {
-    handleNewToken();
-
+    // After 1 hour has passed, refresh the token
     const interval = setInterval(() => {
-      handleNewToken();
-      // Time: 1 hour
+      return handleNewToken();
     }, 60 * 60 * 1000);
 
     // Clear interval if the component is unmounted
@@ -28,14 +20,8 @@ export default function Home() {
     const user = auth.currentUser;
     if (!user) return;
 
-    const token = await user.getIdToken();
-    document.cookie = `token=${token}; path=/`;
-  }
-
-  async function handleCookies() {
-    if (!user || !user.uid) return;
-
-    document.cookie = `uid=${user.uid}; path=/`;
+    const idToken = await user.getIdToken();
+    sessionStorage.setItem("idToken", idToken);
   }
 
   return (

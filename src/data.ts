@@ -15,7 +15,7 @@ function getData() {
       instanceContentId: 2,
       instanceContentType: "raids",
       contentTypeId: 5,
-    }
+    },
   ];
 
   const data = localStorage.getItem("characterData");
@@ -25,7 +25,7 @@ function getData() {
   }
 
   const parsedData = JSON.parse(data);
-  const arrayOfClassJobs = parsedData.Character.ClassJobs;
+  const arrayOfClassJobs = parsedData.ClassJobs;
 
   const arrayOfRoles = [
     {

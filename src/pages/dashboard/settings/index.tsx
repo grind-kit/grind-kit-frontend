@@ -52,8 +52,8 @@ export default function SettingsPage({ servers }: TSettingsPageProps) {
     // Fetch the user's job data from the Lodestone
     const response = await axios.get(`https://xivapi.com/character/${lodestoneId}`)
 
-    // Store the user's job data in localStorage
-    localStorage.setItem("jobs", JSON.stringify(response.data.Character.ClassJobs));
+    // Store the user's character data in localStorage
+    localStorage.setItem("characterData", JSON.stringify(response.data.Character));
 
     setSaved(true);
     setCharacter(null);
