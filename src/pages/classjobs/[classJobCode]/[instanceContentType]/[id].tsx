@@ -8,6 +8,7 @@ import Image from "next/image";
 import BookmarkIcon from "@/components/BookmarkIcon";
 import { InstanceContentBookmark } from "@/api/api-client";
 import useLocale from "@/hooks/useLocale";
+import axios from "axios";
 
 export default function IdPage({
   instanceContentId,
@@ -27,7 +28,7 @@ export default function IdPage({
   const [bookmarked, setBookmarked] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchBookmarkData();
+    fetchBookmarkData(instanceContentId);
   }, []);
 
   function handleImage(src: string): string {
@@ -51,7 +52,7 @@ export default function IdPage({
         typeId,
         instanceContentId
       );
-      
+
       setBookmarked(true); // Update bookmarked state when bookmark is created
     } else if (bookmarkData.value === 0) {
       response = await InstanceContentBookmark.patchBookmark(
@@ -72,80 +73,33 @@ export default function IdPage({
     }
 
     setBookmarkData(response); // Update bookmark data state when bookmark is created
-    updateLocalStorageCache(response); // Update local storage cache
     return;
   }
 
-  async function updateLocalStorageCache(updatedBookmarkData: TBookmarkData) {
-    const existingBookmarkCache = localStorage.getItem("bookmarkData");
-    let parsedBookmarkCache = [];
+  async function fetchBookmarkData(id: number) {
+    const idToken: string | null = await sessionStorage.getItem("idToken");
+    const userId: string | null = await sessionStorage.getItem("userId");
 
-    if (existingBookmarkCache) {
-      parsedBookmarkCache = await JSON.parse(existingBookmarkCache);
-
-      const existingBookmark = parsedBookmarkCache.filter(
-        (item: TBookmarkData) =>
-          item.content_finder_condition === instanceContentId
-      );
-
-      if (existingBookmark.length > 0) {
-        const updatedBookmarkCache = parsedBookmarkCache.map(
-          (item: TBookmarkData) => {
-            if (item.content_finder_condition === instanceContentId) {
-              return {
-                ...item,
-                value: updatedBookmarkData ? updatedBookmarkData.value : 0,
-              };
-            }
-            return item;
-          }
-        );
-        await localStorage.setItem(
-          "bookmarkData",
-          JSON.stringify(updatedBookmarkCache)
-        );
-      } else {
-        // Cache exists, but no bookmark for this instance content
-        const updatedBookmarkCache = [
-          ...parsedBookmarkCache,
-          updatedBookmarkData,
-        ];
-        await localStorage.setItem(
-          "bookmarkData",
-          JSON.stringify(updatedBookmarkCache)
-        );
+    const response = await axios.get(
+      `${process.env.BACKEND_URL}/api/conditions/${id}/bookmarks`,
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
       }
-    } else {
-      // No cache exists yet
-      await localStorage.setItem(
-        "bookmarkData",
-        JSON.stringify([updatedBookmarkData])
-      );
-    }
-  }
-
-  async function fetchBookmarkData() {
-    const bookmarkData: string | null = await localStorage.getItem(
-      "bookmarkData"
     );
 
-    let parsedBookmarkData = null;
-
-    if (bookmarkData) {
-      const parsedData = await JSON.parse(bookmarkData);
-      const filteredData = await parsedData.filter((item: TBookmarkData) => {
-        return item.content_finder_condition === instanceContentId;
+    if (response) {
+      const filteredBookmarkData = response.data.filter((bookmark: TBookmarkData) => {
+        return bookmark.user_id === Number(userId);
       });
 
-      if (filteredData.length > 0) parsedBookmarkData = filteredData[0];
-    }
+      if (filteredBookmarkData.length > 0) {
+        setBookmarkData(filteredBookmarkData[0]);
+        setBookmarked(filteredBookmarkData[0].value === 1);
+      }
 
-    if (parsedBookmarkData) {
-      setBookmarkData(parsedBookmarkData);
-      setBookmarked(parsedBookmarkData.value === 1);
-    } else {
-      setBookmarkData(null);
-      setBookmarked(false);
+      return;
     }
   }
 

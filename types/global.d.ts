@@ -105,7 +105,7 @@ export type TCharacter = {
 
 export type TBookmarkData = {
   id: number;
-  user: number,
+  user_id: number,
   content_finder_condition: number,
   content_type_id: number,
   value: number,
